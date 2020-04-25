@@ -11,6 +11,16 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="{% static 'users/main.css' %}">
+    <script src="{% static 'masonry.pkgd.js' %}"></script>
+    <script src="{% static 'imagesloaded.pkgd.js' %}"></script>
+    <script>
+        var $grid = $('.grid').imagesLoaded( function() {
+          // init Masonry after all images have loaded
+          $grid.masonry({
+            // options...
+          });
+        });
+    </script>
 
     {% if title %}
         <title>SWAPDROP - {{ title }}</title>

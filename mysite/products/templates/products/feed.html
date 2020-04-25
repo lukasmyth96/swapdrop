@@ -1,17 +1,11 @@
 {% extends "users/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-    {% for product in products %}
-        <article class="media content-section">
-          <img class="rounded-circle article-img" src="{{ product.image.url }}">
-          <div class="media-body">
-            <div class="article-metadata">
-              <a class="mr-2" href="{% url 'product-detail' product.id %}">{{ product.owner }}</a>
-              <small class="text-muted">{{ product.date_posted|date:"F d, Y" }}</small>
-            </div>
-            <h2><a class="article-title" href="{% url 'product-detail' product.id %}">{{ product.name }}</a></h2>
-            <p class="article-content">{{ product.description }}</p>
-          </div>
-        </article>
-    {% endfor %}
+    <div class="grid" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 10 }'>
+            {% for product in products %}
+                      <a href="{% url 'product-detail' product.id %}">
+                        <img class="img-thumbnail grid-item" src="{{ product.image.url }}" style="max-width: 300px">
+                      </a>
+            {% endfor %}
+    </div>
 {% endblock content %}

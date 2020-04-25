@@ -55,15 +55,9 @@ a.article-title:hover {
   margin-right: 16px;
 }
 
-.article-metadata {
-  padding-bottom: 1px;
-  margin-bottom: 4px;
-  border-bottom: 1px solid #e3e3e3
-}
-
-.article-metadata a:hover {
-  color: #333;
-  text-decoration: none;
+.feed-img {
+  height: 20px;
+  width: 20px
 }
 
 .article-svg {
