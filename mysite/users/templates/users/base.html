@@ -29,7 +29,8 @@
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
               {% if user.is_authenticated %}
-                <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+                <a class="nav-item nav-link" href="{% url 'profile-info' %}">Profile</a>
+                <a class="nav-item nav-link" href="{% url 'product-feed' %}">Feed</a>
                 <a class="nav-item nav-link" href="#">Matches</a>
                 <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
               {% else %}

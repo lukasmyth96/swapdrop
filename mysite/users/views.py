@@ -17,7 +17,7 @@ def register(request):
 
 
 @login_required()
-def profile(request):
+def profile_info(request):
     if request.method == 'POST':
         u_form = UserUpdateForm(instance=request.user, data=request.POST)
         p_form = ProfileUpdateForm(instance=request.user.profile, data=request.POST, files=request.FILES)
@@ -26,7 +26,7 @@ def profile(request):
             u_form.save()
             p_form.save()
             messages.success(request, f'Your account has been updated')
-            return redirect('profile')
+            return redirect('profile-info')
 
     else:
         u_form = UserUpdateForm(instance=request.user)

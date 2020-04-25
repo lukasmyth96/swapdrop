@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'homepage.apps.HomepageConfig',
     'users.apps.UsersConfig',
+    'products.apps.ProductsConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -127,5 +128,5 @@ MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = 'profile'
+LOGIN_REDIRECT_URL = 'profile-info'
 LOGIN_URL = 'login'
