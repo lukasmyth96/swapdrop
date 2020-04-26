@@ -16,6 +16,12 @@ class ProductListView(ListView):
     context_object_name = 'products'
     ordering = ['-date_posted']
 
+    def get_queryset(self):
+        """ Returns all products NOT owned by currently logged in user"""
+        all_products_qs = super().get_queryset()
+        filtered_products_qs = all_products_qs.exclude(owner=self.request.user)
+        return filtered_products_qs
+
 
 class ProductDetailView(DetailView):
     model = Product
