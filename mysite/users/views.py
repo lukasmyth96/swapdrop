@@ -1,7 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from django.views.generic import (
+    ListView
+)
+
+from users.forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from products.models import Product
 
 
 def register(request):
@@ -35,5 +40,22 @@ def profile_info(request):
         'u_form': u_form,
         'p_form': p_form
     }
-    return render(request, 'users/profile.html', context=context)
+    return render(request, 'users/profile_info.html', context=context)
+
+
+class ProfileProductsListView(ListView):
+    model = Product
+    template_name = 'users/profile.html'  # FIXME currently sharing same template as feed
+    context_object_name = 'products'
+    ordering = ['-date_posted']
+
+    def get_queryset(self):
+        """ Returns all products owned by currently logged in user"""
+        all_products = super().get_queryset()
+        users_products = all_products.filter(owner=self.request.user)
+        return users_products
+
+
+
+
 
