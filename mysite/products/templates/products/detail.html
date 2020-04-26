@@ -9,6 +9,9 @@
             <div class="col">
               <h2 class="article-title">{{ object.name }}</h2>
               <p class="article-content">{{ object.description }}</p>
+              <button style="width: 20%" class="btn btn-outline-info" type="submit" onclick="location.href='{% url 'product-like' product.id %}'">
+                  Like
+              </button>
             </div>
         </div>
 {% endblock content %}
