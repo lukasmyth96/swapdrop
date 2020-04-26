@@ -8,6 +8,7 @@ from django.views.generic import (
     DeleteView
 )
 from .models import Product
+from matches.models import Like
 
 
 class ProductListView(ListView):
@@ -17,10 +18,17 @@ class ProductListView(ListView):
     ordering = ['-date_posted']
 
     def get_queryset(self):
-        """ Returns all products NOT owned by currently logged in user"""
+        """ Returns all products not owned or already liked by currently logged in user"""
+        # TODO there's probably an easier way of doing this - do some reading on querysets
         all_products_qs = super().get_queryset()
-        filtered_products_qs = all_products_qs.exclude(owner=self.request.user)
-        return filtered_products_qs
+        other_peoples_products = all_products_qs.exclude(owner=self.request.user)
+
+        my_likes = Like.objects.filter(liked_by=self.request.user)
+        already_liked_product_ids = [like.product.id for like in my_likes]
+
+        other_peoples_products_not_already_liked = other_peoples_products.exclude(id__in=already_liked_product_ids)
+
+        return other_peoples_products_not_already_liked
 
 
 class ProductDetailView(DetailView):
