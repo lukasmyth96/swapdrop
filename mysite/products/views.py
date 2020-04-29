@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (
     ListView,
@@ -9,6 +8,7 @@ from django.views.generic import (
 )
 from .models import Product
 from matches.models import Like
+from .forms import ProductCreateForm, ProductUpdateForm
 
 
 class ProductListView(ListView):
@@ -38,8 +38,9 @@ class ProductDetailView(DetailView):
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
+    form_class = ProductCreateForm
     template_name = 'products/create_form.html'
-    fields = ['name', 'description', 'image']
+    success_url = '/profile'
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
@@ -48,8 +49,9 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 
 class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Product
+    form_class = ProductUpdateForm
     template_name = 'products/update_form.html'
-    fields = ['name', 'description', 'image']
+    success_url = '/profile'
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
@@ -64,7 +66,7 @@ class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Product
-    success_url = '/'
+    success_url = '/profile'
 
     def test_func(self):
         product = self.get_object()
