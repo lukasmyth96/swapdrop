@@ -38,7 +38,8 @@ class ProductDetailView(DetailView):
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
-    fields = ['name', 'description']
+    template_name = 'products/create_form.html'
+    fields = ['name', 'description', 'image']
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
@@ -47,7 +48,8 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 
 class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Product
-    fields = ['name', 'description']
+    template_name = 'products/update_form.html'
+    fields = ['name', 'description', 'image']
 
     def form_valid(self, form):
         form.instance.owner = self.request.user

@@ -8,8 +8,8 @@ from PIL import Image
 
 class Product(models.Model):
 
-    name = models.CharField(max_length=100)
-    description = models.TextField()
+    name = models.CharField(max_length=50)
+    description = models.TextField(max_length=250)
     image = models.ImageField(default='default.jpg', upload_to='product_pics')
     date_posted = models.DateTimeField(default=timezone.now)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
