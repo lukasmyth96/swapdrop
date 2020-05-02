@@ -9,14 +9,15 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-    <link rel="stylesheet" type="text/css" href="{% static 'users/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'homepage/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'homepage/image-picker.css' %}">
     <script src="https://code.jquery.com/jquery-3.5.0.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+    <script src="image-picker.js"></script>
     <script src="https://unpkg.com/packery@2/dist/packery.pkgd.min.js"></script>
-
     <script src="{% static 'imagesloaded.pkgd.js' %}"></script>
+
     <script>
-        var $grid = $('#grid')
+        let $grid = $('#grid')
         function init_packery() {
             // init Masonry after all images have loaded
             $grid.packery({
