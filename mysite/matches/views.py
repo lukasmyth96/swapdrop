@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.http import HttpResponse
 
 from .models import Like
 from products.models import Product
@@ -12,7 +13,12 @@ def like(request, product_id):
     if created_new:
         like.save()
         messages.success(request, 'You have liked this product')
+        return redirect('product-make-offer', product_id=product_id)
     else:
         messages.success(request, 'You have already liked this product')
-    return redirect('product-detail', pk=product_id)
+        return redirect('product-like', product_id=product_id)
 
+
+def make_offer(request, product_id):
+
+    return HttpResponse('This is a make offer page for product {}'.format(product_id))
