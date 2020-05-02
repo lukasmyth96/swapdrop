@@ -1,11 +1,11 @@
 {% extends "users/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <div class="grid" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 10 }' style="margin-left: 10%">
+    <div id="grid">
             {% for product in products %}
-                      <a href="{% url 'product-detail' product.id %}">
-                        <img class="img-thumbnail grid-item" src="{{ product.image.url }}" style="max-width: 45%">
-                      </a>
+              <a href="{% url 'product-detail' product.id %}">
+                <img class="grid-item" src="{{ product.image.url }}" style="width: 30%">
+              </a>
             {% endfor %}
     </div>
 {% endblock content %}
