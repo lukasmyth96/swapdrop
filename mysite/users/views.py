@@ -45,7 +45,7 @@ def profile_info(request):
 
 class ProfileProductsListView(ListView):
     model = Product
-    template_name = 'users/profile.html'  # FIXME currently sharing same template as feed
+    template_name = 'users/profile.html'
     context_object_name = 'products'
     ordering = ['-date_posted']
 

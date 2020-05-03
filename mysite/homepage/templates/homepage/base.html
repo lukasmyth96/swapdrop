@@ -12,8 +12,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'homepage/main.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'homepage/image-picker.css' %}">
     <script src="https://code.jquery.com/jquery-3.5.0.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
-    <script src="image-picker.js"></script>
     <script src="https://unpkg.com/packery@2/dist/packery.pkgd.min.js"></script>
+    <script src={% static 'image-picker.js' %}></script>
     <script src="{% static 'imagesloaded.pkgd.js' %}"></script>
 
     <script>
@@ -28,6 +28,24 @@
         }
 
         $grid = $grid.imagesLoaded(init_packery)
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $("#image-picker-select").imagepicker({
+                hide_select: true
+            });
+
+            let $container = $('.image-picker-select');
+            // initialize
+            $container.imagesLoaded(function () {
+                $container.packery({
+                    columnWidth: 500,
+                    itemSelector: '.grid-item'
+                });
+                console.log('packery initialised')
+            });
+        });
     </script>
 
 
@@ -77,8 +95,7 @@
     </main>
 
     <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <!-- Popper.js, then Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
