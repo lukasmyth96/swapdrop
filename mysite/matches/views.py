@@ -5,6 +5,7 @@ from django.http import HttpResponse
 
 from .models import Like
 from products.models import Product
+from matches.models import Offer
 
 
 def like(request, product_id):
@@ -30,8 +31,35 @@ class MakeOfferListView(ListView):
         return super(MakeOfferListView, self).get(request)
 
     def post(self, request, product_id):
+        """
+        Process submission of 'make offer' form. Redirect to form.
+
+        Extracts list of offered product ids, creates and saves Offer objects for each offer and then redirects user
+        back to feed
+
+        Parameters
+        ----------
+        request
+        product_id: int
+            id of the desired product
+        """
+
+        # Extract ids of selected products from the select box in the form
         selected_product_ids = [int(_id) for _id in request.POST.getlist('image-picker-select')]
-        return HttpResponse('Selected product ids are {}'.format(selected_product_ids))
+
+        # Construct objects for offered products and desired product
+        offered_products = [Product.objects.get(pk=product_id) for product_id in selected_product_ids]
+        desired_product = Product.objects.get(pk=product_id)
+
+        # Create and save offer objects
+        for offered_product in offered_products:
+            _offer, created_new = Offer.objects.get_or_create(offered_product=offered_product, desired_product=desired_product)
+            if created_new:
+                _offer.save()
+
+        messages.success(request, 'Your offer has been sent')
+        return redirect('product-feed')
+
 
     def get_queryset(self):
         """ Returns all products owned by currently logged in user"""
