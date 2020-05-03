@@ -9,7 +9,7 @@ class Like(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
     def __str__(self):
-        abbreviated_product_name = self.product.__str__()[:25]
+        abbreviated_product_name = self.product.__str__()[:20]
         return f'{self.liked_by}  *LIKED*  {abbreviated_product_name}  *OWNED BY*  {self.product.owner}'
 
 

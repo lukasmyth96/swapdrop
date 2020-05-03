@@ -1,12 +1,22 @@
 {% extends "homepage/base.html" %}
 {% block content %}
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <select id="image-picker-select" name="image-picker-select" multiple="multiple" class="image-picker-select">
-          {% for product in products %}
-              <option class="grid-item" data-img-src="{{ product.image.url }}" data-img-class="first" data-img-alt="Page 1" value="{{ product.id }}"></option>
-          {% endfor %}
-        </select>
-        <button class="btn" type="submit">Submit</button>
-    </form>
+    {%  if products %}
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+                <div class="form-group" style="text-align: center">
+                    <h2>Select which items you're willing to swap?</h2>
+                    <button class="btn btn-outline-info" type="submit">Submit</button>
+                </div>
+            <select id="image-picker-select" name="image-picker-select" multiple="multiple" class="image-picker-select" style="display: none">
+              {% for product in products %}
+                  <option class="grid-item" data-img-src="{{ product.image.url }}" data-img-class="first" data-img-alt="Page 1" value="{{ product.id }}" style="display: none"></option>
+              {% endfor %}
+            </select>
+        </form>
+    {% else %}
+        <div class="form-group" style="text-align: center">
+            <h2>You must upload at least one item to swap!</h2>
+            <a class="btn btn-outline-info" href="{% url 'product-create' %}">Upload Your First Item</a>
+        </div>
+    {% endif %}
 {% endblock content %}

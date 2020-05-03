@@ -20,7 +20,7 @@ ul.thumbnails.image_picker_selector {
   /* line 30, source/sass/image-picker.scss */
   ul.thumbnails.image_picker_selector li {
     margin: 0px 12px 12px 0px;
-    float: left; }
+    float: left;}
     /* line 35, source/sass/image-picker.scss */
     ul.thumbnails.image_picker_selector li .thumbnail {
       padding: 6px;
@@ -30,7 +30,7 @@ ul.thumbnails.image_picker_selector {
       -ms-user-select: none; }
       /* line 42, source/sass/image-picker.scss */
       ul.thumbnails.image_picker_selector li .thumbnail img {
-        -webkit-user-drag: none; }
+        -webkit-user-drag: none;}
     /* line 48, source/sass/image-picker.scss */
     ul.thumbnails.image_picker_selector li .thumbnail.selected {
       background: #08C; }
