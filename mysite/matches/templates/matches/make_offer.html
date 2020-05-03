@@ -1,0 +1,12 @@
+{% extends "homepage/base.html" %}
+{% block content %}
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <select id="image-picker-select" name="image-picker-select" multiple="multiple" class="image-picker-select">
+          {% for product in products %}
+              <option class="grid-item" data-img-src="{{ product.image.url }}" data-img-class="first" data-img-alt="Page 1" value="{{ product.id }}"></option>
+          {% endfor %}
+        </select>
+        <button class="btn" type="submit">Submit</button>
+    </form>
+{% endblock content %}
