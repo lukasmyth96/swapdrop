@@ -47,6 +47,10 @@ class MakeOfferListView(ListView):
         # Extract ids of selected products from the select box in the form
         selected_product_ids = [int(_id) for _id in request.POST.getlist('image-picker-select')]
 
+        if not selected_product_ids:
+            messages.warning(request, 'You must select at least one item to offer')
+            return redirect('make-offer', product_id=product_id)
+
         # Construct objects for offered products and desired product
         offered_products = [Product.objects.get(pk=product_id) for product_id in selected_product_ids]
         desired_product = Product.objects.get(pk=product_id)
