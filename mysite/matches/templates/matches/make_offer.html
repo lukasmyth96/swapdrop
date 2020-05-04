@@ -9,10 +9,26 @@
                 </div>
             <select id="image-picker-select" name="image-picker-select" multiple="multiple" class="image-picker-select" style="display: none">
               {% for product in products %}
-                  <option class="grid-item" data-img-src="{{ product.image.url }}" data-img-class="first" data-img-alt="Page 1" value="{{ product.id }}" style="display: none"></option>
+                  <option class="grid-item" data-img-src="{{ product.image.url }}"  value="{{ product.id }}" style="display: none"></option>
               {% endfor %}
             </select>
         </form>
+        <script>
+            $(document).ready(function () {
+                $("#image-picker-select").imagepicker({
+                    hide_select: true
+                });
+
+                let $container = $('.image-picker-select');
+                // initialize Packery after all images have loaded
+                $container.imagesLoaded(function () {
+                    $container.masonry({
+                        columnWidth: 0,
+                        itemSelector: '.grid-item'
+                    });
+                });
+            });
+        </script>
     {% else %}
         <div class="form-group" style="text-align: center">
             <h2>You must upload at least one item to swap!</h2>

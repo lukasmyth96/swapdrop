@@ -1,7 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.contrib import messages
 from django.views.generic import ListView
-from django.http import HttpResponse
 
 from .models import Like
 from products.models import Product
@@ -47,6 +46,7 @@ class MakeOfferListView(ListView):
         # Extract ids of selected products from the select box in the form
         selected_product_ids = [int(_id) for _id in request.POST.getlist('image-picker-select')]
 
+        # Show warning if no items have been offered
         if not selected_product_ids:
             messages.warning(request, 'You must select at least one item to offer')
             return redirect('make-offer', product_id=product_id)
