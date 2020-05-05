@@ -1,10 +1,11 @@
 from django.shortcuts import redirect
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView
 
 from .models import Like
 from products.models import Product
-from matches.models import Offer
+from matches.models import Offer, OfferStatus
 
 
 def like(request, product_id):
@@ -70,6 +71,75 @@ class MakeOfferListView(ListView):
         all_products = super().get_queryset()
         users_products = all_products.filter(owner=self.request.user)
         return users_products
+
+
+class ReviewOffersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
+
+    model = Offer
+    template_name = 'matches/review_offers.html'
+    context_object_name = 'products'
+    ordering = ['-date_posted']
+
+
+    def get_queryset(self):
+        """ Returns list of all products that have been offered for current product"""
+        current_product = self.get_current_product()  # product that the offers are being made for
+        offers_for_product = self.get_offers_for_product(current_product=current_product)
+        offered_products = [offer.offered_product for offer in offers_for_product]
+
+        return offered_products
+
+    def post(self, request, product_id):
+        """ Process acceptance of offer"""
+
+        # Extract ids of selected products from the select box in the form
+        # Note - by default a hidden <option> is selected on load with value=""
+        selected_product_id = [_id for _id in request.POST.getlist('image-picker-select')][0]
+
+        # Show warning if no items have been offered
+        if not selected_product_id:
+            messages.warning(request, 'You must select which offer to accept')
+            return redirect('review-offers', product_id=product_id)
+
+        # Update status column in offer table
+        selected_product_id = int(selected_product_id)
+        current_product = self.get_current_product(product_id=product_id)  # Product object
+        offers_for_product = self.get_offers_for_product(current_product=current_product)  # get list of offered products
+        for offer in offers_for_product:
+            if offer.offered_product.id == selected_product_id:
+                offer.status = OfferStatus.ACCEPTED
+            else:
+                offer.status = OfferStatus.REJECTED
+            offer.save(update_fields=['status'])  # update status in db
+
+        messages.success(request, 'Congrats - match complete!')
+        return redirect('profile')
+
+
+
+
+    def test_func(self):
+        """ Ensures only the owner of the product can review it's offers"""
+        current_product = self.get_current_product()
+        if self.request.user == current_product.owner:
+            return True
+        return False
+
+    def get_current_product(self, product_id=None):
+        if product_id is None:
+            product_id = self.kwargs.get('product_id')  # for get requests
+        current_product = Product.objects.get(id=product_id)
+        return current_product
+
+    @staticmethod
+    def get_offers_for_product(current_product):
+        """ Returns QuerySet of all offers for this product """
+        offers_for_this_product = Offer.objects.filter(desired_product=current_product)
+        return offers_for_this_product
+
+
+
+
 
 
 

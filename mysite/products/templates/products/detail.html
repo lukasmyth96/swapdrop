@@ -3,18 +3,19 @@
 {% block content %}
         <div class="row">
             <div class="col">
-                <img src="{{ object.image.url }}" width="100%">
+                <img src="{{ product.image.url }}" width="100%">
             </div>
 
             <div class="col">
-              <h2 class="article-title">{{ object.name }}</h2>
+              <h2 class="article-title">{{ product.name }}</h2>
 
-              <p class="article-content">{{ object.description }}</p>
+              <p class="article-content">{{ product.description }}</p>
 
               {% if object.owner == user %}
                 <div>
-                  <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'product-update' object.id %}">Update</a>
-                  <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'product-delete' object.id %}">Delete</a>
+                  <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'review-offers' product.id %}">Review Offers</a>
+                  <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'product-update' product.id %}">Update</a>
+                  <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'product-delete' product.id %}">Delete</a>
                 </div>
               {% else %}
                   <button style="width: 30%" class="btn btn-outline-info" type="submit" onclick="location.href='{% url 'product-like' product.id %}'">
