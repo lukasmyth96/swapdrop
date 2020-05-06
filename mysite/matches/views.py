@@ -109,6 +109,7 @@ class ReviewOffersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
         # Update status of current product to MATCHED
         current_product = self.get_current_product(product_id=product_id)  # Product object
+        assert current_product.status == ProductStatus.LIVE
         current_product.status = ProductStatus.MATCHED
         current_product.save(update_fields=['status'])
 

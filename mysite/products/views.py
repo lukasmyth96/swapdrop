@@ -6,7 +6,7 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
-from .models import Product
+from .models import Product, ProductStatus
 from matches.models import Like
 from .forms import ProductCreateForm, ProductUpdateForm
 
@@ -20,8 +20,8 @@ class ProductListView(ListView):
     def get_queryset(self):
         """ Returns all products not owned or already liked by currently logged in user"""
         # TODO there's probably an easier way of doing this - do some reading on querysets
-        all_products_qs = super().get_queryset()
-        other_peoples_products = all_products_qs.exclude(owner=self.request.user)
+        all_products = Product.objects.filter(status=ProductStatus.LIVE)
+        other_peoples_products = all_products.exclude(owner=self.request.user)
 
         my_likes = Like.objects.filter(liked_by=self.request.user)
         already_liked_product_ids = [like.product.id for like in my_likes]
