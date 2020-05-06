@@ -84,8 +84,13 @@ class ReviewOffersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     def get_queryset(self):
         """ Returns list of all products that have been offered for current product"""
         current_product = self.get_current_product()  # product that the offers are being made for
-        offers_for_product = self.get_offers_for_product(current_product=current_product)
-        offered_products = [offer.offered_product for offer in offers_for_product]
+
+        if current_product.status == ProductStatus.LIVE:
+            offers_for_product = self.get_offers_for_product(current_product=current_product)
+            offered_products = [offer.offered_product for offer in offers_for_product]
+        else:
+            offered_products = []
+            messages.warning(self.request, 'You have already accepted an offer on this product')
 
         return offered_products
 
