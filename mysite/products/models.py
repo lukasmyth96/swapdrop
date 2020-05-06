@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import ugettext_lazy
 from django_enumfield import enum
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -20,6 +21,13 @@ class ProductStatus(enum.Enum):
         MATCHED: (LIVE,),  # Can go from LIVE to MATCHED
         COLLECTED: (MATCHED,),  # Can go from MATCHED to COLLECTED
         DELIVERED: (COLLECTED,)  # Can go from collected to delivered
+    }
+
+    __labels__ = {
+        LIVE: ugettext_lazy("Live"),
+        MATCHED: ugettext_lazy("Matched"),
+        COLLECTED: ugettext_lazy("Collected"),
+        DELIVERED: ugettext_lazy("Delivered"),
     }
 
 
