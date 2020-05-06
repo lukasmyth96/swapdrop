@@ -11,7 +11,7 @@
 
               <p class="article-content">{{ product.description }}</p>
 
-              {% if object.owner == user %}
+              {% if product.owner == user %}
                 <div>
                   {% if product.status.name == 'LIVE' %}
                       <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'review-offers' product.id %}">Review Offers</a>
