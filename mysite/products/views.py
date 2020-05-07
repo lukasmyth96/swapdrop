@@ -7,7 +7,7 @@ from django.views.generic import (
     DeleteView
 )
 from .models import Product, ProductStatus
-from matches.models import Like
+from matches.models import Offer
 from .forms import ProductCreateForm, ProductUpdateForm
 
 
@@ -18,17 +18,20 @@ class ProductListView(ListView):
     ordering = ['-date_posted']
 
     def get_queryset(self):
-        """ Returns all products not owned or already liked by currently logged in user"""
-        # TODO there's probably an easier way of doing this - do some reading on querysets
+        """ Returns all products the current user does not own and hasn't already made an offer for"""
+
+        # Get QuerySet of all products not owned by me
         all_products = Product.objects.filter(status=ProductStatus.LIVE)
         other_peoples_products = all_products.exclude(owner=self.request.user)
 
-        my_likes = Like.objects.filter(liked_by=self.request.user)
-        already_liked_product_ids = [like.product.id for like in my_likes]
+        # Get set of product ids for products I've already made an offer on (so don't want to see in my feed again)
+        my_offers = Offer.objects.filter(offered_product__owner__exact=self.request.user)
+        already_desired_product_ids = set([offer.desired_product.id for offer in my_offers])
 
-        other_peoples_products_not_already_liked = other_peoples_products.exclude(id__in=already_liked_product_ids)
+        # Get other peoples products I've not already made an offer of
+        other_peoples_products_not_already_offered_for = other_peoples_products.exclude(id__in=already_desired_product_ids)
 
-        return other_peoples_products_not_already_liked
+        return other_peoples_products_not_already_offered_for
 
 
 class ProductDetailView(DetailView):

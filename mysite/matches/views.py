@@ -3,22 +3,8 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView
 
-from .models import Like
 from products.models import Product, ProductStatus
 from matches.models import Offer, OfferStatus
-
-
-def like(request, product_id):
-
-    product = Product.objects.get(pk=product_id)
-    _like, created_new = Like.objects.get_or_create(liked_by=request.user, product=product)
-    if created_new:
-        _like.save()
-        messages.success(request, 'You have liked this product')
-        return redirect('make-offer', product_id=product_id)
-    else:
-        messages.success(request, 'You have already liked this product')
-        return redirect('product-detail', product_id=product_id)
 
 
 class MakeOfferListView(ListView):

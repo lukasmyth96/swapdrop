@@ -22,8 +22,8 @@
                   <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'product-delete' product.id %}">Delete</a>
                 </div>
               {% else %}
-                  <button style="width: 30%" class="btn btn-outline-info" type="submit" onclick="location.href='{% url 'product-like' product.id %}'">
-                      I want this!
+                  <button style="width: 40%" class="btn btn-outline-info" type="submit" onclick="location.href='{% url 'make-offer' product.id %}'">
+                      Make an offer
                   </button>
 
               {% endif %}
