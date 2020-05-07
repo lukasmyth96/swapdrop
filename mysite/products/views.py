@@ -18,18 +18,17 @@ class ProductListView(ListView):
     ordering = ['-date_posted']
 
     def get_queryset(self):
-        """ Returns all products the current user does not own and hasn't already made an offer for"""
+        """ Returns all LIVE (non-matched) products the current user does not own and hasn't already made an offer for"""
 
-        # Get QuerySet of all products not owned by me
-        all_products = Product.objects.filter(status=ProductStatus.LIVE)
-        other_peoples_products = all_products.exclude(owner=self.request.user)
+        live_products = Product.objects.filter(status=ProductStatus.LIVE)  # Get QuerySet of all LIVE products
+        other_peoples_products = live_products.exclude(owner=self.request.user)  # Filter products owned by me
 
         # Get set of product ids for products I've already made an offer on (so don't want to see in my feed again)
         my_offers = Offer.objects.filter(offered_product__owner__exact=self.request.user)
-        already_desired_product_ids = set([offer.desired_product.id for offer in my_offers])
+        already_offered_on_product_ids = set([offer.desired_product.id for offer in my_offers])
 
         # Get other peoples products I've not already made an offer of
-        other_peoples_products_not_already_offered_for = other_peoples_products.exclude(id__in=already_desired_product_ids)
+        other_peoples_products_not_already_offered_for = other_peoples_products.exclude(id__in=already_offered_on_product_ids)
 
         return other_peoples_products_not_already_offered_for
 
