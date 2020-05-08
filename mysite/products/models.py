@@ -7,6 +7,8 @@ from django.urls import reverse
 
 from PIL import Image
 
+from .validators import is_square_image
+
 
 class ProductStatus(enum.Enum):
     LIVE = 0  # live on site
@@ -35,7 +37,7 @@ class Product(models.Model):
 
     name = models.CharField(max_length=50)
     description = models.TextField(max_length=250)
-    image = models.ImageField(default='default.jpg', upload_to='product_pics')
+    image = models.ImageField(default='default.jpg', upload_to='product_pics', validators=[is_square_image])
     date_posted = models.DateTimeField(default=timezone.now)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     status = enum.EnumField(ProductStatus, default=ProductStatus.LIVE)
