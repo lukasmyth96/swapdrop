@@ -1,17 +1,13 @@
 <! Used as a base component for product feed and profil feed - exposes single_product block to be extended>
-<div id="grid" class="grid" style="text-align: center">
-            {% for product in products %}
-                {% block single_product %} {% endblock %}
-            {% endfor %}
+<div class="container-fluid">
+    <div class="row">
+        {% for product in products %}
+            {% block single_product %} {% endblock %}
+        {% endfor %}
     </div>
+</div>
 <script>
     $(document).ready(function() {
-         $('#grid').masonry({
-         // options
-          itemSelector: '.grid-item',
-         columnWidth: 0,
-        });
-         console.log('masonry initialised')
         let images = $('.grid-item');
         let i
         for (i=0; i<images.length; i++){
