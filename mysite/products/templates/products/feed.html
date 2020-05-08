@@ -1,26 +1,5 @@
 {% extends "homepage/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <div id="grid" class="grid" style="text-align: center">
-            {% for product in products %}
-              <a  href="{% url 'product-detail' product.id %}">
-                <img class="grid-item thumbnail" src="{{ product.image.url }}" style="width: 220px; visibility: hidden">
-              </a>
-            {% endfor %}
-    </div>
-    <script>
-        $(document).ready(function() {
-             $('#grid').masonry({
-             // options
-              itemSelector: '.grid-item',
-             columnWidth: 0,
-            });
-             console.log('masonry initialised')
-            let images = $('.grid-item');
-            let i
-            for (i=0; i<images.length; i++){
-                images[i].style.visibility = 'visible'
-            }
-        });
-    </script>
+    {% include "products/_product_feed_component.html" %}
 {% endblock content %}

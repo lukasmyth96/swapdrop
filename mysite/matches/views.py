@@ -3,22 +3,8 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView
 
-from .models import Like
-from products.models import Product
+from products.models import Product, ProductStatus
 from matches.models import Offer, OfferStatus
-
-
-def like(request, product_id):
-
-    product = Product.objects.get(pk=product_id)
-    _like, created_new = Like.objects.get_or_create(liked_by=request.user, product=product)
-    if created_new:
-        _like.save()
-        messages.success(request, 'You have liked this product')
-        return redirect('make-offer', product_id=product_id)
-    else:
-        messages.success(request, 'You have already liked this product')
-        return redirect('product-detail', product_id=product_id)
 
 
 class MakeOfferListView(ListView):
@@ -84,8 +70,13 @@ class ReviewOffersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     def get_queryset(self):
         """ Returns list of all products that have been offered for current product"""
         current_product = self.get_current_product()  # product that the offers are being made for
-        offers_for_product = self.get_offers_for_product(current_product=current_product)
-        offered_products = [offer.offered_product for offer in offers_for_product]
+
+        if current_product.status == ProductStatus.LIVE:
+            offers_for_product = self.get_offers_for_product(current_product=current_product)
+            offered_products = [offer.offered_product for offer in offers_for_product]
+        else:
+            offered_products = []
+            messages.warning(self.request, 'You have already accepted an offer on this product')
 
         return offered_products
 
@@ -94,6 +85,7 @@ class ReviewOffersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
         # Extract ids of selected products from the select box in the form
         # Note - by default a hidden <option> is selected on load with value=""
+        assert len(request.POST.getlist('image-picker-select')) == 1
         selected_product_id = [_id for _id in request.POST.getlist('image-picker-select')][0]
 
         # Show warning if no items have been offered
@@ -101,22 +93,27 @@ class ReviewOffersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
             messages.warning(request, 'You must select which offer to accept')
             return redirect('review-offers', product_id=product_id)
 
-        # Update status column in offer table
-        selected_product_id = int(selected_product_id)
+        # Update status of current product to MATCHED
         current_product = self.get_current_product(product_id=product_id)  # Product object
+        assert current_product.status == ProductStatus.LIVE
+        current_product.status = ProductStatus.MATCHED
+        current_product.save(update_fields=['status'])
+
+        # Update status of each offer and update the status of accepted product to MATCHED
+        selected_product_id = int(selected_product_id)
         offers_for_product = self.get_offers_for_product(current_product=current_product)  # get list of offered products
         for offer in offers_for_product:
-            if offer.offered_product.id == selected_product_id:
-                offer.status = OfferStatus.ACCEPTED
+            offered_product = offer.offered_product
+            if offered_product.id == selected_product_id:
+                offer.status = OfferStatus.ACCEPTED  # update status of offer
+                offered_product.status = ProductStatus.MATCHED  # update status of accepted product
+                offered_product.save(update_fields=['status'])
             else:
                 offer.status = OfferStatus.REJECTED
             offer.save(update_fields=['status'])  # update status in db
 
         messages.success(request, 'Congrats - match complete!')
         return redirect('profile')
-
-
-
 
     def test_func(self):
         """ Ensures only the owner of the product can review it's offers"""
@@ -134,7 +131,7 @@ class ReviewOffersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     @staticmethod
     def get_offers_for_product(current_product):
         """ Returns QuerySet of all offers for this product """
-        offers_for_this_product = Offer.objects.filter(desired_product=current_product)
+        offers_for_this_product = Offer.objects.filter(desired_product=current_product, status=OfferStatus.PENDING)
         return offers_for_this_product
 
 

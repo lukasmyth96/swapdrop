@@ -1,6 +1,5 @@
 from django.contrib import admin
 
-from .models import Like, Offer
+from .models import Offer
 
-admin.site.register(Like)
 admin.site.register(Offer)
