@@ -1,0 +1,17 @@
+<! Used as a base component for product feed and profil feed - exposes single_product block to be extended>
+<div class="container-fluid">
+    <div class="row">
+        {% for product in products %}
+            {% block single_product %} {% endblock %}
+        {% endfor %}
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        let images = $('.grid-item');
+        let i
+        for (i=0; i<images.length; i++){
+            images[i].style.visibility = 'visible'
+        }
+    });
+</script>

@@ -1,0 +1,8 @@
+{% extends "products/_base_feed_component.html" %}
+{% block single_product %}
+  <div class="col-md-3" style="margin-top:20px">
+      <a href="{% url 'product-detail' product.id %}" style="width: 100%">
+        <img class="grid-item thumbnail" src="{{ product.image.url }}" style="width: 100%; visibility: hidden">
+      </a>
+  </div>
+{% endblock %}

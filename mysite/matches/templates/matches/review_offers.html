@@ -1,0 +1,45 @@
+{% extends "homepage/base.html" %}
+{% block content %}
+    {%  if products %}
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+                <div class="form-group" style="text-align: center">
+                    <h2>Select one offer you'd like to accept</h2>
+                    <button class="btn btn-outline-info" type="submit">Accept Offer</button>
+                </div>
+            <select id="image-picker-select" name="image-picker-select" class="image-picker-select" style="display: none">
+                <option class="grid-item" value="" style="display: none"></option>
+              {% for product in products %}
+                  <option class="grid-item" data-img-src="{{ product.image.url }}"  value="{{ product.id }}" style="display: none"></option>
+              {% endfor %}
+            </select>
+        </form>
+        <script>
+            $(document).ready(function () {
+                $("#image-picker-select").imagepicker({
+                    hide_select: true
+                });
+
+                // Set all items to de-selected by default
+                let options = $('.grid-item');
+                let i;
+                for (i=0; i<options.length; i++){
+                    options[i].selected = false
+                }
+
+                let $container = $('.image-picker-select');
+                // initialize Packery after all images have loaded
+                $container.imagesLoaded(function () {
+                    $container.masonry({
+                        columnWidth: 0,
+                        itemSelector: '.grid-item'
+                    });
+                });
+            });
+        </script>
+    {% else %}
+        <div class="form-group" style="text-align: center">
+            <h2>no offers yet - check back later!</h2>
+        </div>
+    {% endif %}
+{% endblock content %}
