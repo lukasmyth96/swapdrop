@@ -4,7 +4,7 @@
     <label for="{{ product.id }}">
         <img class="grid-item thumbnail" src="{{ product.image.url }}" style="width: 100%; visibility: hidden">
     </label>
-    <input type="checkbox" id="{{ product.id }}" name="{{ product.id }}">
+    <input type="radio" id="{{ product.id }}" name="product_id" value="{{ product.id }}">
   </div>
 
 {% endblock %}
