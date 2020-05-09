@@ -1,25 +1,25 @@
-.outer {
-    position:relative;
-    width: 200px;
-    height: 300px;
-}
-.overlay {
-    display: none;
+/* Container needed to position the button. Adjust the width as needed */
+.product-container {
+  position: relative;
+  width: 50%;
 }
 
-.outer:hover .overlay {
-    display: block;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: black;
-    opacity: 0.7;
-    top: 0;
+/* Make the image responsive */
+.product-container img {
+  width: 100%;
+  height: auto;
 }
-.text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform:translate(-50%, -50%);
-    color:white;
+
+/* Style the button and place it in the middle of the container/image */
+.product-container .offer-status-icon {
+  position: absolute;
+  top: 0px;
+  left: 6%;
+  background-color: #a39e9e;
+  color: white;
+  font-size: 16px;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
 }
