@@ -3,32 +3,13 @@
     {%  if products %}
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-                <div class="form-group" style="text-align: center">
-                    <h2>Select which items you're willing to swap?</h2>
-                    <button class="btn btn-outline-info" type="submit">Submit</button>
-                </div>
-            <select id="image-picker-select" name="image-picker-select" multiple="multiple" class="image-picker-select" style="display: none">
-              {% for product in products %}
-                  <option class="grid-item" data-img-src="{{ product.image.url }}"  value="{{ product.id }}" style="display: none"></option>
-              {% endfor %}
-            </select>
+            <div class="form-group" style="text-align: center">
+                <h2>Select which items you want to offer</h2>
+                <button class="btn btn-outline-info" type="submit">Submit</button>
+            </div>
+            {% include 'matches/_make_offer_feed_component.html' %}
         </form>
-        <script>
-            $(document).ready(function () {
-                $("#image-picker-select").imagepicker({
-                    hide_select: true
-                });
 
-                let $container = $('.image-picker-select');
-                // initialize Packery after all images have loaded
-                $container.imagesLoaded(function () {
-                    $container.masonry({
-                        columnWidth: 0,
-                        itemSelector: '.grid-item'
-                    });
-                });
-            });
-        </script>
     {% else %}
         <div class="form-group" style="text-align: center">
             <h2>You must upload at least one item to swap!</h2>

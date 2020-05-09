@@ -31,7 +31,9 @@ class MakeOfferListView(ListView):
         """
 
         # Extract ids of selected products from the select box in the form
-        selected_product_ids = [int(_id) for _id in request.POST.getlist('image-picker-select')]
+        # FIXME probably a more reliable way of doing this?
+        product_id_strings = list(request.POST.keys())[1:]  # gets list of product ids that have been selected
+        selected_product_ids = [int(prod_id) for prod_id in product_id_strings]  # converts each to a int
 
         # Show warning if no items have been offered
         if not selected_product_ids:
@@ -83,10 +85,7 @@ class ReviewOffersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     def post(self, request, product_id):
         """ Process acceptance of offer"""
 
-        # Extract ids of selected products from the select box in the form
-        # Note - by default a hidden <option> is selected on load with value=""
-        assert len(request.POST.getlist('image-picker-select')) == 1
-        selected_product_id = [_id for _id in request.POST.getlist('image-picker-select')][0]
+        selected_product_id = int(request.POST['product_id'])
 
         # Show warning if no items have been offered
         if not selected_product_id:
