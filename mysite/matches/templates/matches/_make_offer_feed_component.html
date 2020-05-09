@@ -11,9 +11,9 @@
     }
   </script>
   <div class="col-md-3" style="margin-top:20px">
-        <label for="{{ product.id }}" class="product-container" onclick="changeBorderColour(this);">
-            <img class="grid-item thumbnail" src="{{ product.image.url }}" style="border-width: 5px; border-color: white; border-style: solid; height: 100%; width: 100%; visibility: hidden;">
+        <label for="{{ product.id }}" onclick="changeBorderColour(this);">
+            <img class="grid-item thumbnail" src="{{ product.image.url }}" style="border-width: 5px; border-color: green; border-style: solid; height: 100%; width: 100%; visibility: hidden;">
         </label>
-        <input type="checkbox" id="{{ product.id }}" name="{{ product.id }}">
+        <input type="checkbox" id="{{ product.id }}" name="{{ product.id }}" checked="checked" style="display: none">
   </div>
 {% endblock %}
