@@ -4,7 +4,7 @@
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group" style="text-align: center">
-                <h2>Select which items you're willing to swap?</h2>
+                <h2>Select which items you want to offer</h2>
                 <button class="btn btn-outline-info" type="submit">Submit</button>
             </div>
             {% include 'matches/_make_offer_feed_component.html' %}
