@@ -1,8 +1,14 @@
 {% extends "products/_base_feed_component.html" %}
 {% block single_product %}
-  <div class="col-md-3" style="margin-top:20px">
+  <div class="col-md-3 product-container" style="margin-top:20px">
       <a href="{% url 'product-detail' product.id %}" style="width: 100%">
         <img class="grid-item thumbnail" src="{{ product.image.url }}" style="width: 100%; visibility: hidden">
       </a>
+
+      {% if product.status.label == 'Live' %}
+      <a class="offer-status-icon" style="visibility: hidden" href="{% url 'review-offers' product.id %}"> {{ product.number_of_offers }} offers</a>
+      {% else %}
+      <p class="offer-status-icon" style="visibility: hidden"> Matched</p>
+      {% endif %}
   </div>
 {% endblock %}

@@ -1,36 +1,15 @@
 from django.db import models
+from django.apps import apps
 from django.utils import timezone
-from django.utils.translation import ugettext_lazy
 from django_enumfield import enum
 from django.contrib.auth.models import User
 from django.urls import reverse
 
 from PIL import Image
 
+from matches.model_enums import OfferStatus
+from .model_enums import ProductStatus
 from .validators import is_square_image
-
-
-class ProductStatus(enum.Enum):
-    LIVE = 0  # live on site
-    MATCHED = 1  # successfully matched
-    COLLECTED = 2  # successfully picked up by owner
-    DELIVERED = 3  # delivered
-
-    __default__ = LIVE
-
-    # InvalidStatusOperationError exception will be raised if we attempt an invalid transition
-    __transitions__ = {
-        MATCHED: (LIVE,),  # Can go from LIVE to MATCHED
-        COLLECTED: (MATCHED,),  # Can go from MATCHED to COLLECTED
-        DELIVERED: (COLLECTED,)  # Can go from collected to delivered
-    }
-
-    __labels__ = {
-        LIVE: ugettext_lazy("Live"),
-        MATCHED: ugettext_lazy("Matched"),
-        COLLECTED: ugettext_lazy("Collected"),
-        DELIVERED: ugettext_lazy("Delivered"),
-    }
 
 
 class Product(models.Model):
@@ -47,6 +26,15 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('product-detail', kwargs={'pk': self.pk})
+
+    @property
+    def number_of_offers(self):
+        """ Returns number of pending offers currently for this product
+
+        Note - using apps.get_model() to avoid circular import
+        """
+        Offer = apps.get_model('matches', 'Offer')
+        return len(Offer.objects.filter(desired_product=self, status=OfferStatus.PENDING))
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         super().save()

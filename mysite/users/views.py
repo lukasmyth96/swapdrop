@@ -7,6 +7,7 @@ from django.views.generic import (
 
 from users.forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from products.models import Product
+from matches.models import Offer
 
 
 def register(request):
