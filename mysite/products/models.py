@@ -39,9 +39,8 @@ class Product(models.Model):
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         super().save()
 
-        # Resize to have 512 width whilst maintaining aspect ratio
+        # Resize to have 512*512
         img = Image.open(self.image.path)
-        ratio = img.size[1] / img.size[0]
-        size = (512, int(ratio * 512))
+        size = (512, 512)
         img = img.resize(size)
         img.save(self.image.path)
