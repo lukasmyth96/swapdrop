@@ -5,7 +5,7 @@ from django.views.generic import (
     ListView
 )
 
-from users.forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from users.forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, ShippingAddressUpdateForm
 from products.models import Product
 from matches.models import Offer
 
@@ -37,11 +37,18 @@ def profile_info(request):
     else:
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
-    context = {
-        'u_form': u_form,
-        'p_form': p_form
-    }
-    return render(request, 'users/profile_info.html', context=context)
+        context = {
+            'u_form': u_form,
+            'p_form': p_form
+        }
+        return render(request, 'users/profile_info.html', context=context)
+
+
+def shipping_address_info(request):
+
+    address_form = ShippingAddressUpdateForm(instance=request.user.profile)
+    context = {'address_form': address_form}
+    return render(request, 'users/shipping_address_info.html', context=context)
 
 
 class ProfileProductsListView(ListView):
