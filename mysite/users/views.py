@@ -31,8 +31,8 @@ def profile_info(request):
         if u_form.is_valid() and p_form.is_valid():
             u_form.save()
             p_form.save()
-            messages.success(request, f'Your account has been updated')
-            return redirect('profile-info')
+            messages.success(request, 'Your account has been updated')
+            return redirect('profile')
 
     else:
         u_form = UserUpdateForm(instance=request.user)
@@ -46,9 +46,17 @@ def profile_info(request):
 
 def shipping_address_info(request):
 
-    address_form = ShippingAddressUpdateForm(instance=request.user.profile)
-    context = {'address_form': address_form}
-    return render(request, 'users/shipping_address_info.html', context=context)
+    if request.method == 'POST':
+        address_form = ShippingAddressUpdateForm(instance=request.user.profile, data=request.POST)
+        if address_form.is_valid():
+            address_form.save()
+            messages.success(request, 'Your shipping address has been updated')
+            return redirect('profile')
+
+    else:
+        address_form = ShippingAddressUpdateForm(instance=request.user.profile)
+        context = {'address_form': address_form}
+        return render(request, 'users/shipping_address_info.html', context=context)
 
 
 class ProfileProductsListView(ListView):

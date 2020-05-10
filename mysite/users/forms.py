@@ -39,3 +39,8 @@ class ShippingAddressUpdateForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ShippingAddressUpdateForm, self).__init__(*args, **kwargs)
+        self.fields['house_name_number'].required = True
+        self.fields['address_line_1'].required = True
+        self.fields['town_city'].required = True
+        self.fields['postcode'].required = True
+        self.fields['contact_number'].required = True
