@@ -5,7 +5,7 @@ from django.views.generic import (
     ListView
 )
 
-from users.forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from users.forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, ShippingAddressUpdateForm
 from products.models import Product
 from matches.models import Offer
 
@@ -31,17 +31,32 @@ def profile_info(request):
         if u_form.is_valid() and p_form.is_valid():
             u_form.save()
             p_form.save()
-            messages.success(request, f'Your account has been updated')
-            return redirect('profile-info')
+            messages.success(request, 'Your account has been updated')
+            return redirect('profile')
 
     else:
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
-    context = {
-        'u_form': u_form,
-        'p_form': p_form
-    }
-    return render(request, 'users/profile_info.html', context=context)
+        context = {
+            'u_form': u_form,
+            'p_form': p_form
+        }
+        return render(request, 'users/profile_info.html', context=context)
+
+
+def shipping_address_info(request):
+
+    if request.method == 'POST':
+        address_form = ShippingAddressUpdateForm(instance=request.user.profile, data=request.POST)
+        if address_form.is_valid():
+            address_form.save()
+            messages.success(request, 'Your shipping address has been updated')
+            return redirect('profile')
+
+    else:
+        address_form = ShippingAddressUpdateForm(instance=request.user.profile)
+        context = {'address_form': address_form}
+        return render(request, 'users/shipping_address_info.html', context=context)
 
 
 class ProfileProductsListView(ListView):
