@@ -8,8 +8,12 @@
         </a>
         <div class="media-body">
             <h2 class="account-heading">{{ user.username }}</h2>
-            <p class="text-secondary">{{ user.email }}</p>
+            <a class="f6 link dim br-pill ba ph3 pv2 mb2 dib dark-blue" href="{% url "profile" %}"> Uploads </a>
+            <a class="f6 link dim br-pill ba ph3 pv2 mb2 dib dark-blue" href="{% url "profile-info" %}"> Info </a>
+            <a class="f6 link dim br-pill ba ph3 pv2 mb2 dib dark-blue" href="{% url "shipping-address-info" %}"> Address </a>
         </div>
+
+
 
       </div>
       {% block profile_content %}{% endblock %}
