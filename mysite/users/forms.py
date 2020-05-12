@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from .models import Profile
 from django.contrib.auth.forms import UserCreationForm
@@ -44,5 +45,23 @@ class ShippingAddressUpdateForm(forms.ModelForm):
         self.fields['town_city'].required = True
         self.fields['postcode'].required = True
         self.fields['contact_number'].required = True
+
+    def is_initial_valid(self):
+        """
+        Returns True if initial values passed into form are already valid.
+
+        Used to determine whether or not we need to redirect user to shipping address form after a match.
+
+        Returns
+        -------
+        is_valid: bool
+        """
+        try:
+            for field_name, field in self.fields.items():
+                field.validate(value=self.initial.get(field_name))
+        except ValidationError:
+            return False
+
+        return True
 
 
