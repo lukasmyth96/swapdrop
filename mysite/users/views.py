@@ -7,7 +7,6 @@ from django.views.generic import (
 
 from users.forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, ShippingAddressUpdateForm
 from products.models import Product
-from matches.models import Offer
 
 
 def register(request):
@@ -44,6 +43,7 @@ def profile_info(request):
         return render(request, 'users/profile_info.html', context=context)
 
 
+@login_required()
 def shipping_address_info(request):
 
     if request.method == 'POST':

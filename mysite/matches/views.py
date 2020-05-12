@@ -1,8 +1,10 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView
 
+from users.forms import ShippingAddressUpdateForm
 from products.models import Product, ProductStatus
 from matches.models import Offer, OfferStatus
 
@@ -57,7 +59,7 @@ class MakeOfferListView(ListView):
     def get_queryset(self):
         """ Returns all products owned by currently logged in user"""
         all_products = super().get_queryset()
-        users_products = all_products.filter(owner=self.request.user)
+        users_products = all_products.filter(owner=self.request.user, status=ProductStatus.LIVE)
         return users_products
 
 
@@ -109,10 +111,11 @@ class ReviewOffersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
                 offered_product.save(update_fields=['status'])
             else:
                 offer.status = OfferStatus.REJECTED
+
             offer.save(update_fields=['status'])  # update status in db
 
         messages.success(request, 'Congrats - match complete!')
-        return redirect('profile')
+        return redirect('shipping-address-redirect')
 
     def test_func(self):
         """ Ensures only the owner of the product can review it's offers"""
@@ -133,6 +136,26 @@ class ReviewOffersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
         offers_for_this_product = Offer.objects.filter(desired_product=current_product, status=OfferStatus.PENDING)
         return offers_for_this_product
 
+
+@login_required()
+def shipping_address_redirect(request):
+
+    if request.method == 'POST':
+        address_form = ShippingAddressUpdateForm(instance=request.user.profile, data=request.POST)
+        if address_form.is_valid():
+            address_form.save()
+            messages.success(request, '*will be redirected to time slot picker at this point*')
+            return redirect('product-feed')
+
+    else:
+        address_form = ShippingAddressUpdateForm(instance=request.user.profile)
+        context = {'address_form': address_form}
+
+        if address_form.is_valid():
+            messages.success(request, '*shipping address already given - redirect to time slot picker at this point*')
+            return redirect('product-feed')
+        else:
+            return render(request, 'matches/shipping_address_redirect.html', context=context)
 
 
 

@@ -44,3 +44,5 @@ class ShippingAddressUpdateForm(forms.ModelForm):
         self.fields['town_city'].required = True
         self.fields['postcode'].required = True
         self.fields['contact_number'].required = True
+
+

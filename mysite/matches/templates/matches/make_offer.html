@@ -12,8 +12,8 @@
 
     {% else %}
         <div class="form-group" style="text-align: center">
-            <h2>You must upload at least one item to swap!</h2>
-            <a class="btn btn-outline-info" href="{% url 'product-create' %}">Upload Your First Item</a>
+            <h2>You must have an item available to swap!</h2>
+            <a class="btn btn-outline-info" href="{% url 'product-create' %}">Upload Item</a>
         </div>
     {% endif %}
 {% endblock content %}
