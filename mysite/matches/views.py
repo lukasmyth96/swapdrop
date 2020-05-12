@@ -1,8 +1,10 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView
 
+from users.forms import ShippingAddressUpdateForm
 from products.models import Product, ProductStatus
 from matches.models import Offer, OfferStatus
 
@@ -57,7 +59,7 @@ class MakeOfferListView(ListView):
     def get_queryset(self):
         """ Returns all products owned by currently logged in user"""
         all_products = super().get_queryset()
-        users_products = all_products.filter(owner=self.request.user)
+        users_products = all_products.filter(owner=self.request.user, status=ProductStatus.LIVE)
         return users_products
 
 
@@ -85,12 +87,13 @@ class ReviewOffersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     def post(self, request, product_id):
         """ Process acceptance of offer"""
 
-        selected_product_id = int(request.POST['product_id'])
-
-        # Show warning if no items have been offered
-        if not selected_product_id:
-            messages.warning(request, 'You must select which offer to accept')
+        selected_product_id_str = request.POST.get('product_id')
+        if selected_product_id_str is None:
+            # Show warning if no items have been offered
+            messages.warning(request, 'You must select one offer to accept')
             return redirect('review-offers', product_id=product_id)
+
+        selected_product_id = int(selected_product_id_str)  # cast to int
 
         # Update status of current product to MATCHED
         current_product = self.get_current_product(product_id=product_id)  # Product object
@@ -109,10 +112,11 @@ class ReviewOffersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
                 offered_product.save(update_fields=['status'])
             else:
                 offer.status = OfferStatus.REJECTED
+
             offer.save(update_fields=['status'])  # update status in db
 
         messages.success(request, 'Congrats - match complete!')
-        return redirect('profile')
+        return redirect('shipping-address-redirect')
 
     def test_func(self):
         """ Ensures only the owner of the product can review it's offers"""
@@ -133,6 +137,28 @@ class ReviewOffersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
         offers_for_this_product = Offer.objects.filter(desired_product=current_product, status=OfferStatus.PENDING)
         return offers_for_this_product
 
+
+@login_required()
+def shipping_address_redirect(request):
+
+    if request.method == 'POST':
+        address_form = ShippingAddressUpdateForm(instance=request.user.profile, data=request.POST)
+        if address_form.is_valid():
+            address_form.save()
+            messages.success(request, '*will be redirected to time slot picker at this point*')
+            return redirect('product-feed')
+
+    else:
+        address_form = ShippingAddressUpdateForm(instance=request.user.profile)
+
+        if address_form.is_initial_valid():
+            # if shipping address already given redirect straight to time slot pick
+            messages.success(request, '*shipping address already given - redirect to time slot picker at this point*')
+            return redirect('product-feed')
+        else:
+            # else redirect to shipping address form first
+            context = {'address_form': address_form}
+            return render(request, 'matches/shipping_address_redirect.html', context=context)
 
 
 
