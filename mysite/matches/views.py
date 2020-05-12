@@ -150,12 +150,14 @@ def shipping_address_redirect(request):
 
     else:
         address_form = ShippingAddressUpdateForm(instance=request.user.profile)
-        context = {'address_form': address_form}
 
         if address_form.is_initial_valid():
+            # if shipping address already given redirect straight to time slot pick
             messages.success(request, '*shipping address already given - redirect to time slot picker at this point*')
             return redirect('product-feed')
         else:
+            # else redirect to shipping address form first
+            context = {'address_form': address_form}
             return render(request, 'matches/shipping_address_redirect.html', context=context)
 
 
