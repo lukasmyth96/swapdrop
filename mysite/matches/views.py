@@ -87,12 +87,13 @@ class ReviewOffersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     def post(self, request, product_id):
         """ Process acceptance of offer"""
 
-        selected_product_id = int(request.POST['product_id'])
-
-        # Show warning if no items have been offered
-        if not selected_product_id:
-            messages.warning(request, 'You must select which offer to accept')
+        selected_product_id_str = request.POST.get('product_id')
+        if selected_product_id_str is None:
+            # Show warning if no items have been offered
+            messages.warning(request, 'You must select one offer to accept')
             return redirect('review-offers', product_id=product_id)
+
+        selected_product_id = int(selected_product_id_str)  # cast to int
 
         # Update status of current product to MATCHED
         current_product = self.get_current_product(product_id=product_id)  # Product object
