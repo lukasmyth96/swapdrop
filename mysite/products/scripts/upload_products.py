@@ -19,13 +19,14 @@ if __name__ == '__main__':
     - create Product object using that file
     - save Product object
     """
-
-    users = User.objects.all()
-
+    # Config
     src_dir = '/home/luka/Pictures/Swapdrop'
     dest_dir = '/home/luka/PycharmProjects/SWAPDROP/mysite/media/product_pics'
     media_dir = '/media/product_pics'
+    max_to_upload = 20
 
+
+    users = User.objects.all()
 
     filenames = [file for file in os.listdir(src_dir) if file.endswith('.jpg')]
     for idx, filename in enumerate(filenames):
@@ -43,3 +44,6 @@ if __name__ == '__main__':
                           owner=random.choice(users),
                           status=ProductStatus.LIVE)
         product.save()
+
+        if idx >= max_to_upload:
+            break
