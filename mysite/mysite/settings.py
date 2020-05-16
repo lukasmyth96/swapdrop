@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'homepage.apps.HomepageConfig',
     'users.apps.UsersConfig',
     'products.apps.ProductsConfig',
-    'swaps.apps.SwapsConfig'
+    'swaps.apps.SwapsConfig',
+    'checkout.apps.CheckoutConfig'
 ]
 
 MIDDLEWARE = [

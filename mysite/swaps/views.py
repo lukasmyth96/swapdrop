@@ -1,10 +1,8 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView
 
-from users.forms import ShippingAddressUpdateForm
 from products.models import Product, ProductStatus
 from swaps.model_enums import SwapStatus
 from swaps.models import Swap
