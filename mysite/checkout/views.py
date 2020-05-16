@@ -1,8 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 from users.forms import ShippingAddressUpdateForm
+from products.models import Product
+from products.model_enums import ProductStatus
+from swaps.models import Swap
+from swaps.models import SwapStatus
 
 
 @login_required()
@@ -34,4 +39,20 @@ def shipping_address_redirect(request, product_id):
 
 @login_required()
 def pick_collection_time(request, product_id):
-    return render(request, template_name='checkout/pick_collection_time.html', context={'product_id': product_id})
+    if request.method == 'POST':
+
+        # Update status of product
+        product = Product.objects.get(id=product_id)
+        product.status = ProductStatus.CHECKOUT_COMPLETE
+        product.save(update_fields=['status'])
+
+        # Refresh status of Swap that product belongs to
+        # TODO error handling if can't find or find more than one? shouldn't ever happen
+        swap = Swap.objects.get((Q(offered_product=product) | Q(desired_product=product))
+                                & Q(status=SwapStatus.PENDING_CHECKOUT))
+        swap.refresh_status()  # internally updates status depending on status of the two products
+
+        messages.success(request, 'Checkout complete')
+        return redirect('profile')
+    else:
+        return render(request, template_name='checkout/pick_collection_time.html', context={'product_id': product_id})

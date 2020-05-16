@@ -4,6 +4,7 @@ from django_enumfield import enum
 from django.contrib.auth.models import User
 
 from products.models import Product
+from products.model_enums import ProductStatus
 from .model_enums import SwapStatus
 
 
@@ -20,3 +21,13 @@ class Swap(models.Model):
         abbreviated_offered_product_name = self.offered_product.__str__()[:20]
         return f'{self.offered_product.owner.username} *OFFERED* {abbreviated_offered_product_name} ' \
                f' *FOR* {abbreviated_desired_product_name}  *OWNED BY* {self.desired_product.owner.username}  *STATUS: {self.status.name}*'
+
+    def refresh_status(self):
+        """
+        Updates swap status based on the status's of two two products involved.
+        """
+        if (self.offered_product.status == ProductStatus.CHECKOUT_COMPLETE) and (self.desired_product.status == ProductStatus.CHECKOUT_COMPLETE):
+            self.status = SwapStatus.CHECKOUT_COMPLETE
+
+        if (self.offered_product.status == ProductStatus.DELIVERED) and (self.desired_product.status == ProductStatus.DELIVERED):
+            self.status = SwapStatus.SWAP_COMPLETE
