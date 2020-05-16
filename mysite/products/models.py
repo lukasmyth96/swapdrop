@@ -7,7 +7,7 @@ from django.urls import reverse
 
 from PIL import Image
 
-from matches.model_enums import OfferStatus
+from swaps.model_enums import SwapStatus
 from .model_enums import ProductStatus
 from .validators import is_square_image
 
@@ -33,8 +33,8 @@ class Product(models.Model):
 
         Note - using apps.get_model() to avoid circular import
         """
-        Offer = apps.get_model('matches', 'Offer')
-        return len(Offer.objects.filter(desired_product=self, status=OfferStatus.PENDING))
+        Swap = apps.get_model('swaps', 'Swap')
+        return len(Swap.objects.filter(desired_product=self, status=SwapStatus.PENDING_REVIEW))
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         super().save()

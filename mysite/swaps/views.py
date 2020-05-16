@@ -6,17 +6,24 @@ from django.views.generic import ListView
 
 from users.forms import ShippingAddressUpdateForm
 from products.models import Product, ProductStatus
-from matches.models import Offer, OfferStatus
+from swaps.model_enums import SwapStatus
+from swaps.models import Swap
 
 
 class MakeOfferListView(ListView):
     model = Product
-    template_name = 'matches/make_offer.html'
+    template_name = 'swaps/make_offer.html'
     context_object_name = 'products'
     ordering = ['-date_posted']
 
     def get(self, request, product_id=None, *args, **kwargs):
         return super(MakeOfferListView, self).get(request)
+
+    def get_queryset(self):
+        """ Returns all products owned by currently logged in user"""
+        all_products = super().get_queryset()
+        users_products = all_products.filter(owner=self.request.user, status=ProductStatus.LIVE)
+        return users_products
 
     def post(self, request, product_id):
         """
@@ -48,25 +55,19 @@ class MakeOfferListView(ListView):
 
         # Create and save offer objects
         for offered_product in offered_products:
-            _offer, created_new = Offer.objects.get_or_create(offered_product=offered_product, desired_product=desired_product)
+            _swap, created_new = Swap.objects.get_or_create(offered_product=offered_product, desired_product=desired_product)
             if created_new:
-                _offer.save()
+                _swap.save()
 
         messages.success(request, 'Your offer has been sent')
         return redirect('product-feed')
 
 
-    def get_queryset(self):
-        """ Returns all products owned by currently logged in user"""
-        all_products = super().get_queryset()
-        users_products = all_products.filter(owner=self.request.user, status=ProductStatus.LIVE)
-        return users_products
-
 
 class ReviewOffersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
-    model = Offer
-    template_name = 'matches/review_offers.html'
+    model = Product
+    template_name = 'swaps/review_offers.html'
     context_object_name = 'products'
     ordering = ['-date_posted']
 
@@ -104,16 +105,16 @@ class ReviewOffersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
         # Update status of each offer and update the status of accepted product to MATCHED
         selected_product_id = int(selected_product_id)
         offers_for_product = self.get_offers_for_product(current_product=current_product)  # get list of offered products
-        for offer in offers_for_product:
-            offered_product = offer.offered_product
+        for potential_swap in offers_for_product:
+            offered_product = potential_swap.offered_product
             if offered_product.id == selected_product_id:
-                offer.status = OfferStatus.ACCEPTED  # update status of offer
+                potential_swap.status = SwapStatus.PENDING_CHECKOUT  # update status of swap
                 offered_product.status = ProductStatus.MATCHED  # update status of accepted product
                 offered_product.save(update_fields=['status'])
             else:
-                offer.status = OfferStatus.REJECTED
+                potential_swap.status = SwapStatus.REJECTED
 
-            offer.save(update_fields=['status'])  # update status in db
+            potential_swap.save(update_fields=['status'])  # update status in db
 
         messages.success(request, 'Congrats - match complete!')
         return redirect('shipping-address-redirect')
@@ -134,31 +135,9 @@ class ReviewOffersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     @staticmethod
     def get_offers_for_product(current_product):
         """ Returns QuerySet of all offers for this product """
-        offers_for_this_product = Offer.objects.filter(desired_product=current_product, status=OfferStatus.PENDING)
+        offers_for_this_product = Swap.objects.filter(desired_product=current_product, status=SwapStatus.PENDING_REVIEW)
         return offers_for_this_product
 
-
-@login_required()
-def shipping_address_redirect(request):
-
-    if request.method == 'POST':
-        address_form = ShippingAddressUpdateForm(instance=request.user.profile, data=request.POST)
-        if address_form.is_valid():
-            address_form.save()
-            messages.success(request, '*will be redirected to time slot picker at this point*')
-            return redirect('product-feed')
-
-    else:
-        address_form = ShippingAddressUpdateForm(instance=request.user.profile)
-
-        if address_form.is_initial_valid():
-            # if shipping address already given redirect straight to time slot pick
-            messages.success(request, '*shipping address already given - redirect to time slot picker at this point*')
-            return redirect('product-feed')
-        else:
-            # else redirect to shipping address form first
-            context = {'address_form': address_form}
-            return render(request, 'matches/shipping_address_redirect.html', context=context)
 
 
 

@@ -4,16 +4,16 @@ from django_enumfield import enum
 from django.contrib.auth.models import User
 
 from products.models import Product
-from .model_enums import OfferStatus
+from .model_enums import SwapStatus
 
 
 
-class Offer(models.Model):
+class Swap(models.Model):
 
-    desired_product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='offers_desired')
-    offered_product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='offers_offered')
+    desired_product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='swaps_desired')
+    offered_product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='swaps_offered')
     date_offered = models.DateTimeField(default=timezone.now)
-    status = enum.EnumField(OfferStatus, default=OfferStatus.PENDING)
+    status = enum.EnumField(SwapStatus, default=SwapStatus.PENDING_REVIEW)
 
     def __str__(self):
         abbreviated_desired_product_name = self.desired_product.__str__()[:20]  # just truncating.
