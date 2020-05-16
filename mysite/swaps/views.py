@@ -115,7 +115,7 @@ class ReviewOffersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
             offer.save(update_fields=['status'])  # update status in db
 
         messages.success(request, 'Congrats - match complete!')
-        return redirect('shipping-address-redirect')
+        return redirect('checkout')
 
     def test_func(self):
         """ Ensures only the owner of the product can review it's offers"""
