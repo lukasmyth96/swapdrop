@@ -6,9 +6,13 @@
       </a>
 
       {% if product.status.label == 'Live' %}
-      <a class="offer-status-icon" style="visibility: hidden" href="{% url 'review-offers' product.id %}"> {{ product.number_of_offers }} offers</a>
-      {% else %}
-      <p class="offer-status-icon" style="visibility: hidden"> {{ product.status.label }} </p>
+          <a class="offer-status-icon" style="visibility: hidden" href="{% url 'review-offers' product.id %}"> {{ product.number_of_offers }} offers</a>
+      {% elif product.status.label == 'Pending Checkout'%}
+          <a class="offer-status-icon" style="visibility: hidden" href="{% url 'shipping_address_redirect' product.id %}">Matched! Click to Checkout</a>
+      {% elif product.status.label == 'Checkout Complete'%}
+          <p class="offer-status-icon" style="visibility: hidden"> Collecting Soon!</p>
+      {% elif product.status.label == 'Collected'%}
+          <p class="offer-status-icon" style="visibility: hidden">Collected</p>
       {% endif %}
   </div>
 {% endblock %}
