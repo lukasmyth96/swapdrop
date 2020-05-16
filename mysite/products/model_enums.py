@@ -3,23 +3,26 @@ from django.utils.translation import ugettext_lazy
 
 
 class ProductStatus(enum.Enum):
-    LIVE = 0  # live on site
-    MATCHED = 1  # successfully matched
-    COLLECTED = 2  # successfully picked up by owner
-    DELIVERED = 3  # delivered
+    LIVE = 0  # live on site - visible for new offers
+    PENDING_CHECKOUT = 1  # successfully matched - pending product owners checkout checkout
+    CHECKOUT_COMPLETE = 2  # product owner has checkout out
+    COLLECTED = 3  # successfully picked up from owner
+    DELIVERED = 4  # delivered to new owner
 
     __default__ = LIVE
 
     # InvalidStatusOperationError exception will be raised if we attempt an invalid transition
     __transitions__ = {
-        MATCHED: (LIVE,),  # Can go from LIVE to MATCHED
-        COLLECTED: (MATCHED,),  # Can go from MATCHED to COLLECTED
-        DELIVERED: (COLLECTED,)  # Can go from collected to delivered
+        PENDING_CHECKOUT: (LIVE,),  # Can only transition to PENDING_CHECKOUT from LIVE
+        CHECKOUT_COMPLETE: (PENDING_CHECKOUT,),  # Can only transition to CHECKOUT_COMPLETE from PENDING_CHECKOUT
+        COLLECTED: (CHECKOUT_COMPLETE,),  # Can only transition to COLLECTED from CHECKOUT_COMPLETE
+        DELIVERED: (COLLECTED,)  # Can only transition to DELIVERED from COLLECTED
     }
 
     __labels__ = {
         LIVE: ugettext_lazy("Live"),
-        MATCHED: ugettext_lazy("Matched"),
+        PENDING_CHECKOUT: ugettext_lazy("Pending Checkout"),
+        CHECKOUT_COMPLETE: ugettext_lazy("Checkout Complete"),
         COLLECTED: ugettext_lazy("Collected"),
         DELIVERED: ugettext_lazy("Delivered"),
     }
