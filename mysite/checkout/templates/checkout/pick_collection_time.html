@@ -1,4 +1,10 @@
 {% extends "homepage/base.html" %}
 {% block content %}
-    <h1> This is the collection time slot picker page</h1>
+    <h1> This is the collection time slot picker page for product id: {{ product_id }}</h1>
+        <form method="POST" enctype='multipart/form-data'>
+            {% csrf_token %}
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Continue to Payment</button>
+            </div>
+        </form>
 {% endblock content %}
