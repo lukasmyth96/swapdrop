@@ -23,7 +23,7 @@ if __name__ == '__main__':
     src_dir = '/home/luka/Pictures/Swapdrop'
     dest_dir = '/home/luka/PycharmProjects/SWAPDROP/mysite/media/product_pics'
     media_dir = '/media/product_pics'
-    max_to_upload = 20
+    max_to_upload = 30
 
 
     users = User.objects.all()

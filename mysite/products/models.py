@@ -22,7 +22,7 @@ class Product(models.Model):
     status = enum.EnumField(ProductStatus, default=ProductStatus.LIVE)
 
     def __str__(self):
-        return f'{self.name} - status:{self.status.name}'
+        return f'ID: {self.id} - {self.name} - status:{self.status.name}'
 
     def get_absolute_url(self):
         return reverse('product-detail', kwargs={'pk': self.pk})
