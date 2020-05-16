@@ -96,25 +96,25 @@ class ReviewOffersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
         selected_product_id = int(selected_product_id_str)  # cast to int
 
-        # Update status of current product to MATCHED
+        # Update status of current product to PENDING_CHECKOUT
         current_product = self.get_current_product(product_id=product_id)  # Product object
         assert current_product.status == ProductStatus.LIVE
-        current_product.status = ProductStatus.MATCHED
+        current_product.status = ProductStatus.PENDING_CHECKOUT
         current_product.save(update_fields=['status'])
 
-        # Update status of each offer and update the status of accepted product to MATCHED
+        # Update status of each offer and update the status of accepted product to PENDING_CHECKOUT
         selected_product_id = int(selected_product_id)
         offers_for_product = self.get_offers_for_product(current_product=current_product)  # get list of offered products
-        for potential_swap in offers_for_product:
-            offered_product = potential_swap.offered_product
+        for offer in offers_for_product:
+            offered_product = offer.offered_product
             if offered_product.id == selected_product_id:
-                potential_swap.status = SwapStatus.PENDING_CHECKOUT  # update status of swap
-                offered_product.status = ProductStatus.MATCHED  # update status of accepted product
+                offer.status = SwapStatus.PENDING_CHECKOUT  # update status of swap
+                offered_product.status = ProductStatus.PENDING_CHECKOUT  # update status of accepted product
                 offered_product.save(update_fields=['status'])
             else:
-                potential_swap.status = SwapStatus.REJECTED
+                offer.status = SwapStatus.REJECTED
 
-            potential_swap.save(update_fields=['status'])  # update status in db
+            offer.save(update_fields=['status'])  # update status in db
 
         messages.success(request, 'Congrats - match complete!')
         return redirect('shipping-address-redirect')

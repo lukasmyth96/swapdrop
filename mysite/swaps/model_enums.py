@@ -12,4 +12,12 @@ class SwapStatus(enum.Enum):
 
     __default__ = PENDING_REVIEW
 
+    __transitions__ = {
+        REJECTED: (PENDING_REVIEW,),  # Can only transition to REJECTED from PENDING_REVIEW
+        PENDING_CHECKOUT: (PENDING_REVIEW,),  # Can only transition to PENDING_CHECKOUT from PENDING_REVIEW
+        CHECKOUT_COMPLETE: (PENDING_CHECKOUT,),  # Can only transition to CHECKOUT_COMPLETE from PENDING_CHECKOUT
+        TIMED_OUT: (PENDING_CHECKOUT,),  # Can only transition to TIMED_OUT from PENDING_CHECKOUT
+        CANCELLED: (PENDING_REVIEW, PENDING_CHECKOUT)  # Can only transition to CANCELLED from PENDING_REVIEW or PENDING_CHECKOUT
+    }
+
 
