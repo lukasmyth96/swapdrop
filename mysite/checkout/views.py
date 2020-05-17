@@ -52,12 +52,7 @@ def pick_collection_time(request, product_id):
 
         # Create collection booking within selected time-slot
         selected_time_slot = TimeSlot.objects.get(id=selected_time_slot_id)
-        product = Product.objects.get(id=product_id)
-        booking = Booking(time_slot=selected_time_slot,
-                          owner=request.user,
-                          product=product,
-                          booking_type=BookingType.COLLECTION)
-        booking.save()
+        _create_booking(selected_time_slot=selected_time_slot, product_id=product_id, owner=request.user)
         time_slot_str = selected_time_slot.date.strftime('%A') + ' at ' + selected_time_slot.time.label
         messages.success(request, f'Collection booking confirmed for {time_slot_str}')
 
@@ -76,6 +71,16 @@ def pick_collection_time(request, product_id):
         context = {'product_id': product_id,
                    'time_slots': time_slots}
         return render(request, template_name='checkout/pick_collection_time.html', context=context)
+
+
+def _create_booking(selected_time_slot, product_id, owner):
+    """ Create and save collection Booking in chosen time slot"""
+    product = Product.objects.get(id=product_id)
+    booking = Booking(time_slot=selected_time_slot,
+                      owner=owner,
+                      product=product,
+                      booking_type=BookingType.COLLECTION)
+    booking.save()
 
 
 
