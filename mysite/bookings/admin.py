@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import TimeSlot, Booking
+
+admin.site.register(TimeSlot)
+admin.site.register(Booking)
