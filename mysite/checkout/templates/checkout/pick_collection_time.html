@@ -3,8 +3,17 @@
     <h1> This is the collection time slot picker page for product id: {{ product_id }}</h1>
         <form method="POST" enctype='multipart/form-data'>
             {% csrf_token %}
-            <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Continue to Payment</button>
+            <div>
+                <div style="padding-bottom: 25px">
+                    <select id="time-slot-select" name="time-slot-select">
+                        <option value="default-placeholder">Select a time slot...</option>
+                        {% for time_slot in time_slots %}
+                            <option value="{{ time_slot.id }}">{{ time_slot }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <button class="btn btn-outline-info" type="submit">Submit Booking</button>
             </div>
         </form>
 {% endblock content %}
