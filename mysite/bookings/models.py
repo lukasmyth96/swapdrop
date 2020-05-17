@@ -21,6 +21,20 @@ class TimeSlot(models.Model):
         time_string = self.time.label
         return f'{date_string} @{time_string}'
 
+    @property
+    def bookings(self):
+        """ Returns QuerySet of bookings in this time slot"""
+        return Booking.objects.filter(time_slot=self)
+
+    @property
+    def num_bookings(self):
+        return len(self.bookings)
+
+    @property
+    def is_available(self):
+        """ Returns True if number of bookings < capacity"""
+        return self.num_bookings < self.capacity
+
 
 class Booking(models.Model):
 
@@ -34,6 +48,7 @@ class Booking(models.Model):
         abbrv_product_name = self.product.name if len(self.product.name) < 20 else f'{self.product.name[:20]}...'
         return f'{self.time_slot.__str__()} - {self.booking_type.label} ' \
                f'of \'{abbrv_product_name}\' from \'{self.owner.username}\''
+
 
 
 
