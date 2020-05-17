@@ -68,6 +68,7 @@ def pick_collection_time(request, product_id):
 
     else:  # GET request
         time_slots = TimeSlot.objects.all()  # FIXME starting with all for simplicity
+        time_slots = [slot for slot in time_slots if slot.is_available]
         context = {'product_id': product_id,
                    'time_slots': time_slots}
         return render(request, template_name='checkout/pick_collection_time.html', context=context)
