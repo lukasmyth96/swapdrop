@@ -45,7 +45,7 @@ def shipping_address_redirect(request, product_id):
 def pick_collection_time(request, product_id):
     if request.method == 'POST':
         try:
-            selected_time_slot_id = int(request.POST['time-slot-select'])
+            selected_time_slot_id = int(request.POST.get('time-slot-radio'))
         except ValueError:
             messages.warning(request, 'select an available time slot')
             return redirect('pick-collection-time', product_id=product_id)  # try again
@@ -91,7 +91,7 @@ def _group_time_slots(time_slots):
 
     def date_range(start_date, end_date):
         """ Iterator - yields all dates in range (inclusive)"""
-        for n in range(int((end_date - start_date).days)):
+        for n in range(int((end_date - start_date).days)+1):
             yield start_date + datetime.timedelta(n)
 
     grouped_time_slots = []
