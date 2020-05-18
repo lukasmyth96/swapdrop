@@ -67,11 +67,39 @@ def pick_collection_time(request, product_id):
         return redirect('profile')
 
     else:  # GET request
-        time_slots = TimeSlot.objects.all()  # FIXME starting with all for simplicity
+        max_date_to_show = datetime.date.today() + datetime.timedelta(days=5)
+        time_slots = TimeSlot.objects.filter(date__lte=max_date_to_show)  # get all slots within next n days
         time_slots = [slot for slot in time_slots if slot.is_available]
+        grouped_time_slots = _group_time_slots(time_slots)
         context = {'product_id': product_id,
-                   'time_slots': time_slots}
+                   'grouped_time_slots': grouped_time_slots}
         return render(request, template_name='checkout/pick_collection_time.html', context=context)
+
+
+def _group_time_slots(time_slots):
+    """
+    Groups list of TimeSlot objects into a list[list[TimeSLot]] where each sublist contains the timeslots for a single
+    day.
+    Parameters
+    ----------
+    time_slots: list[TimeSLot]
+
+    Returns
+    -------
+    grouped_time_slots: list[list[TimeSlot]]
+    """
+
+    def date_range(start_date, end_date):
+        """ Iterator - yields all dates in range (inclusive)"""
+        for n in range(int((end_date - start_date).days)):
+            yield start_date + datetime.timedelta(n)
+
+    grouped_time_slots = []
+    max_date = max([ts.date for ts in time_slots])  # get max date among time slots
+    for date in date_range(datetime.date.today(), max_date):
+        grouped_time_slots.append([ts for ts in time_slots if ts.date == date])
+
+    return grouped_time_slots
 
 
 def _create_booking(selected_time_slot, product_id, owner):

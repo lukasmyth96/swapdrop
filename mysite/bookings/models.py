@@ -22,6 +22,28 @@ class TimeSlot(models.Model):
         return f'{date_string} @{time_string}'
 
     @property
+    def day_str(self):
+        """ Returns e.g. Mon, Tue etc."""
+        return self.date.strftime('%a')
+
+    @property
+    def date_str(self):
+        """ Returns e.g. 5th, 3rd etc."""
+        date_suffix = {
+                1: 'st',
+                2: 'nd',
+                3: 'rd',
+                21: 'st',
+                22: 'nd',
+                23: 'rd',
+                31: 'st'
+            }
+        suffix = date_suffix.get(self.date.day, 'th')
+        return f'{self.date.day}{suffix}'
+
+
+
+    @property
     def bookings(self):
         """ Returns QuerySet of bookings in this time slot"""
         return Booking.objects.filter(time_slot=self)
@@ -32,8 +54,8 @@ class TimeSlot(models.Model):
 
     @property
     def is_available(self):
-        """ Returns True if number of bookings < capacity"""
-        return self.num_bookings < self.capacity
+        """ Returns True if number of bookings < capacity and time slot date is after current date"""
+        return (self.num_bookings < self.capacity) and (datetime.date.today() < self.date)
 
 
 class Booking(models.Model):
