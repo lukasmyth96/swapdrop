@@ -39,7 +39,7 @@ p{
 /* Images */
 
 .logo{
-    width: 80%;
+    width: 100%;
 }
 
 .explanation-img{
@@ -67,6 +67,7 @@ p{
 .register-container{
     margin-top: 10%;
     text-align: center;
+    box-shadow: -6px 8px 18px 5px rgba(62,66,66,0.26);
 }
 
 .register-input{
@@ -78,4 +79,15 @@ p{
     background: linear-gradient(215deg, rgba(255,120,0,1) 0%, rgba(255,159,0,1) 100%);
     font-size: 1.5vw;
     color: white;
+}
+
+#fadeout-text{
+  text-align: center;
+  font-size: 1.5vw;
+  margin-top: 1%;
+}
+
+.fadeout{
+  opacity: 0;
+  transition: 3s opacity;
 }

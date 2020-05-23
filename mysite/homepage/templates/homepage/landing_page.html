@@ -35,17 +35,42 @@
                 </div>
 
                 <!-- Register Interest -->
-                <div class="input-group register-container">
-                  <input type="text" class="form-control register-input" placeholder="Email" aria-label="Email" aria-describedby="basic-addon2">
-                  <div class="input-group-append">
-                    <button class="btn register-button" type="button">Register Interest</button>
-                  </div>
-                </div>
+                <form method="POST" enctype='multipart/form-data'>
+                    {% csrf_token %}
+                    <div class="input-group register-container">
+                        <!-- Note custom attributes are added in the LandingPageForm -->
+                        {{ form.email }}
+                      <div class="input-group-append">
+                        <button class="btn register-button" type="submit" id="submit-button">Register Interest</button>
+                      </div>
+                    </div>
+
+                    <!-- Success message-->
+                    {% if submitted %}
+                        <h6 id="fadeout-text" class="montserrat orange"> Thanks - we'll keep you posted.</h6>
+                        <script>
+                        setTimeout(function() {
+                             document.getElementById("fadeout-text").classList.add("fadeout")
+                          }, 1000);
+
+                        </script>
+                    {% endif %}
+
+                    <!-- Error message-->
+                    {% if form.errors %}
+                        <script>
+                            let textBox = document.getElementById('id_email');
+                            textBox.value = '';
+                            textBox.placeholder='Enter a valid email';
+                            textBox.style.borderColor = 'red';
+                        </script>
+                    {% endif %}
+                </form>
 
             </div>
 
             <div class="col-6" style="text-align: center">
-                <img alt="logo" src="/media/assets/red_and_orange_logo.png" class="logo">
+                <img alt="logo" src="/media/assets/mockup_over_logo_large.png" class="logo">
             </div>
 
         </div>
@@ -104,12 +129,12 @@
         <!-- Collage -->
         <div class="row">
             <div class="col-12" style="text-align: center">
-                 <img src="/media/assets/profile_mockup.png" style="height: 400px">
+                 <img src="/media/assets/mockup_over_images_large.png" style="height: 400px">
             </div>
         </div>
 
         <!-- Footer -->
-        <div class="row footer">
+        <div class="row footer" style="margin-top: -4%">
 
             <!-- Socials -->
             <div class="col-4" style="margin-top: 2%; margin-bottom: 2%">
