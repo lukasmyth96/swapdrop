@@ -58,6 +58,11 @@ p{
     text-align: center;
 }
 
+.footer{
+    background: rgb(255,59,0);
+    background: linear-gradient(45deg, rgba(255,59,0,1) 0%, rgba(255,59,0,1) 0%, rgba(255,100,0,1) 100%);
+}
+
 /* Register */
 .register-container{
     margin-top: 10%;
@@ -69,7 +74,8 @@ p{
 }
 
 .register-button{
-    background: rgba(255, 59, 0, 1);
+    background: rgb(255,120,0);
+    background: linear-gradient(215deg, rgba(255,120,0,1) 0%, rgba(255,159,0,1) 100%);
     font-size: 1.5vw;
     color: white;
 }
