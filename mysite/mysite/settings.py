@@ -22,8 +22,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '-f*vqbes1p!gto2kln0cc4^+k*$zasj^pd2u!n#g*+pj42l(rk'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -92,6 +90,7 @@ if 'RDS_DB_NAME' in os.environ:
             'PORT': os.environ['RDS_PORT'],
         }
     }
+    DEBUG = False
 else:
     DATABASES = {
         'default': {
@@ -103,6 +102,9 @@ else:
             'PORT': '5432'
         }
     }
+
+    # SECURITY WARNING: don't run with debug turned on in production!
+    DEBUG = True
 
 
 # Password validation
