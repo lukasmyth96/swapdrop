@@ -90,7 +90,7 @@ if 'RDS_DB_NAME' in os.environ:
             'PORT': os.environ['RDS_PORT'],
         }
     }
-    DEBUG = True
+    DEBUG = False
 else:
     DATABASES = {
         'default': {
@@ -105,9 +105,6 @@ else:
 
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = True
-
-# FIXME remove this after
-print(DATABASES)
 
 
 # Password validation
