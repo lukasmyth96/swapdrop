@@ -1,0 +1,17 @@
+.invisible-radio {
+  /* per https://a11yproject.com/posts/how-to-hide-content/ */
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+.styled-radio {
+  background: #b0c6d5;
+  margin-top: 15px;
+  width: 500px;
+  height: 50px;
+}
+

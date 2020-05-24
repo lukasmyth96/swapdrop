@@ -5,7 +5,7 @@ from django.urls import reverse
 class HomepageTests(SimpleTestCase):
 
     def setUp(self) -> None:
-        url = reverse('homepage-home')
+        url = reverse('landing-page')
         self.response = self.client.get(url)
 
     def test_homepage_status_code(self):

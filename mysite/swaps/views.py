@@ -114,7 +114,6 @@ class ReviewOffersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
             offer.save(update_fields=['status'])  # update status in db
 
-        messages.success(request, 'Congrats - match complete!')
         return redirect('checkout', product_id=current_product.id)
 
     def test_func(self):

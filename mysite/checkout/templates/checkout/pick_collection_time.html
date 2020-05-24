@@ -1,10 +1,40 @@
 {% extends "homepage/base.html" %}
 {% block content %}
+
+    <script>
+        function changeColour(element) {
+            let selected_slot = element.getElementsByTagName('div')[0];
+            let all_slots = document.getElementsByClassName('styled-radio');
+            let i;
+            for (i=0; i<all_slots.length; i++){
+                // first set all image borders to white
+                all_slots[i].style.background = '#b0c6d5';
+            }
+            // but set the selected one to green
+            selected_slot.style.background = '#34c9eb';
+        }
+    </script>
+
     <h1> This is the collection time slot picker page for product id: {{ product_id }}</h1>
         <form method="POST" enctype='multipart/form-data'>
             {% csrf_token %}
-            <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Continue to Payment</button>
+            <div>
+                <div style="padding-bottom: 25px">
+                    {% for time_slot_group in grouped_time_slots %}
+                        {% for time_slot in time_slot_group %}
+                            <div>
+                                <input type="radio" name="time-slot-radio" id="{{ time_slot.id }}" value="{{ time_slot.id }}" class="invisible-radio">
+                                <label for="{{ time_slot.id }}" onclick="changeColour(this);">
+                                    <div class="row styled-radio red">
+                                        {{ time_slot }}
+                                    </div>
+                                </label>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+
+                <button class="btn btn-outline-info" type="submit">Submit Booking</button>
             </div>
         </form>
 {% endblock content %}
