@@ -13,6 +13,10 @@ def landing_page(request):
     else:
         form = LandingPageForm()
     context['form'] = form
-    return render(request, 'homepage/landing_page.html', context=context)
+
+    # serve different template on desktop and mobile
+    template = 'homepage/landing_page_mobile.html' if request.user_agent.is_mobile else 'homepage/landing_page.html'
+
+    return render(request, template, context=context)
 
 

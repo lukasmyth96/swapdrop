@@ -28,7 +28,7 @@
     color: black;
 }
 
-p{
+.explanation-p{
     text-align: center;
     font-size: 1.2vw;
     margin-left: 10%;
@@ -37,10 +37,6 @@ p{
 
 
 /* Images */
-
-.logo{
-    width: 100%;
-}
 
 .explanation-img{
     width: 40%;
@@ -59,6 +55,7 @@ p{
 }
 
 .footer{
+    width: 110%;
     background: rgb(255,59,0);
     background: linear-gradient(45deg, rgba(255,59,0,1) 0%, rgba(255,59,0,1) 0%, rgba(255,100,0,1) 100%);
 }
@@ -70,14 +67,9 @@ p{
     box-shadow: -6px 8px 18px 5px rgba(62,66,66,0.26);
 }
 
-.register-input{
-    font-size: 1.5vw;
-}
-
 .register-button{
     background: rgb(255,120,0);
     background: linear-gradient(215deg, rgba(255,120,0,1) 0%, rgba(255,159,0,1) 100%);
-    font-size: 1.5vw;
     color: white;
 }
 

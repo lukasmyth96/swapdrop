@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'products.apps.ProductsConfig',
     'swaps.apps.SwapsConfig',
     'checkout.apps.CheckoutConfig',
-    'bookings.apps.BookingsConfig'
+    'bookings.apps.BookingsConfig',
+    'django_user_agents'
 ]
 
 MIDDLEWARE = [
@@ -54,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware'
 ]
 
 ROOT_URLCONF = 'mysite.urls'

@@ -5,7 +5,7 @@ from .models import PotentialUser
 
 
 class LandingPageForm(forms.ModelForm):
-    email = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control register-input',
+    email = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control',
                                                            'placeholder': 'Email',
                                                            }))
 
