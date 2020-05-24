@@ -90,7 +90,7 @@ if 'RDS_DB_NAME' in os.environ:
             'PORT': os.environ['RDS_PORT'],
         }
     }
-    DEBUG = False
+    DEBUG = True
 else:
     DATABASES = {
         'default': {
