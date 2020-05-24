@@ -5,4 +5,5 @@ django-user-agents==0.4.0
 ua-parser==0.10.0
 user-agents==2.1
 Pillow==7.1.1
+psycopg2==2.8.5
 pyyaml==5.3.1
