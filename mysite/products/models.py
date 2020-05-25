@@ -36,11 +36,3 @@ class Product(models.Model):
         Swap = apps.get_model('swaps', 'Swap')
         return len(Swap.objects.filter(desired_product=self, status=SwapStatus.PENDING_REVIEW))
 
-    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
-        super(Product, self).save(force_insert, force_update, using, update_fields)
-
-        # Resize to have 512*512
-        img = Image.open(self.image.path)
-        size = (512, 512)
-        img = img.resize(size)
-        img.save(self.image.path)
