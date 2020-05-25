@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'swaps.apps.SwapsConfig',
     'checkout.apps.CheckoutConfig',
     'bookings.apps.BookingsConfig',
-    'django_user_agents'
+    'django_user_agents',
+    'storages'
 ]
 
 MIDDLEWARE = [
@@ -143,10 +144,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, "..", "www", "static")
+# STATIC_ROOT = os.path.join(BASE_DIR, "..", "www", "static")
+
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -155,3 +157,21 @@ LOGIN_REDIRECT_URL = 'profile'
 LOGIN_URL = 'login'
 
 ALLOWED_HOSTS = ['*']
+
+AWS_S3_OBJECT_PARAMETERS = {
+    'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+    'CacheControl': 'max-age=94608000',
+}
+
+AWS_STORAGE_BUCKET_NAME = 'swapdrop-files'
+AWS_S3_REGION_NAME = 'eu-west-2'  # e.g. us-east-2
+AWS_ACCESS_KEY_ID = 'AKIASOHMJCQWEXZ4ENVN'
+AWS_SECRET_ACCESS_KEY = 'Cs43m15Wmup60ONLohQXLmdEsGWwgPidOdlz5PiG'
+AWS_DEFAULT_ACL = None
+AWS_S3_FILE_OVERWRITE = False
+
+STATICFILES_LOCATION = 'static'
+STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+
+MEDIAFILES_LOCATION = 'media'
+DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
