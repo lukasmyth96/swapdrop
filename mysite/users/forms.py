@@ -11,6 +11,13 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
+        exclude = ['user']
+
+
+class UserPostcodeForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['postcode']
 
 
 class UserUpdateForm(forms.ModelForm):

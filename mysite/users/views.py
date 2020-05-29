@@ -5,20 +5,27 @@ from django.views.generic import (
     ListView
 )
 
-from users.forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, ShippingAddressUpdateForm
+from users.forms import UserRegisterForm, UserPostcodeForm, UserUpdateForm, ProfileUpdateForm, ShippingAddressUpdateForm
 from products.models import Product
+from users.models import Profile
 
 
 def register(request):
     if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
-        if form.is_valid():
-            form.save()
+        user_form = UserRegisterForm(request.POST)
+        postcode_form = UserPostcodeForm(request.POST)
+        if user_form.is_valid() and postcode_form.is_valid():
+            user = user_form.save()
+            # Note - there's probably an easier way of doing below
+            profile = Profile.objects.get(user=user)
+            profile.postcode = postcode_form.cleaned_data.get('postcode')
+            profile.save(update_fields=['postcode'])
             messages.success(request, f'Account Created! You can now Login')
             return redirect('login')
     else:
-        form = UserRegisterForm()
-    return render(request, 'users/register.html', {'form': form})
+        user_form = UserRegisterForm()
+        postcode_form = UserPostcodeForm()
+    return render(request, 'users/register.html', {'user_form': user_form, 'postcode_form': postcode_form})
 
 
 @login_required()
