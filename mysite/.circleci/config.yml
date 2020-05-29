@@ -1,0 +1,9 @@
+dependencies:
+  pre:
+    -pip install awsebcli
+deployment:
+  staging:
+    branch: staging
+    commands:
+      - eb use SWAPDROP-staging --profile default
+      - eb deploy --profile default
