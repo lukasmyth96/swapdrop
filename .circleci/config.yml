@@ -9,12 +9,13 @@ jobs:
                       eb deploy --profile default
 workflows:
     version: 2
-    jobs:
-        - eb_deploy:
-              filters:
-                  branches:
+    staging_deploy:
+        jobs:
+            - eb_deploy:
+                filters:
+                    branches:
                       only:
-                          - staging
+                       - staging
 
 
 
