@@ -9,7 +9,6 @@ jobs:
             command: |
               ls -la
               sudo pip install awsebcli==3.18.1
-              eb use SWAPDROP-staging --region eu-west-2
               eb deploy
 workflows:
     version: 2
