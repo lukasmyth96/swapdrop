@@ -8,8 +8,7 @@ jobs:
         - run:
             command: |
               sudo pip install awsebcli==3.18.1
-              eb use SWAPDROP-staging
-              eb deploy
+              eb deploy SWAPDROP
 workflows:
     version: 2
     staging_deploy:
