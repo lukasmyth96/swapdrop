@@ -1,20 +1,20 @@
 version: 2
-jobs: 
-    deploy:
+jobs:
+    eb_deploy:
         steps:
-            -run:
-                name: elastic beanstalk deployment
-                command: |
-                    pip install awsebcli
-                    eb use SWAPDROP-staging --profile default
-                    eb deploy --profile default
-
+            - run:
+                  command: |
+                      pip install awsebcli
+                      eb use SWAPDROP-staging --profile default
+                      eb deploy --profile default
 workflows:
     version: 2
-    staging_deploy:
-        jobs:
-            - deploy
-                filters:
-                    branches:
-                        only:
-                            - staging
+    jobs:
+        - eb_deploy:
+              filters:
+                  branches:
+                      only:
+                          - staging
+
+
+
