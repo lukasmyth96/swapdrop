@@ -41,3 +41,8 @@
   cursor: pointer;
   border-radius: 5px;
 }
+
+.postcode-warning{
+  color: red;
+  visibility: hidden;
+}

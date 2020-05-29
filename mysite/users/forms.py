@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from .models import Profile
 from django.contrib.auth.forms import UserCreationForm
 
+from users.validators import is_in_chichester
+
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
@@ -15,6 +17,8 @@ class UserRegisterForm(UserCreationForm):
 
 
 class UserPostcodeForm(forms.ModelForm):
+    postcode = forms.CharField(validators=[is_in_chichester])
+
     class Meta:
         model = Profile
         fields = ['postcode']
