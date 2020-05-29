@@ -45,4 +45,6 @@
 .postcode-warning{
   color: red;
   display: none;
+  font-size: 2vw;
+  margin-left: 1%;
 }
