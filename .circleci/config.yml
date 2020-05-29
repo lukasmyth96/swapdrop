@@ -1,12 +1,14 @@
 version: 2
 jobs:
     eb_deploy:
-        steps:
-            - run:
-                  command: |
-                      pip install awsebcli
-                      eb use SWAPDROP-staging --profile default
-                      eb deploy --profile default
+      docker:
+        - image: circleci/python:3.6.8
+      steps:
+        - run:
+           command: |
+              pip install awsebcli
+              eb use SWAPDROP-staging --profile default
+              eb deploy --profile default
 workflows:
     version: 2
     staging_deploy:
