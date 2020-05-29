@@ -92,7 +92,7 @@ if not os.environ.get('DJANGO_DEVELOPMENT'):
             'PORT': os.environ['RDS_PORT'],
         }
     }
-    DEBUG = False
+    DEBUG = True
 
 
 # Password validation
