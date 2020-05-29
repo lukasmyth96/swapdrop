@@ -6,8 +6,6 @@ jobs:
       steps:
         - checkout
         - run:
-           command: |
-              pip install --upgrade pip
               sudo pip install awsebcli==3.18.1
               eb use SWAPDROP-staging
               eb deploy
