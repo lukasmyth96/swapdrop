@@ -44,5 +44,5 @@
 
 .postcode-warning{
   color: red;
-  visibility: hidden;
+  display: none;
 }

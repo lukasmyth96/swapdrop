@@ -22,8 +22,12 @@
         </div>
     </div>
     <script>
-        $("#id_postcode").blur(function() {
+
+        $("#id_postcode").focus(function() {
+            $(".postcode-warning").hide();}
+            ).blur(function() {
             if (this.value && !this.value.startsWith('PO19')){
+            $(".postcode-warning").show();
             console.log('INVALID POSTCODE');
             }
             });
