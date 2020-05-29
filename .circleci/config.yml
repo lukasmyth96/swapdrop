@@ -7,8 +7,8 @@ jobs:
         - run:
            command: |
               sudo pip install awsebcli
-              eb use SWAPDROP-staging --profile default
-              eb deploy --profile default
+              eb use SWAPDROP-staging --profile eb-cli
+              eb deploy --profile eb-cli
 workflows:
     version: 2
     staging_deploy:
