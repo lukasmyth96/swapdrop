@@ -150,7 +150,7 @@ AWS_S3_OBJECT_PARAMETERS = {
 
 if not os.environ.get('DJANGO_DEVELOPMENT'):
     # Production specific
-    AWS_STORAGE_BUCKET_NAME = 'swapdrop-files-staging'  # FIXME how can we configure the bucket name depending on env
+    AWS_STORAGE_BUCKET_NAME = os.environ.get('S3_BUCKET_NAME')
     AWS_S3_REGION_NAME = 'eu-west-2'  # e.g. us-east-2
     AWS_ACCESS_KEY_ID = 'AKIASOHMJCQWEXZ4ENVN'  # for django-user
     AWS_SECRET_ACCESS_KEY = 'Cs43m15Wmup60ONLohQXLmdEsGWwgPidOdlz5PiG'  # for django-user
