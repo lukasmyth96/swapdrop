@@ -6,8 +6,10 @@ from PIL import Image
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)  # 'user' includes: username, password, email address.
 
+    # profile picture
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
+    # shipping address
     house_name_number = models.CharField(max_length=50, blank=True)
     address_line_1 = models.CharField(max_length=50, blank=True)
     address_line_2 = models.CharField(max_length=50, blank=True)
@@ -15,6 +17,9 @@ class Profile(models.Model):
     county = models.CharField(max_length=50, blank=True)
     postcode = models.CharField(max_length=10, blank=True)
     contact_number = models.CharField(max_length=13, blank=True)
+
+    # clothing preferences
+
 
     def __str__(self):
         return f'{self.user.username}'
