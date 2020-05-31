@@ -1,15 +1,123 @@
 {% extends "users/profile_base.html" %}
 {% load crispy_forms_tags %}
+{% load user_agents %}
 {% block profile_content %}
   <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <fieldset class="form-group">
         <legend class="border-bottom mb-4">Profile Info</legend>
-        {{ u_form|crispy }}
-        {{ p_form|crispy }}
+        {{ form|crispy }}
+
+        <!-- Gender Preferences -->
+        <div class="row" style="text-align: center">
+            <div class="btn-group btn-group-toggle" data-toggle="buttons" style="display: inline-block">
+              <label id="menswear-label" class="btn btn-info" for="menswear-checkbox">
+                <input type="checkbox" name="gender_preference" id="menswear-checkbox" value="m" onchange="checkIfNoneSelected()"> Menswear
+              </label>
+              <label id="womenswear-label" class="btn btn-info" for="womenswear-checkbox">
+                <input type="checkbox" name="gender_preference" id="womenswear-checkbox" value="w" onchange="checkIfNoneSelected()"> Womenswear
+              </label>
+            </div>
+        </div>
+        {{ current_gender_preferences|json_script:"current_gender_preferences" }}
+        <script>
+            // Select currently selected genders
+            let currentGenderPreferences = JSON.parse(document.getElementById('current_gender_preferences').textContent);
+            if (currentGenderPreferences.includes('MENSWEAR')){
+                $("#menswear-label").toggleClass('active');
+                $("#menswear-checkbox").prop("checked", true);
+            }
+            if (currentGenderPreferences.includes('WOMENSWEAR')){
+                $("#womenswear-label").toggleClass('active');
+                $("#womenswear-checkbox").prop("checked", true);
+            }
+
+            // shows alert if no gender selected after click
+            function checkIfNoneSelected(){
+            if ($("input[type=checkbox]:checked").length === 0){
+                alert('You must select at least one gender preference')}
+            }
+        </script>
+
+
+        <!-- Labels for Size Dropdowns - can't seem to align these if including in same column as below-->
+        <div class="row" style="margin-top: 5%">
+            <div class="col-4" style="text-align: center">
+                <label for="primary-size-select"> Primary Size </label>
+            </div>
+            <div class="col-4" style="text-align: center">
+                <label for="waist-size-select"> Waist Size </label>
+            </div>
+            <div class="col-4" style="text-align: center">
+                <label for="shoe-size-select"> Shoe Size </label>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <!-- PRIMARY SIZE -->
+            <div class="col-4" style="text-align: center">
+                <select id="primary-size-select" name="primary_size" class="selectpicker" title="select primary sizes..." data-size="5" data-width="100%" data-actions-box="true" multiple>
+                    {% for primary_size in primary_sizes %}
+                        <option value="{{ primary_size.id }}">{{ primary_size }}</option>
+                    {% endfor %}
+                </select>
+                <!-- creates script tag which contains currently selected primary size ids -->
+                {{ current_primary_size_ids|json_script:"current-primary-size-ids" }}
+
+                <script>
+                    // list of ids
+                    let currentPrimarySizeIds = JSON.parse(document.getElementById('current-primary-size-ids').textContent);
+                    $(".selectpicker").selectpicker('val', currentPrimarySizeIds)
+                </script>
+            </div>
+
+            <!-- WAIST SIZE -->
+            <div class="col-4" style="text-align: center">
+                <select id="waist-size-select" name="waist_size" class="selectpicker" title="select waist sizes..." data-size="5" data-width="100%" data-actions-box="true" multiple>
+                    {% for waist_size in waist_sizes %}
+                        <option value="{{ waist_size.id }}">{{ waist_size }}</option>
+                    {% endfor %}
+                </select>
+                <!-- creates script tag which contains currently selected waist size ids -->
+                {{ current_waist_size_ids|json_script:"current-waist-size-ids" }}
+
+                <script>
+                    // list of ids
+                    let currentWaistSizeIds = JSON.parse(document.getElementById('current-waist-size-ids').textContent);
+                    $(".selectpicker").selectpicker('val', currentWaistSizeIds)
+                </script>
+            </div>
+
+            <!-- SHOE SIZE -->
+            <div class="col-4" style="text-align: center">
+                <select id="shoe-size-select" name="shoe_size" class="selectpicker" title="select shoe sizes..." data-size="5" data-width="100%" data-actions-box="true" multiple>
+                    {% for shoe_size in shoe_sizes %}
+                        <option value="{{ shoe_size.id }}">{{ shoe_size }}</option>
+                    {% endfor %}
+                </select>
+                <!-- creates script tag which contains currently selected shoe size ids -->
+                {{ current_shoe_size_ids|json_script:"current-shoe-size-ids" }}
+
+                <script>
+                    // list of ids
+                    let currentShoeSizeIds = JSON.parse(document.getElementById('current-shoe-size-ids').textContent);
+                    $(".selectpicker").selectpicker('val', currentShoeSizeIds)
+                </script>
+            </div>
+
+        </div>
     </fieldset>
+
     <div class="form-group">
         <button class="btn btn-outline-info" type="submit">Update</button>
     </div>
  </form>
+
+ <script>
+     {% if request|is_mobile %}
+         $('.selectpicker').selectpicker('mobile');
+     {% endif %}
+ </script>
+
 {% endblock profile_content %}

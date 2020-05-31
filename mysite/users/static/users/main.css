@@ -48,3 +48,16 @@
   font-size: 2vw;
   margin-left: 1%;
 }
+
+.btn.btn-info {
+  background: grey;
+  border-color: grey;
+}
+
+.btn.btn-info.focus.active{
+  background: cadetblue;
+  border-color: cadetblue;
+}
+
+
+

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'swaps.apps.SwapsConfig',
     'checkout.apps.CheckoutConfig',
     'bookings.apps.BookingsConfig',
+    'sizes.apps.SizesConfig',
     'django_user_agents',
     'storages'
 ]
