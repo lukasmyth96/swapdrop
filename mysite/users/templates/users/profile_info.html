@@ -8,14 +8,14 @@
         <legend class="border-bottom mb-4">Profile Info</legend>
         {{ form|crispy }}
 
-        <!-- Menswear vs Womenswear -->
+        <!-- Gender Preferences -->
         <div class="row" style="text-align: center">
             <div class="btn-group btn-group-toggle" data-toggle="buttons" style="display: inline-block">
               <label id="menswear-label" class="btn btn-info" for="menswear-checkbox">
-                <input type="checkbox" name="gender_preference" id="menswear-checkbox" value="m"> Menswear
+                <input type="checkbox" name="gender_preference" id="menswear-checkbox" value="m" onchange="checkIfNoneSelected()"> Menswear
               </label>
               <label id="womenswear-label" class="btn btn-info" for="womenswear-checkbox">
-                <input type="checkbox" name="gender_preference" id="womenswear-checkbox" value="w"> Womenswear
+                <input type="checkbox" name="gender_preference" id="womenswear-checkbox" value="w" onchange="checkIfNoneSelected()"> Womenswear
               </label>
             </div>
         </div>
@@ -30,6 +30,12 @@
             if (currentGenderPreferences.includes('WOMENSWEAR')){
                 $("#womenswear-label").toggleClass('active');
                 $("#womenswear-checkbox").prop("checked", true);
+            }
+
+            // shows alert if no gender selected after click
+            function checkIfNoneSelected(){
+            if ($("input[type=checkbox]:checked").length === 0){
+                alert('You must select at least one gender preference')}
             }
         </script>
 
