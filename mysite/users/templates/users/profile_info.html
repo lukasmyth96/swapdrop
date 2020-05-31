@@ -8,7 +8,20 @@
         <legend class="border-bottom mb-4">Profile Info</legend>
         {{ form|crispy }}
 
-        <!-- Labels for Size Dropdowns -->
+        <!-- Menswear vs Womenswear -->
+        <div class="row" style="text-align: center">
+            <div class="btn-group btn-group-toggle gender-radio" data-toggle="buttons" style="display: inline-block">
+              <label class="btn btn-info active" for="menswear-radio">
+                <input type="radio" name="gender_preference" id="menswear-radio" value="m" autocomplete="off" checked> Menswear
+              </label>
+              <label class="btn btn-info" for="womenswear-radio">
+                <input type="radio" name="gender_preference" id="womenswear-radio" value="w" autocomplete="off"> Womenswear
+              </label>
+            </div>
+        </div>
+
+
+        <!-- Labels for Size Dropdowns - can't seem to align these if including in same column as below-->
         <div class="row" style="margin-top: 5%">
             <div class="col-4" style="text-align: center">
                 <label for="primary-size-select"> Primary Size </label>

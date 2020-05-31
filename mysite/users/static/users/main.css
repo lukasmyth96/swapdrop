@@ -49,3 +49,7 @@
   margin-left: 1%;
 }
 
+.gender-radio.active{
+  color: green;
+}
+

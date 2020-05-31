@@ -9,7 +9,7 @@ from django.views.generic import (
 
 from products.models import Product
 
-from sizes.models import GenderPreference, PrimarySize, WaistSize, ShoeSize
+from sizes.models import GenderPreference, GenderOptions, PrimarySize, WaistSize, ShoeSize
 
 from users.forms import UserRegisterForm, UserPostcodeForm, UserUpdateForm, ProfileUpdateForm, ShippingAddressUpdateForm
 from users.models import Profile
@@ -42,6 +42,18 @@ def register(request):
 @login_required()
 def profile_info(request):
     if request.method == 'POST':
+
+        # Process gender preference
+        selected_gender_value = request.POST.get('gender_preference')
+        if selected_gender_value.startswith('m'):
+            gender_preference = GenderPreference.objects.get(gender=GenderOptions.MENSWEAR)
+        elif selected_gender_value.startswith('w'):
+            gender_preference = GenderPreference.objects.get(gender=GenderOptions.WOMENSWEAR)
+        else:
+            raise ValueError('Unhandled gender value in /profile/info submit')
+        request.user.profile.gender_preference.clear()
+        request.user.profile.gender_preference.add(gender_preference)
+
         # Process primary size selections
         selected_primary_size_ids = [int(_id) for _id in request.POST.getlist('primary_size')]
         selected_primary_sizes = PrimarySize.objects.filter(pk__in=selected_primary_size_ids)
