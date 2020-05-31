@@ -31,8 +31,8 @@ def register(request):
             user = authenticate(username=user_form.cleaned_data['username'],
                                 password=user_form.cleaned_data['password1'])
             login(request, user)
-            messages.success(request, f'Welcome to the swapping revolution.')
-            return redirect('profile')
+            messages.success(request, f'Welcome to Swapdrop - please selected your preferences below...')
+            return redirect('profile-info')
     else:
         user_form = UserRegisterForm()
         postcode_form = UserPostcodeForm()
