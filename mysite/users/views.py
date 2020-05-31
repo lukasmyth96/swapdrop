@@ -6,8 +6,12 @@ from django.views.generic import (
     ListView
 )
 
-from users.forms import UserRegisterForm, UserPostcodeForm, UserUpdateForm, ProfileUpdateForm, ShippingAddressUpdateForm
+
 from products.models import Product
+
+from sizes.models import GenderPreference, PrimarySize, WaistSize, ShoeSize
+
+from users.forms import UserRegisterForm, UserPostcodeForm, UserUpdateForm, ProfileUpdateForm, ShippingAddressUpdateForm
 from users.models import Profile
 
 
@@ -38,8 +42,26 @@ def register(request):
 @login_required()
 def profile_info(request):
     if request.method == 'POST':
-        form = ProfileUpdateForm(instance=request.user.profile, data=request.POST, files=request.FILES)
+        # Process primary size selections
+        selected_primary_size_ids = [int(_id) for _id in request.POST.getlist('primary_size')]
+        selected_primary_sizes = PrimarySize.objects.filter(pk__in=selected_primary_size_ids)
+        request.user.profile.primary_sizes.clear()
+        request.user.profile.primary_sizes.add(*selected_primary_sizes)
 
+        # Process waist size selections
+        selected_waist_size_ids = [int(_id) for _id in request.POST.getlist('waist_size')]
+        selected_waist_sizes = WaistSize.objects.filter(pk__in=selected_waist_size_ids)
+        request.user.profile.waist_sizes.clear()
+        request.user.profile.waist_sizes.add(*selected_waist_sizes)
+
+        # Process shoe sizes
+        selected_shoe_size_ids = [int(_id) for _id in request.POST.getlist('shoe_size')]
+        selected_shoe_sizes = ShoeSize.objects.filter(pk__in=selected_shoe_size_ids)
+        request.user.profile.shoe_sizes.clear()
+        request.user.profile.shoe_sizes.add(*selected_shoe_sizes)
+
+        # Process profile pic update
+        form = ProfileUpdateForm(instance=request.user.profile, data=request.POST, files=request.FILES)
         if form.is_valid():
             form.save()
             messages.success(request, 'Your profile has been updated')
@@ -47,7 +69,15 @@ def profile_info(request):
 
     else:
         form = ProfileUpdateForm(instance=request.user.profile)
-        context = {'form': form}
+
+        context = {'form': form,
+                   'primary_sizes': PrimarySize.objects.all(),
+                   'current_primary_size_ids': [str(size.id) for size in request.user.profile.primary_sizes.all()],
+                   'waist_sizes': WaistSize.objects.all(),
+                   'current_waist_size_ids': [str(size.id) for size in request.user.profile.waist_sizes.all()],
+                   'shoe_sizes': ShoeSize.objects.all(),
+                   'current_shoe_size_ids': [str(size.id) for size in request.user.profile.shoe_sizes.all()]}
+
         return render(request, 'users/profile_info.html', context=context)
 
 

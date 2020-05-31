@@ -7,17 +7,70 @@
         <legend class="border-bottom mb-4">Profile Info</legend>
         {{ form|crispy }}
 
-        <!-- Bootstrap select for size preferences -->
-        <select class="selectpicker">
-          <option>Mustard</option>
-          <option>Ketchup</option>
-          <option>Barbecue</option>
-        </select>
+
+        <div class="row">
+
+            <!-- PRIMARY SIZE -->
+            <div class="col-4">
+                <select id="primary-size-select" name="primary_size" class="selectpicker" title="select primary sizes..." data-size="5" data-actions-box="true" multiple>
+                    {% for primary_size in primary_sizes %}
+                        <option value="{{ primary_size.id }}">{{ primary_size }}</option>
+                    {% endfor %}
+                </select>
+                <!-- creates script tag which contains currently selected primary size ids -->
+                {{ primary|json_script:"current-primary-size-ids" }}
+
+                <script>
+                    // list of ids
+                    let currentPrimarySizeIds = JSON.parse(document.getElementById('current-primary-size-ids').textContent);
+                    $(".selectpicker").selectpicker('val', currentPrimarySizeIds)
+                </script>
+            </div>
+
+            <!-- WAIST SIZE -->
+            <div class="col-4">
+                <select id="waist-size-select" name="waist_size" class="selectpicker" title="select waist sizes..." data-size="5" data-actions-box="true" multiple>
+                    {% for waist_size in waist_sizes %}
+                        <option value="{{ waist_size.id }}">{{ waist_size }}</option>
+                    {% endfor %}
+                </select>
+                <!-- creates script tag which contains currently selected waist size ids -->
+                {{ current_waist_size_ids|json_script:"current-waist-size-ids" }}
+
+                <script>
+                    // list of ids
+                    let currentWaistSizeIds = JSON.parse(document.getElementById('current-waist-size-ids').textContent);
+                    $(".selectpicker").selectpicker('val', currentWaistSizeIds)
+                </script>
+            </div>
+
+            <!-- SHOE SIZE -->
+            <div class="col-4">
+                <select id="shoe-size-select" name="shoe_size" class="selectpicker" title="select shoe sizes..." data-size="5" data-actions-box="true" multiple>
+                    {% for shoe_size in shoe_sizes %}
+                        <option value="{{ shoe_size.id }}">{{ shoe_size }}</option>
+                    {% endfor %}
+                </select>
+                <!-- creates script tag which contains currently selected shoe size ids -->
+                {{ current_shoe_size_ids|json_script:"current-shoe-size-ids" }}
+
+                <script>
+                    // list of ids
+                    let currentShoeSizeIds = JSON.parse(document.getElementById('current-shoe-size-ids').textContent);
+                    $(".selectpicker").selectpicker('val', currentShoeSizeIds)
+                </script>
+            </div>
+
+        </div>
+
 
     </fieldset>
+
+
 
     <div class="form-group">
         <button class="btn btn-outline-info" type="submit">Update</button>
     </div>
  </form>
+
 {% endblock profile_content %}
