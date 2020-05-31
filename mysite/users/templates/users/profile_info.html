@@ -10,15 +10,28 @@
 
         <!-- Menswear vs Womenswear -->
         <div class="row" style="text-align: center">
-            <div class="btn-group btn-group-toggle gender-radio" data-toggle="buttons" style="display: inline-block">
-              <label class="btn btn-info active" for="menswear-radio">
-                <input type="radio" name="gender_preference" id="menswear-radio" value="m" autocomplete="off" checked> Menswear
+            <div class="btn-group btn-group-toggle" data-toggle="buttons" style="display: inline-block">
+              <label id="menswear-label" class="btn btn-info" for="menswear-checkbox">
+                <input type="checkbox" name="gender_preference" id="menswear-checkbox" value="m"> Menswear
               </label>
-              <label class="btn btn-info" for="womenswear-radio">
-                <input type="radio" name="gender_preference" id="womenswear-radio" value="w" autocomplete="off"> Womenswear
+              <label id="womenswear-label" class="btn btn-info" for="womenswear-checkbox">
+                <input type="checkbox" name="gender_preference" id="womenswear-checkbox" value="w"> Womenswear
               </label>
             </div>
         </div>
+        {{ current_gender_preferences|json_script:"current_gender_preferences" }}
+        <script>
+            // Select currently selected genders
+            let currentGenderPreferences = JSON.parse(document.getElementById('current_gender_preferences').textContent);
+            if (currentGenderPreferences.includes('MENSWEAR')){
+                $("#menswear-label").toggleClass('active');
+                $("#menswear-checkbox").prop("checked", true);
+            }
+            if (currentGenderPreferences.includes('WOMENSWEAR')){
+                $("#womenswear-label").toggleClass('active');
+                $("#womenswear-checkbox").prop("checked", true);
+            }
+        </script>
 
 
         <!-- Labels for Size Dropdowns - can't seem to align these if including in same column as below-->
@@ -44,7 +57,7 @@
                     {% endfor %}
                 </select>
                 <!-- creates script tag which contains currently selected primary size ids -->
-                {{ primary|json_script:"current-primary-size-ids" }}
+                {{ current_primary_size_ids|json_script:"current-primary-size-ids" }}
 
                 <script>
                     // list of ids

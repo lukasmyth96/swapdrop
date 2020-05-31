@@ -44,15 +44,13 @@ def profile_info(request):
     if request.method == 'POST':
 
         # Process gender preference
-        selected_gender_value = request.POST.get('gender_preference')
-        if selected_gender_value.startswith('m'):
-            gender_preference = GenderPreference.objects.get(gender=GenderOptions.MENSWEAR)
-        elif selected_gender_value.startswith('w'):
-            gender_preference = GenderPreference.objects.get(gender=GenderOptions.WOMENSWEAR)
-        else:
-            raise ValueError('Unhandled gender value in /profile/info submit')
-        request.user.profile.gender_preference.clear()
-        request.user.profile.gender_preference.add(gender_preference)
+        selected_gender_values = request.POST.getlist('gender_preference')
+        request.user.profile.gender_preference.clear()  # clear existing preferences
+        if 'm' in selected_gender_values:
+            request.user.profile.gender_preference.add(GenderPreference.objects.get(gender=GenderOptions.MENSWEAR))
+        if 'w' in selected_gender_values:
+            request.user.profile.gender_preference.add(GenderPreference.objects.get(gender=GenderOptions.WOMENSWEAR))
+
 
         # Process primary size selections
         selected_primary_size_ids = [int(_id) for _id in request.POST.getlist('primary_size')]
@@ -82,7 +80,10 @@ def profile_info(request):
     else:
         form = ProfileUpdateForm(instance=request.user.profile)
 
+        current_gender_preferences = [str(gender) for gender in request.user.profile.gender_preference.all()]
+
         context = {'form': form,
+                   'current_gender_preferences': current_gender_preferences,
                    'primary_sizes': PrimarySize.objects.all(),
                    'current_primary_size_ids': [str(size.id) for size in request.user.profile.primary_sizes.all()],
                    'waist_sizes': WaistSize.objects.all(),

@@ -49,7 +49,15 @@
   margin-left: 1%;
 }
 
-.gender-radio.active{
-  color: green;
+.btn.btn-info {
+  background: grey;
+  border-color: grey;
 }
+
+.btn.btn-info.focus.active{
+  background: cadetblue;
+  border-color: cadetblue;
+}
+
+
 
