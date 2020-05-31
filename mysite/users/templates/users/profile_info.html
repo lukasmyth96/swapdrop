@@ -6,7 +6,16 @@
     <fieldset class="form-group">
         <legend class="border-bottom mb-4">Profile Info</legend>
         {{ form|crispy }}
+
+        <!-- Bootstrap select for size preferences -->
+        <select class="selectpicker">
+          <option>Mustard</option>
+          <option>Ketchup</option>
+          <option>Barbecue</option>
+        </select>
+
     </fieldset>
+
     <div class="form-group">
         <button class="btn btn-outline-info" type="submit">Update</button>
     </div>
