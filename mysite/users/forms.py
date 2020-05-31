@@ -15,6 +15,11 @@ class UserRegisterForm(UserCreationForm):
         fields = ['username', 'email', 'password1', 'password2']
         exclude = ['user']
 
+    def __init__(self, *args, **kwargs):
+        super(UserRegisterForm, self).__init__(*args, **kwargs)
+        for fieldname in ['username', 'email', 'password1', 'password2']:
+            self.fields[fieldname].help_text = None
+
 
 class UserPostcodeForm(forms.ModelForm):
     postcode = forms.CharField(validators=[is_in_chichester])
@@ -25,7 +30,6 @@ class UserPostcodeForm(forms.ModelForm):
 
 
 class UserUpdateForm(forms.ModelForm):
-    email = forms.EmailField()
 
     class Meta:
         model = User
