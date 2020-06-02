@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
                 ('postcode', models.CharField(blank=True, max_length=10)),
                 ('contact_number', models.CharField(blank=True, max_length=13)),
                 ('gender_preference', models.ManyToManyField(to='sizes.GenderPreference')),
-                ('primary_sizes', models.ManyToManyField(to='sizes.PrimarySize')),
+                ('primary_sizes', models.ManyToManyField(to='sizes.Size')),
                 ('shoe_sizes', models.ManyToManyField(to='sizes.ShoeSize')),
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
                 ('waist_sizes', models.ManyToManyField(to='sizes.WaistSize')),

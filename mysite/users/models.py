@@ -1,7 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django_enumfield import enum
 
-from sizes.models import GenderPreference, PrimarySize, WaistSize, ShoeSize
+from sizes.models import Size
+from sizes.model_enums import GenderOptions
 
 """ Scroll down for Profile"""
 
@@ -22,12 +24,9 @@ class Profile(models.Model):
     contact_number = models.CharField(max_length=13, blank=True)
 
     # clothing preferences
-    # Note - this has been designed to allow the user to view a range of sizes rather than limiting them to select only
-    # on size
-    gender_preference = models.ManyToManyField(GenderPreference)  # menswear, womenswear
-    primary_sizes = models.ManyToManyField(PrimarySize)
-    waist_sizes = models.ManyToManyField(WaistSize)
-    shoe_sizes = models.ManyToManyField(ShoeSize)
+    # Note - this has been designed to allow the user to view a range of sizes rather than limiting them to select only one size
+    gender_preference = enum.EnumField(GenderOptions)  # menswear, womenswear
+    sizes = models.ManyToManyField(Size)
 
 
     def __str__(self):

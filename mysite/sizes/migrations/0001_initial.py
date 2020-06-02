@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='PrimarySize',
+            name='Size',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('gender', django_enumfield.db.fields.EnumField(enum=sizes.model_enums.GenderOptions)),
