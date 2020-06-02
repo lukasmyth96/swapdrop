@@ -12,17 +12,17 @@
         <div class="row" style="text-align: center">
             <div class="btn-group btn-group-toggle" data-toggle="buttons" style="display: inline-block">
               <label id="menswear-label" class="btn btn-info" for="menswear-checkbox">
-                <input type="checkbox" name="gender_preference" id="menswear-checkbox" value="m" onchange="checkIfNoneSelected()"> Menswear
+                <input type="radio" name="gender_preference" id="menswear-checkbox" value="m"> Menswear
               </label>
               <label id="womenswear-label" class="btn btn-info" for="womenswear-checkbox">
-                <input type="checkbox" name="gender_preference" id="womenswear-checkbox" value="w" onchange="checkIfNoneSelected()"> Womenswear
+                <input type="radio" name="gender_preference" id="womenswear-checkbox" value="w"> Womenswear
               </label>
             </div>
         </div>
-        {{ current_gender_preferences|json_script:"current_gender_preferences" }}
+        {{ current_gender_preference|json_script:"current_gender_preference" }}
         <script>
             // Select currently selected genders
-            let currentGenderPreferences = JSON.parse(document.getElementById('current_gender_preferences').textContent);
+            let currentGenderPreferences = JSON.parse(document.getElementById('current_gender_preference').textContent);
             if (currentGenderPreferences.includes('MENSWEAR')){
                 $("#menswear-label").toggleClass('active');
                 $("#menswear-checkbox").prop("checked", true);
@@ -32,11 +32,6 @@
                 $("#womenswear-checkbox").prop("checked", true);
             }
 
-            // shows alert if no gender selected after click
-            function checkIfNoneSelected(){
-            if ($("input[type=checkbox]:checked").length === 0){
-                alert('You must select at least one gender preference')}
-            }
         </script>
 
 

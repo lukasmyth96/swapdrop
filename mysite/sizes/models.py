@@ -12,5 +12,5 @@ class Size(models.Model):
 
 
     def __str__(self):
-        return self.size
+        return self.size.name
 

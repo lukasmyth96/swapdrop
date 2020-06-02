@@ -45,11 +45,10 @@ def profile_info(request):
     if request.method == 'POST':
 
         # Process gender preference
-        selected_gender_values = request.POST.getlist('gender_preference')
-        request.user.profile.gender_preference.clear()  # clear existing preferences
-        if 'm' in selected_gender_values:
+        selected_gender_value = request.POST.get('gender_preference')
+        if selected_gender_value == 'm':
             request.user.profile.gender_preference = GenderOptions.MENSWEAR
-        if 'w' in selected_gender_values:
+        elif selected_gender_value == 'w':
             request.user.profile.gender_preference = GenderOptions.WOMENSWEAR
         request.user.profile.save(update_fields=['gender_preference'])
 
@@ -73,10 +72,11 @@ def profile_info(request):
     else:
         form = ProfileUpdateForm(instance=request.user.profile)
 
-        current_gender_preferences = [str(gender) for gender in request.user.profile.gender_preference.all()]
+        current_gender_preference = request.user.profile.gender_preference
+        current_gender_preference_str = '' if current_gender_preference is None else current_gender_preference.name
 
         context = {'form': form,
-                   'current_gender_preferences': current_gender_preferences,
+                   'current_gender_preference': current_gender_preference_str,
                    'primary_sizes': Size.objects.filter(size_type=SizeTypes.PRIMARY),
                    'current_primary_size_ids': [str(size.id) for size in request.user.profile.sizes.filter(size_type=SizeTypes.PRIMARY)],
                    'waist_sizes': Size.objects.filter(size_type=SizeTypes.WAIST),
