@@ -25,7 +25,7 @@ class Profile(models.Model):
 
     # clothing preferences
     # Note - this has been designed to allow the user to view a range of sizes rather than limiting them to select only one size
-    gender_preference = enum.EnumField(GenderOptions)  # menswear, womenswear
+    gender_preference = enum.EnumField(GenderOptions, blank=True, null=True)  # menswear, womenswear
     sizes = models.ManyToManyField(Size)
 
 
