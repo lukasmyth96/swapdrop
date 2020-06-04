@@ -22,12 +22,12 @@
         {{ current_gender_preference|json_script:"current_gender_preference" }}
         <script>
             // Select currently selected genders
-            let currentGenderPreferences = JSON.parse(document.getElementById('current_gender_preference').textContent);
-            if (currentGenderPreferences.includes('MENSWEAR')){
+            let currentGenderPreference = JSON.parse(document.getElementById('current_gender_preference').textContent);
+            if (currentGenderPreference === 'MENSWEAR'){
                 $("#menswear-label").toggleClass('active');
                 $("#menswear-checkbox").prop("checked", true);
             }
-            if (currentGenderPreferences.includes('WOMENSWEAR')){
+            if (currentGenderPreference === 'WOMENSWEAR'){
                 $("#womenswear-label").toggleClass('active');
                 $("#womenswear-checkbox").prop("checked", true);
             }
@@ -65,6 +65,14 @@
                     let currentPrimarySizeIds = JSON.parse(document.getElementById('current-primary-size-ids').textContent);
                     $("#primary-size-select").selectpicker('val', currentPrimarySizeIds)
                 </script>
+
+                <script>
+                    // automatically scroll currently selected row into view
+                    $('#primary-size-select').on('shown.bs.select', function () {
+                            $(this).parent().find('li.selected a').focus()
+                        }
+                    )
+                </script>
             </div>
 
             <!-- WAIST SIZE -->
@@ -82,6 +90,14 @@
                     let currentWaistSizeIds = JSON.parse(document.getElementById('current-waist-size-ids').textContent);
                     $("#waist-size-select").selectpicker('val', currentWaistSizeIds)
                 </script>
+
+                <script>
+                    // automatically scroll currently selected row into view
+                    $('#waist-size-select').on('shown.bs.select', function () {
+                            $(this).parent().find('li.selected a').focus()
+                        }
+                    )
+                </script>
             </div>
 
             <!-- SHOE SIZE -->
@@ -98,6 +114,14 @@
                     // list of ids
                     let currentShoeSizeIds = JSON.parse(document.getElementById('current-shoe-size-ids').textContent);
                     $("#shoe-size-select").selectpicker('val', currentShoeSizeIds)
+                </script>
+
+                <script>
+                    // automatically scroll currently selected row into view
+                    $('#shoe-size-select').on('shown.bs.select', function () {
+                            $(this).parent().find('li.selected a').focus()
+                        }
+                    )
                 </script>
             </div>
 

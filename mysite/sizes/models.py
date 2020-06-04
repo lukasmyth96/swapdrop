@@ -21,7 +21,7 @@ class Size(models.Model):
         elif size_type == 'SHOE':
             size_text = f'UK {splitted[1]}'
             if len(splitted) == 3:
-                size_text += f'.{splitted[2]}'  # for hals sizes
+                size_text += f'.{splitted[2]}'  # for half sizes
         else:
             raise ValueError('Unhandled size type')
         return size_text
