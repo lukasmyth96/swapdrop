@@ -35,23 +35,9 @@
         </script>
 
 
-        <!-- Labels for Size Dropdowns - can't seem to align these if including in same column as below-->
         <div class="row" style="margin-top: 5%">
-            <div class="col-4" style="text-align: center">
-                <label for="primary-size-select"> Primary Size </label>
-            </div>
-            <div class="col-4" style="text-align: center">
-                <label for="waist-size-select"> Waist Size </label>
-            </div>
-            <div class="col-4" style="text-align: center">
-                <label for="shoe-size-select"> Shoe Size </label>
-            </div>
-        </div>
-
-
-        <div class="row">
             <!-- PRIMARY SIZE -->
-            <div class="col-4" style="text-align: center">
+            <div class="col-xs-6 col-sm-4 col-md-4" style="text-align: center; margin-top: 10px">
                 <select id="primary-size-select" name="primary_size" class="selectpicker dropup" title="select primary sizes..." data-size="5" data-width="100%" data-actions-box="true" data-dropup-auto="false" multiple>
                     {% for primary_size in primary_sizes %}
                         <option value="{{ primary_size.id }}">{{ primary_size }}</option>
@@ -80,7 +66,7 @@
             </div>
 
             <!-- WAIST SIZE -->
-            <div class="col-4" style="text-align: center">
+            <div class="col-xs-6 col-sm-4 col-md-4" style="text-align: center; margin-top: 10px">
                 <select id="waist-size-select" name="waist_size" class="selectpicker dropup" title="select waist sizes..." data-size="5" data-width="100%" data-actions-box="true" data-dropup-auto="false" multiple>
                     {% for waist_size in waist_sizes %}
                         <option value="{{ waist_size.id }}">{{ waist_size }}</option>
@@ -109,7 +95,7 @@
             </div>
 
             <!-- SHOE SIZE -->
-            <div class="col-4" style="text-align: center">
+            <div class="col-xs-6 col-sm-4 col-md-4" style="text-align: center; margin-top: 10px">
                 <select id="shoe-size-select" name="shoe_size" class="selectpicker dropup" title="select shoe sizes..." data-size="5" data-width="100%" data-actions-box="true"  multiple>
                     {% for shoe_size in shoe_sizes %}
                         <option value="{{ shoe_size.id }}">{{ shoe_size }}</option>
