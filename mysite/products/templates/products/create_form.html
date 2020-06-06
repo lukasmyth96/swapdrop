@@ -41,27 +41,26 @@
         <script>
             let uploadedImage = document.getElementById('id_image');
 
-            // Update the previewed image with the uploaded image
             function readFileAsync(file) {
+              // This function returns a Promise with resolve value as a base64 encoding of the uploading image
+              // We do this so we can display the uploaded image in the cropper
               return new Promise((resolve, reject) => {
                 let reader = new FileReader();
 
                 reader.onload = () => {
-                  console.log('FileReader loaded')
                   resolve(reader.result);
                 };
 
                 reader.onerror = reject;
 
-                console.log('Starting to read file')
                 reader.readAsDataURL(file);
               })
             }
 
             async function processFile() {
+                  // Converts uploaded file to base64 and starts a croppie with that image src
                   $('#croppie-container').css('display', 'none').croppie('destroy')  // destroy any existing croppies
                   try {
-                    console.log('Processing uploaded file')
                     let file = uploadedImage.files[0];
                     let src = await readFileAsync(file);
 
@@ -73,12 +72,12 @@
                         boundary: {width: 250, height: 250}})
                       .croppie('bind', {url: src});
 
-
                   } catch(err) {
                     console.log(err);
                   }
                 }
 
+            // Call the processFile every time the chosen image is changed
             uploadedImage.addEventListener("change", processFile);
 
         </script>
@@ -89,6 +88,8 @@
                 let croppedDimensions = $('#croppie-container').croppie('get').points.join();
                 $('#cropped-dimensions-input').val(croppedDimensions);
             }
+
+            // call function on every update to the crop
             $('#croppie-container').on('update.croppie', getCropDimensions);
         </script>
 
