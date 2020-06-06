@@ -1,7 +1,14 @@
 {% extends "homepage/base.html" %}
 {% load crispy_forms_tags %}
+{% load static %}
 {% block content %}
     <div class="content-section">
+
+        <div>
+            <img id="croppie_image" src="{% static "assets/red_and_orange_logo.png" %}" style="width: 25%; display: none">
+        </div>
+
+
         <form method="POST" enctype='multipart/form-data'>
             {% csrf_token %}
 
@@ -30,6 +37,44 @@
         </form>
 
         <script>
+            let uploadedImage = document.getElementById('id_image');
+
+            // Update the previewed image with the uploaded image
+            function readFileAsync(file) {
+              return new Promise((resolve, reject) => {
+                let reader = new FileReader();
+
+                reader.onload = () => {
+                  console.log('FileReader loaded')
+                  resolve(reader.result);
+                };
+
+                reader.onerror = reject;
+
+                console.log('Starting to read file')
+                reader.readAsDataURL(file);
+              })
+            }
+
+            async function processFile() {
+                  try {
+                    console.log('Processing uploaded file')
+                    let file = uploadedImage.files[0];
+                    let src = await readFileAsync(file);
+                    let croppieImage = document.getElementById('croppie_image');
+                    croppieImage.src = src;
+                    croppieImage.style.display = 'block';
+                  } catch(err) {
+                    console.log(err);
+                  }
+                }
+
+            uploadedImage.addEventListener("change", processFile);
+
+        </script>
+
+        <script>
+            // Hide sizes that are only applicable to the gender not selected
             $('#id_gender').on('change', function() {
                 let selectedValue = $("#id_gender").val();
                 let selectedGender = $("#id_gender").find("option").filter(function() {return $(this).val() === selectedValue;}).text()
