@@ -10,9 +10,8 @@ class ProductCreateForm(forms.ModelForm):
         widgets = {'description': forms.Textarea(attrs={'rows': 4})}
 
     def save(self, commit=True):
-        print('stop here')
         self.instance.cropped_dimensions = [int(dim) for dim in self.data.get('cropped-dimensions').split(',')]
-        super(ProductCreateForm, self).save(commit=True)
+        return super(ProductCreateForm, self).save(commit=True)
 
 
 class ProductUpdateForm(forms.ModelForm):
