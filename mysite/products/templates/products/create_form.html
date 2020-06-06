@@ -4,11 +4,6 @@
 {% block content %}
     <div class="content-section">
 
-        <div>
-            <img id="croppie_image" src="{% static "assets/red_and_orange_logo.png" %}" style="width: 25%; display: none">
-        </div>
-
-
         <form method="POST" enctype='multipart/form-data'>
             {% csrf_token %}
 
@@ -29,7 +24,14 @@
 
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">New Product</legend>
+
+              <!-- Container for croppie -->
+              <div id="croppie-container" style="width: 300px; height: 300px; margin-top: 25px; margin-bottom: 25px; margin-left: auto; margin-right: auto; display: none">
+              </div>
+
                 {{ form|crispy }}
+                <input id="cropped-dimensions-input" name="cropped-dimensions" style="display: none">
+
             </fieldset>
             <div class="form-group">
                 <button class="btn btn-outline-info" type="submit">Upload</button>
@@ -57,13 +59,21 @@
             }
 
             async function processFile() {
+                  $('#croppie-container').css('display', 'none').croppie('destroy')  // destroy any existing croppies
                   try {
                     console.log('Processing uploaded file')
                     let file = uploadedImage.files[0];
                     let src = await readFileAsync(file);
-                    let croppieImage = document.getElementById('croppie_image');
-                    croppieImage.src = src;
-                    croppieImage.style.display = 'block';
+
+                      // Start croppie with the uploaded image src
+                      $('#croppie-container')
+                      .css('display', 'block')  // make div container visible
+                      .croppie({
+                        viewport: {width: 200, height: 200},
+                        boundary: {width: 250, height: 250}})
+                      .croppie('bind', {url: src});
+
+
                   } catch(err) {
                     console.log(err);
                   }
@@ -72,6 +82,17 @@
             uploadedImage.addEventListener("change", processFile);
 
         </script>
+
+        <script>
+            // get the cropped dimensions and store them as comma separated string in hidden form input
+            function getCropDimensions() {
+                let croppedDimensions = $('#croppie-container').croppie('get').points.join();
+                $('#cropped-dimensions-input').val(croppedDimensions);
+            }
+            $('#croppie-container').on('update.croppie', getCropDimensions);
+        </script>
+
+
 
         <script>
             // Hide sizes that are only applicable to the gender not selected

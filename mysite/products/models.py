@@ -5,6 +5,10 @@ from django_enumfield import enum
 from django.contrib.auth.models import User
 from django.urls import reverse
 
+from io import BytesIO
+from django.core.files import File
+from PIL import Image
+
 from swaps.model_enums import SwapStatus
 from sizes.models import Size
 from sizes.model_enums import GenderOptions
@@ -29,6 +33,23 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('product-detail', kwargs={'pk': self.pk})
+
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        print('stop here')
+        self.image = self.crop_image()
+        super(Product, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
+
+    def crop_image(self):
+        im = Image.open(self.image)
+        cropped_dimensions = tuple(self.cropped_dimensions)  # this attribute gets added in ProductCreateForm.save
+
+        im.convert('RGB')  # convert mode
+        im = im.crop(cropped_dimensions)  # resize image
+        thumb_io = BytesIO()  # create a BytesIO object
+        im.save(thumb_io, 'JPEG', quality=85)  # save image to BytesIO object
+        image = File(thumb_io, name=self.image.name)  # create a django friendly File object
+
+        return image
 
     @property
     def number_of_offers(self):
