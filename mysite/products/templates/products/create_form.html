@@ -25,9 +25,13 @@
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">New Product</legend>
 
-              <!-- Container for croppie -->
-              <div id="croppie-container" style="width: 300px; height: 300px; margin-top: 25px; margin-bottom: 25px; margin-left: auto; margin-right: auto; display: none">
+              <!-- Container for croppie - contains placeholder image at start -->
+              <div id="croppie-container" style="width: 300px; height: 300px; margin-top: 25px; margin-bottom: 25px; margin-left: auto; margin-right: auto">
+                  <button id="upload-placeholder-image" onclick="triggerImageUpload();">
+                        <img src="{% static "assets/upload_image_placeholder.png" %}" style="width: 100%; height: 100%">
+                  </button>
               </div>
+
 
                 {{ form|crispy }}
                 <input id="cropped-dimensions-input" name="cropped-dimensions" style="display: none">
@@ -37,6 +41,13 @@
                 <button class="btn btn-outline-info" type="submit">Upload</button>
             </div>
         </form>
+
+        <script>
+            function triggerImageUpload(){
+                // Trigger click on hidden file upload button
+                $("#id_image").click()
+            }
+        </script>
 
         <script>
             let uploadedImage = document.getElementById('id_image');
@@ -59,7 +70,9 @@
 
             async function processFile() {
                   // Converts uploaded file to base64 and starts a croppie with that image src
-                  $('#croppie-container').css('display', 'none').croppie('destroy')  // destroy any existing croppies
+
+                  $('#upload-placeholder-image').css('display', 'none');  // hide the placeholder image
+                  $('#croppie-container').croppie('destroy')  // destroy any existing croppies
                   try {
                     let file = uploadedImage.files[0];
                     let src = await readFileAsync(file);

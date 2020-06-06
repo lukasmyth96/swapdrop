@@ -23,7 +23,7 @@ class Product(models.Model):
     gender = enum.EnumField(GenderOptions, default=GenderOptions.UNISEX)
     clothing_type = enum.EnumField(ClothingType, default=ClothingType.T_SHIRT)
     size = models.ForeignKey(Size, null=True, on_delete=models.SET_NULL)
-    image = models.ImageField(default='default.jpg', upload_to='product_pics', validators=[is_square_image])
+    image = models.ImageField(default='default.jpg', upload_to='product_pics')
     date_posted = models.DateTimeField(default=timezone.now)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     status = enum.EnumField(ProductStatus, default=ProductStatus.LIVE)
@@ -35,18 +35,16 @@ class Product(models.Model):
         return reverse('product-detail', kwargs={'pk': self.pk})
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
-        print('stop here')
         self.image = self.crop_image()
         super(Product, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
 
     def crop_image(self):
         im = Image.open(self.image)
+        im_format = im.format
         cropped_dimensions = tuple(self.cropped_dimensions)  # this attribute gets added in ProductCreateForm.save
-
-        im.convert('RGB')  # convert mode
         im = im.crop(cropped_dimensions)  # resize image
         thumb_io = BytesIO()  # create a BytesIO object
-        im.save(thumb_io, 'JPEG', quality=85)  # save image to BytesIO object
+        im.save(thumb_io, im_format)  # save image to BytesIO object
         image = File(thumb_io, name=self.image.name)  # create a django friendly File object
 
         return image
