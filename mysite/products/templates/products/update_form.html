@@ -12,5 +12,30 @@
                 <button class="btn btn-outline-info" type="submit">Update</button>
             </div>
         </form>
+
+        <script>
+            function changeVisibleSizesByGender(){
+                let selectedValue = $("#id_gender").val();
+                let selectedGender = $("#id_gender").find("option").filter(function() {return $(this).val() === selectedValue;}).text()
+                let menSizes = $("#id_size").find("option").filter(function () { return $(this).html().includes("Men"); });
+                let womenSizes = $("#id_size").find("option").filter(function () { return $(this).html().includes("Women"); });
+                if (selectedGender === 'Menswear'){
+                    menSizes.show();
+                    womenSizes.hide();
+                } else if ((selectedGender === 'Womenswear')){
+                    menSizes.hide();
+                    womenSizes.show();
+                } else {
+                    // for Unisex
+                    menSizes.show();
+                    womenSizes.show();
+                }
+            }
+
+            $('#id_gender').on('change', changeVisibleSizesByGender)
+            $(document).ready(changeVisibleSizesByGender())
+
+        </script>
+
     </div>
 {% endblock content %}

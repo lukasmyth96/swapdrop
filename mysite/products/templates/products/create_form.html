@@ -28,5 +28,25 @@
                 <button class="btn btn-outline-info" type="submit">Upload</button>
             </div>
         </form>
+
+        <script>
+            $('#id_gender').on('change', function() {
+                let selectedValue = $("#id_gender").val();
+                let selectedGender = $("#id_gender").find("option").filter(function() {return $(this).val() === selectedValue;}).text()
+                let menSizes = $("#id_size").find("option").filter(function () { return $(this).html().includes("Men"); });
+                let womenSizes = $("#id_size").find("option").filter(function () { return $(this).html().includes("Women"); });
+                if (selectedGender === 'Menswear'){
+                    menSizes.show();
+                    womenSizes.hide();
+                } else if ((selectedGender === 'Womenswear')){
+                    menSizes.hide();
+                    womenSizes.show();
+                } else {
+                    // for Unisex
+                    menSizes.show();
+                    womenSizes.show();
+                }
+            })
+        </script>
     </div>
 {% endblock content %}
