@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'bookings.apps.BookingsConfig',
     'sizes.apps.SizesConfig',
     'django_user_agents',
-    'storages'
+    'storages',
+    'reset_migrations'
 ]
 
 MIDDLEWARE = [

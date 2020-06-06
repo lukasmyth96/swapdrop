@@ -9,7 +9,8 @@ from django.views.generic import (
 
 from products.models import Product
 
-from sizes.models import GenderPreference, GenderOptions, PrimarySize, WaistSize, ShoeSize
+from sizes.models import Size
+from sizes.model_enums import GenderOptions, SizeTypes
 
 from users.forms import UserRegisterForm, UserPostcodeForm, UserUpdateForm, ProfileUpdateForm, ShippingAddressUpdateForm
 from users.models import Profile
@@ -44,31 +45,22 @@ def profile_info(request):
     if request.method == 'POST':
 
         # Process gender preference
-        selected_gender_values = request.POST.getlist('gender_preference')
-        request.user.profile.gender_preference.clear()  # clear existing preferences
-        if 'm' in selected_gender_values:
-            request.user.profile.gender_preference.add(GenderPreference.objects.get(gender=GenderOptions.MENSWEAR))
-        if 'w' in selected_gender_values:
-            request.user.profile.gender_preference.add(GenderPreference.objects.get(gender=GenderOptions.WOMENSWEAR))
+        selected_gender_value = request.POST.get('gender_preference')
+        if selected_gender_value == 'm':
+            request.user.profile.gender_preference = GenderOptions.MENSWEAR
+        elif selected_gender_value == 'w':
+            request.user.profile.gender_preference = GenderOptions.WOMENSWEAR
+        request.user.profile.save(update_fields=['gender_preference'])
 
 
         # Process primary size selections
-        selected_primary_size_ids = [int(_id) for _id in request.POST.getlist('primary_size')]
-        selected_primary_sizes = PrimarySize.objects.filter(pk__in=selected_primary_size_ids)
-        request.user.profile.primary_sizes.clear()
-        request.user.profile.primary_sizes.add(*selected_primary_sizes)
+        # combine selected Size ids from each of the three dropdowns
+        selected_size_ids = request.POST.getlist('primary_size') + request.POST.getlist('waist_size') + request.POST.getlist('shoe_size')
+        selected_size_ids = [int(_id) for _id in selected_size_ids]
+        selected_sizes = Size.objects.filter(pk__in=selected_size_ids)
+        request.user.profile.sizes.clear()
+        request.user.profile.sizes.add(*selected_sizes)
 
-        # Process waist size selections
-        selected_waist_size_ids = [int(_id) for _id in request.POST.getlist('waist_size')]
-        selected_waist_sizes = WaistSize.objects.filter(pk__in=selected_waist_size_ids)
-        request.user.profile.waist_sizes.clear()
-        request.user.profile.waist_sizes.add(*selected_waist_sizes)
-
-        # Process shoe sizes
-        selected_shoe_size_ids = [int(_id) for _id in request.POST.getlist('shoe_size')]
-        selected_shoe_sizes = ShoeSize.objects.filter(pk__in=selected_shoe_size_ids)
-        request.user.profile.shoe_sizes.clear()
-        request.user.profile.shoe_sizes.add(*selected_shoe_sizes)
 
         # Process profile pic update
         form = ProfileUpdateForm(instance=request.user.profile, data=request.POST, files=request.FILES)
@@ -80,16 +72,17 @@ def profile_info(request):
     else:
         form = ProfileUpdateForm(instance=request.user.profile)
 
-        current_gender_preferences = [str(gender) for gender in request.user.profile.gender_preference.all()]
+        current_gender_preference = request.user.profile.gender_preference
+        current_gender_preference_str = '' if current_gender_preference is None else current_gender_preference.name
 
         context = {'form': form,
-                   'current_gender_preferences': current_gender_preferences,
-                   'primary_sizes': PrimarySize.objects.all(),
-                   'current_primary_size_ids': [str(size.id) for size in request.user.profile.primary_sizes.all()],
-                   'waist_sizes': WaistSize.objects.all(),
-                   'current_waist_size_ids': [str(size.id) for size in request.user.profile.waist_sizes.all()],
-                   'shoe_sizes': ShoeSize.objects.all(),
-                   'current_shoe_size_ids': [str(size.id) for size in request.user.profile.shoe_sizes.all()]}
+                   'current_gender_preference': current_gender_preference_str,
+                   'primary_sizes': Size.objects.filter(size_type=SizeTypes.PRIMARY),
+                   'current_primary_size_ids': [str(size.id) for size in request.user.profile.sizes.filter(size_type=SizeTypes.PRIMARY)],
+                   'waist_sizes': Size.objects.filter(size_type=SizeTypes.WAIST),
+                   'current_waist_size_ids': [str(size.id) for size in request.user.profile.sizes.filter(size_type=SizeTypes.WAIST)],
+                   'shoe_sizes': Size.objects.filter(size_type=SizeTypes.SHOE),
+                   'current_shoe_size_ids': [str(size.id) for size in request.user.profile.sizes.filter(size_type=SizeTypes.SHOE)]}
 
         return render(request, 'users/profile_info.html', context=context)
 

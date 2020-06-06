@@ -1,9 +1,5 @@
 from django.contrib import admin
 
-from sizes.models import GenderPreference, PrimarySize, WaistSize, ShoeSize
+from sizes.models import Size
 
-admin.site.register(GenderPreference)
-admin.site.register(PrimarySize)
-admin.site.register(WaistSize)
-admin.site.register(ShoeSize)
-
+admin.site.register(Size)

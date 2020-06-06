@@ -55,8 +55,10 @@
 }
 
 .btn.btn-info.focus.active{
-  background: cadetblue;
-  border-color: cadetblue;
+  outline: 0;
+  outline-offset: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
 
 

@@ -1,4 +1,5 @@
 {% load static %}
+{% load user_agents %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,6 +29,8 @@
 
     <script src={% static 'image-picker.js' %}></script>
 
+    <link rel="shortcut icon" type="image/png" href="{% static 'assets/white_logo.png' %}"/>
+
     {% if title %}
         <title>Swapdrop - {{ title }}</title>
     {% else %}
@@ -36,24 +39,53 @@
 </head>
 <body>
     <header class="site-header">
-      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-        <div class="container">
-          <div class="collapse navbar-collapse" id="navbarToggle">
-            <!-- Navbar Right Side -->
-            <div class="navbar-nav">
-              {% if user.is_authenticated %}
-                <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
-                <a class="nav-item nav-link" href="{% url 'product-feed' %}">Feed</a>
-                <a class="nav-item nav-link" href="#">Matches</a>
-                <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-              {% else %}
-                <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-                <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
-              {% endif %}
-            </div>
-          </div>
-        </div>
+      <nav class="navbar bg-orange fixed-top" style="margin-right: 0">
+               <div class="row" style="width: 100%;">
+                   <div class="col-3">
+                       {% if request|is_mobile %}
+                           <img src="{% static "assets/white_logo.png" %}" style="width: 40%">
+                       {% else %}
+                           <p class="nav-swapdrop"> Swapdrop </p>
+                       {% endif %}
+
+                   </div>
+
+                  <div class="col-6">
+                      <ul class="nav nav-pills" style="margin-left: 5%">
+                          <li class="nav-item" style="margin-left: auto">
+                            <a id="feed-nav-link" class="nav-item nav-link" href="{% url 'product-feed' %}">Feed</a>
+                          </li>
+                          <li class="nav-item" style="margin-right: auto">
+                            <a id="profile-nav-link" class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+                          </li>
+                      </ul>
+                  </div>
+
+                   <div class="col-3" style="text-align: right; vertical-align: middle">
+                       <a href="{% url 'shipping-address-info' %}" style="margin-right: -10%">
+                           {% if request|is_mobile %}
+                               <img alt="menu icon" src="{% static "assets/three_bar_menu_icon.png" %}" style="width: 40%; margin-top: 7%; margin-right: -30%">
+                           {% else %}
+                               <img alt="menu icon" src="{% static "assets/three_bar_menu_icon.png" %}" style="width: 15%">
+                           {% endif %}
+
+                       </a>
+
+                   </div>
+               </div>
       </nav>
+
+    {{ request.resolver_match.url_name|json_script:"current-url" }}
+    <script>
+        // add underline to Feed or Profile depending on URL
+        let currentUrl = JSON.parse(document.getElementById('current-url').textContent);
+        if (currentUrl.includes('profile')){
+            $("#profile-nav-link").addClass("nav-link-underline")
+        } else if (currentUrl.includes('feed')){
+            $("#feed-nav-link").addClass("nav-link-underline")
+        }
+    </script>
+
     </header>
     <main role="main" class="container">
       <div class="row">

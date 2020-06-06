@@ -10,54 +10,35 @@
 
         <!-- Gender Preferences -->
         <div class="row" style="text-align: center">
-            <div class="btn-group btn-group-toggle" data-toggle="buttons" style="display: inline-block">
+            <div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin-left: auto; margin-right: auto">
               <label id="menswear-label" class="btn btn-info" for="menswear-checkbox">
-                <input type="checkbox" name="gender_preference" id="menswear-checkbox" value="m" onchange="checkIfNoneSelected()"> Menswear
+                <input type="radio" name="gender_preference" id="menswear-checkbox" value="m"> Menswear
               </label>
               <label id="womenswear-label" class="btn btn-info" for="womenswear-checkbox">
-                <input type="checkbox" name="gender_preference" id="womenswear-checkbox" value="w" onchange="checkIfNoneSelected()"> Womenswear
+                <input type="radio" name="gender_preference" id="womenswear-checkbox" value="w"> Womenswear
               </label>
             </div>
         </div>
-        {{ current_gender_preferences|json_script:"current_gender_preferences" }}
+        {{ current_gender_preference|json_script:"current_gender_preference" }}
         <script>
             // Select currently selected genders
-            let currentGenderPreferences = JSON.parse(document.getElementById('current_gender_preferences').textContent);
-            if (currentGenderPreferences.includes('MENSWEAR')){
+            let currentGenderPreference = JSON.parse(document.getElementById('current_gender_preference').textContent);
+            if (currentGenderPreference === 'MENSWEAR'){
                 $("#menswear-label").toggleClass('active');
                 $("#menswear-checkbox").prop("checked", true);
             }
-            if (currentGenderPreferences.includes('WOMENSWEAR')){
+            if (currentGenderPreference === 'WOMENSWEAR'){
                 $("#womenswear-label").toggleClass('active');
                 $("#womenswear-checkbox").prop("checked", true);
             }
 
-            // shows alert if no gender selected after click
-            function checkIfNoneSelected(){
-            if ($("input[type=checkbox]:checked").length === 0){
-                alert('You must select at least one gender preference')}
-            }
         </script>
 
 
-        <!-- Labels for Size Dropdowns - can't seem to align these if including in same column as below-->
         <div class="row" style="margin-top: 5%">
-            <div class="col-4" style="text-align: center">
-                <label for="primary-size-select"> Primary Size </label>
-            </div>
-            <div class="col-4" style="text-align: center">
-                <label for="waist-size-select"> Waist Size </label>
-            </div>
-            <div class="col-4" style="text-align: center">
-                <label for="shoe-size-select"> Shoe Size </label>
-            </div>
-        </div>
-
-
-        <div class="row">
             <!-- PRIMARY SIZE -->
-            <div class="col-4" style="text-align: center">
-                <select id="primary-size-select" name="primary_size" class="selectpicker" title="select primary sizes..." data-size="5" data-width="100%" data-actions-box="true" multiple>
+            <div class="col-xs-6 col-sm-4 col-md-4" style="text-align: center; margin-top: 10px">
+                <select id="primary-size-select" name="primary_size" class="selectpicker dropup" title="select primary sizes..." data-size="5" data-width="100%" data-actions-box="true" data-dropup-auto="false" multiple>
                     {% for primary_size in primary_sizes %}
                         <option value="{{ primary_size.id }}">{{ primary_size }}</option>
                     {% endfor %}
@@ -68,13 +49,25 @@
                 <script>
                     // list of ids
                     let currentPrimarySizeIds = JSON.parse(document.getElementById('current-primary-size-ids').textContent);
-                    $(".selectpicker").selectpicker('val', currentPrimarySizeIds)
+                    $("#primary-size-select").selectpicker('val', currentPrimarySizeIds)
+                </script>
+
+                <script>
+                    // automatically scroll currently selected row into view
+                    $('#primary-size-select').on('shown.bs.select', function () {
+                        let selectedVals = $(this).selectpicker('val')
+                        if (selectedVals.length > 0){
+                            let firstSelectedVal = selectedVals[0]
+                            let selectedText = $(this).find('option').filter(function(){return this.value === firstSelectedVal}).text()
+                            let optionElement = $(this).parent().find('li').filter(function(){return this.textContent === selectedText}).find('a')
+                            optionElement.attr({"aria-disabled": "false", "aria-selected": "true", "tabindex": "0"})
+                            optionElement.focus()}})
                 </script>
             </div>
 
             <!-- WAIST SIZE -->
-            <div class="col-4" style="text-align: center">
-                <select id="waist-size-select" name="waist_size" class="selectpicker" title="select waist sizes..." data-size="5" data-width="100%" data-actions-box="true" multiple>
+            <div class="col-xs-6 col-sm-4 col-md-4" style="text-align: center; margin-top: 10px">
+                <select id="waist-size-select" name="waist_size" class="selectpicker dropup" title="select waist sizes..." data-size="5" data-width="100%" data-actions-box="true" data-dropup-auto="false" multiple>
                     {% for waist_size in waist_sizes %}
                         <option value="{{ waist_size.id }}">{{ waist_size }}</option>
                     {% endfor %}
@@ -85,13 +78,25 @@
                 <script>
                     // list of ids
                     let currentWaistSizeIds = JSON.parse(document.getElementById('current-waist-size-ids').textContent);
-                    $(".selectpicker").selectpicker('val', currentWaistSizeIds)
+                    $("#waist-size-select").selectpicker('val', currentWaistSizeIds)
+                </script>
+
+                <script>
+                    // automatically scroll currently selected row into view
+                    $('#waist-size-select').on('shown.bs.select', function () {
+                        let selectedVals = $(this).selectpicker('val')
+                        if (selectedVals.length > 0){
+                            let firstSelectedVal = selectedVals[0]
+                            let selectedText = $(this).find('option').filter(function(){return this.value === firstSelectedVal}).text()
+                            let optionElement = $(this).parent().find('li').filter(function(){return this.textContent === selectedText}).find('a')
+                            optionElement.attr({"aria-disabled": "false", "aria-selected": "true", "tabindex": "0"})
+                            optionElement.focus()}})
                 </script>
             </div>
 
             <!-- SHOE SIZE -->
-            <div class="col-4" style="text-align: center">
-                <select id="shoe-size-select" name="shoe_size" class="selectpicker" title="select shoe sizes..." data-size="5" data-width="100%" data-actions-box="true" multiple>
+            <div class="col-xs-6 col-sm-4 col-md-4" style="text-align: center; margin-top: 10px">
+                <select id="shoe-size-select" name="shoe_size" class="selectpicker dropup" title="select shoe sizes..." data-size="5" data-width="100%" data-actions-box="true"  multiple>
                     {% for shoe_size in shoe_sizes %}
                         <option value="{{ shoe_size.id }}">{{ shoe_size }}</option>
                     {% endfor %}
@@ -102,22 +107,28 @@
                 <script>
                     // list of ids
                     let currentShoeSizeIds = JSON.parse(document.getElementById('current-shoe-size-ids').textContent);
-                    $(".selectpicker").selectpicker('val', currentShoeSizeIds)
+                    $("#shoe-size-select").selectpicker('val', currentShoeSizeIds)
+                </script>
+
+                <script>
+                    // automatically scroll currently selected row into view
+                    $('#shoe-size-select').on('shown.bs.select', function () {
+                        let selectedVals = $(this).selectpicker('val')
+                        if (selectedVals.length > 0){
+                            let firstSelectedVal = selectedVals[0]
+                            let selectedText = $(this).find('option').filter(function(){return this.value === firstSelectedVal}).text()
+                            let optionElement = $(this).parent().find('li').filter(function(){return this.textContent === selectedText}).find('a')
+                            optionElement.attr({"aria-disabled": "false", "aria-selected": "true", "tabindex": "0"})
+                            optionElement.focus()}})
                 </script>
             </div>
 
         </div>
     </fieldset>
 
-    <div class="form-group">
+    <div class="form-group" style="text-align: center">
         <button class="btn btn-outline-info" type="submit">Update</button>
     </div>
  </form>
-
- <script>
-     {% if request|is_mobile %}
-         $('.selectpicker').selectpicker('mobile');
-     {% endif %}
- </script>
 
 {% endblock profile_content %}

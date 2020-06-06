@@ -3,7 +3,7 @@
 
 .montserrat{
     font-family: 'Montserrat', sans-serif;
-        font-weight: 800;
+    font-weight: 800;
 }
 
 .h1{
@@ -21,7 +21,7 @@
 }
 
 .orange{
-    color: rgba(255, 59, 0, 1);
+    color: rgb(255, 59, 0);
 }
 
 .black{
