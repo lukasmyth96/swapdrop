@@ -8,7 +8,7 @@ from django.urls import reverse
 from swaps.model_enums import SwapStatus
 from sizes.models import Size
 from sizes.model_enums import GenderOptions
-from .model_enums import ProductStatus
+from .model_enums import ProductStatus, ClothingType
 from .validators import is_square_image
 
 
@@ -16,8 +16,9 @@ class Product(models.Model):
 
     name = models.CharField(max_length=50)
     description = models.TextField(max_length=250)
-    size = models.ForeignKey(Size, null=True, on_delete=models.SET_NULL)
     gender = enum.EnumField(GenderOptions, default=GenderOptions.UNISEX)
+    clothing_type = enum.EnumField(ClothingType, default=ClothingType.T_SHIRT)
+    size = models.ForeignKey(Size, null=True, on_delete=models.SET_NULL)
     image = models.ImageField(default='default.jpg', upload_to='product_pics', validators=[is_square_image])
     date_posted = models.DateTimeField(default=timezone.now)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
