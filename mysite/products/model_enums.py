@@ -26,3 +26,8 @@ class ProductStatus(enum.Enum):
         COLLECTED: ugettext_lazy("Collected"),
         DELIVERED: ugettext_lazy("Delivered"),
     }
+
+
+
+
+
