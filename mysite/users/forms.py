@@ -41,6 +41,11 @@ class ProfileUpdateForm(forms.ModelForm):
         model = Profile
         fields = ['image']
 
+    def __init__(self, *args, **kwargs):
+        super(ProfileUpdateForm, self).__init__(*args, **kwargs)
+        for fieldname in ['image']:
+            self.fields[fieldname].help_text = None
+
 
 class ShippingAddressUpdateForm(forms.ModelForm):
     class Meta:
