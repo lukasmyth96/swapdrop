@@ -13,7 +13,6 @@ from swaps.model_enums import SwapStatus
 from sizes.models import Size
 from sizes.model_enums import GenderOptions
 from .model_enums import ProductStatus, ClothingType
-from .validators import is_square_image
 
 
 class Product(models.Model):
@@ -27,6 +26,8 @@ class Product(models.Model):
     date_posted = models.DateTimeField(default=timezone.now)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     status = enum.EnumField(ProductStatus, default=ProductStatus.LIVE)
+
+    cropped_dimensions = None  # stores image crop dims from ProductCreateView Form
 
     def __str__(self):
         return f'ID: {self.id} - {self.name} - status:{self.status.name}'
