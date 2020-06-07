@@ -1,12 +1,14 @@
+import os
+from io import BytesIO
+
 from django.db import models
+from django.core.files import File
 from django.apps import apps
 from django.utils import timezone
 from django_enumfield import enum
 from django.contrib.auth.models import User
 from django.urls import reverse
 
-from io import BytesIO
-from django.core.files import File
 from PIL import Image
 
 from swaps.model_enums import SwapStatus
@@ -36,17 +38,21 @@ class Product(models.Model):
         return reverse('product-detail', kwargs={'pk': self.pk})
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
-        self.image = self.crop_image()
+        self.image = self.crop_resize_rename_image()
         super(Product, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
 
-    def crop_image(self):
+    def crop_resize_rename_image(self):
         im = Image.open(self.image)
         im_format = im.format
         cropped_dimensions = tuple(self.cropped_dimensions)  # this attribute gets added in ProductCreateForm.save
-        im = im.crop(cropped_dimensions)  # resize image
+        im = im.crop(cropped_dimensions)  # crop image
+        im = im.resize((512, 512))  # resize image
         thumb_io = BytesIO()  # create a BytesIO object
         im.save(thumb_io, im_format)  # save image to BytesIO object
-        image = File(thumb_io, name=self.image.name)  # create a django friendly File object
+
+        _, file_extension = os.path.splitext(self.image.name)
+        new_filename = self.date_posted.strftime(f'%d_%m_%Y_%H_%M_%S{file_extension}')
+        image = File(thumb_io, name=new_filename)  # create a django friendly File object
 
         return image
 
