@@ -1,45 +1,89 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
 from django.views.generic import (
     ListView
 )
 
-from users.forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, ShippingAddressUpdateForm
+
 from products.models import Product
+
+from sizes.models import Size
+from sizes.model_enums import GenderOptions, SizeTypes
+
+from users.forms import UserRegisterForm, UserPostcodeForm, UserUpdateForm, ProfileUpdateForm, ShippingAddressUpdateForm
+from users.models import Profile
 
 
 def register(request):
     if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, f'Account Created! You can now Login')
-            return redirect('login')
+        user_form = UserRegisterForm(request.POST)
+        postcode_form = UserPostcodeForm(request.POST)
+        if user_form.is_valid() and postcode_form.is_valid():
+            # Create new user and profile
+            user = user_form.save()
+            # Note - there's probably an easier way of doing below
+            profile = Profile.objects.get(user=user)
+            profile.postcode = postcode_form.cleaned_data.get('postcode')
+            profile.save(update_fields=['postcode'])
+
+            # Automatically log user in
+            user = authenticate(username=user_form.cleaned_data['username'],
+                                password=user_form.cleaned_data['password1'])
+            login(request, user)
+            messages.success(request, f'Welcome to Swapdrop - please selected your preferences below...')
+            return redirect('profile-info')
     else:
-        form = UserRegisterForm()
-    return render(request, 'users/register.html', {'form': form})
+        user_form = UserRegisterForm()
+        postcode_form = UserPostcodeForm()
+    return render(request, 'users/register.html', {'user_form': user_form, 'postcode_form': postcode_form})
 
 
 @login_required()
 def profile_info(request):
     if request.method == 'POST':
-        u_form = UserUpdateForm(instance=request.user, data=request.POST)
-        p_form = ProfileUpdateForm(instance=request.user.profile, data=request.POST, files=request.FILES)
 
-        if u_form.is_valid() and p_form.is_valid():
-            u_form.save()
-            p_form.save()
-            messages.success(request, 'Your account has been updated')
+        # Process gender preference
+        selected_gender_value = request.POST.get('gender_preference')
+        if selected_gender_value == 'm':
+            request.user.profile.gender_preference = GenderOptions.MENSWEAR
+        elif selected_gender_value == 'w':
+            request.user.profile.gender_preference = GenderOptions.WOMENSWEAR
+        request.user.profile.save(update_fields=['gender_preference'])
+
+
+        # Process primary size selections
+        # combine selected Size ids from each of the three dropdowns
+        selected_size_ids = request.POST.getlist('primary_size') + request.POST.getlist('waist_size') + request.POST.getlist('shoe_size')
+        selected_size_ids = [int(_id) for _id in selected_size_ids]
+        selected_sizes = Size.objects.filter(pk__in=selected_size_ids)
+        request.user.profile.sizes.clear()
+        request.user.profile.sizes.add(*selected_sizes)
+
+
+        # Process profile pic update
+        form = ProfileUpdateForm(instance=request.user.profile, data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your profile has been updated')
             return redirect('profile')
 
     else:
-        u_form = UserUpdateForm(instance=request.user)
-        p_form = ProfileUpdateForm(instance=request.user.profile)
-        context = {
-            'u_form': u_form,
-            'p_form': p_form
-        }
+        form = ProfileUpdateForm(instance=request.user.profile)
+
+        current_gender_preference = request.user.profile.gender_preference
+        current_gender_preference_str = '' if current_gender_preference is None else current_gender_preference.name
+
+        context = {'form': form,
+                   'current_gender_preference': current_gender_preference_str,
+                   'primary_sizes': Size.objects.filter(size_type=SizeTypes.PRIMARY),
+                   'current_primary_size_ids': [str(size.id) for size in request.user.profile.sizes.filter(size_type=SizeTypes.PRIMARY)],
+                   'waist_sizes': Size.objects.filter(size_type=SizeTypes.WAIST),
+                   'current_waist_size_ids': [str(size.id) for size in request.user.profile.sizes.filter(size_type=SizeTypes.WAIST)],
+                   'shoe_sizes': Size.objects.filter(size_type=SizeTypes.SHOE),
+                   'current_shoe_size_ids': [str(size.id) for size in request.user.profile.sizes.filter(size_type=SizeTypes.SHOE)]}
+
         return render(request, 'users/profile_info.html', context=context)
 
 

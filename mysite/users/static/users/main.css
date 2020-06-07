@@ -41,3 +41,25 @@
   cursor: pointer;
   border-radius: 5px;
 }
+
+.postcode-warning{
+  color: red;
+  display: none;
+  font-size: 2vw;
+  margin-left: 1%;
+}
+
+.btn.btn-info {
+  background: grey;
+  border-color: grey;
+}
+
+.btn.btn-info.focus.active{
+  outline: 0;
+  outline-offset: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+
+

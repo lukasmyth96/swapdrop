@@ -1,4 +1,8 @@
+import os
+from io import BytesIO
+
 from django.db import models
+from django.core.files import File
 from django.apps import apps
 from django.utils import timezone
 from django_enumfield import enum
@@ -8,24 +12,49 @@ from django.urls import reverse
 from PIL import Image
 
 from swaps.model_enums import SwapStatus
-from .model_enums import ProductStatus
-from .validators import is_square_image
+from sizes.models import Size
+from sizes.model_enums import GenderOptions
+from .model_enums import ProductStatus, ClothingType
 
 
 class Product(models.Model):
 
     name = models.CharField(max_length=50)
     description = models.TextField(max_length=250)
-    image = models.ImageField(default='default.jpg', upload_to='product_pics', validators=[is_square_image])
+    gender = enum.EnumField(GenderOptions, default=GenderOptions.UNISEX)
+    clothing_type = enum.EnumField(ClothingType, default=ClothingType.T_SHIRT)
+    size = models.ForeignKey(Size, null=True, on_delete=models.SET_NULL)
+    image = models.ImageField(default='default.jpg', upload_to='product_pics')
     date_posted = models.DateTimeField(default=timezone.now)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     status = enum.EnumField(ProductStatus, default=ProductStatus.LIVE)
+
+    cropped_dimensions = None  # stores image crop dims from ProductCreateView Form
 
     def __str__(self):
         return f'ID: {self.id} - {self.name} - status:{self.status.name}'
 
     def get_absolute_url(self):
         return reverse('product-detail', kwargs={'pk': self.pk})
+
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        self.image = self.crop_resize_rename_image()
+        super(Product, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
+
+    def crop_resize_rename_image(self):
+        im = Image.open(self.image)
+        im_format = im.format
+        cropped_dimensions = tuple(self.cropped_dimensions)  # this attribute gets added in ProductCreateForm.save
+        im = im.crop(cropped_dimensions)  # crop image
+        im = im.resize((512, 512))  # resize image
+        thumb_io = BytesIO()  # create a BytesIO object
+        im.save(thumb_io, im_format)  # save image to BytesIO object
+
+        _, file_extension = os.path.splitext(self.image.name)
+        new_filename = self.date_posted.strftime(f'%d_%m_%Y_%H_%M_%S{file_extension}')
+        image = File(thumb_io, name=new_filename)  # create a django friendly File object
+
+        return image
 
     @property
     def number_of_offers(self):
@@ -36,11 +65,3 @@ class Product(models.Model):
         Swap = apps.get_model('swaps', 'Swap')
         return len(Swap.objects.filter(desired_product=self, status=SwapStatus.PENDING_REVIEW))
 
-    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
-        super(Product, self).save(force_insert, force_update, using, update_fields)
-
-        # Resize to have 512*512
-        img = Image.open(self.image.path)
-        size = (512, 512)
-        img = img.resize(size)
-        img.save(self.image.path)

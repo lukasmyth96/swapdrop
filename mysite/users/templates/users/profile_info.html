@@ -1,15 +1,134 @@
 {% extends "users/profile_base.html" %}
 {% load crispy_forms_tags %}
+{% load user_agents %}
 {% block profile_content %}
   <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <fieldset class="form-group">
         <legend class="border-bottom mb-4">Profile Info</legend>
-        {{ u_form|crispy }}
-        {{ p_form|crispy }}
+        {{ form|crispy }}
+
+        <!-- Gender Preferences -->
+        <div class="row" style="text-align: center">
+            <div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin-left: auto; margin-right: auto">
+              <label id="menswear-label" class="btn btn-info" for="menswear-checkbox">
+                <input type="radio" name="gender_preference" id="menswear-checkbox" value="m"> Menswear
+              </label>
+              <label id="womenswear-label" class="btn btn-info" for="womenswear-checkbox">
+                <input type="radio" name="gender_preference" id="womenswear-checkbox" value="w"> Womenswear
+              </label>
+            </div>
+        </div>
+        {{ current_gender_preference|json_script:"current_gender_preference" }}
+        <script>
+            // Select currently selected genders
+            let currentGenderPreference = JSON.parse(document.getElementById('current_gender_preference').textContent);
+            if (currentGenderPreference === 'MENSWEAR'){
+                $("#menswear-label").toggleClass('active');
+                $("#menswear-checkbox").prop("checked", true);
+            }
+            if (currentGenderPreference === 'WOMENSWEAR'){
+                $("#womenswear-label").toggleClass('active');
+                $("#womenswear-checkbox").prop("checked", true);
+            }
+
+        </script>
+
+
+        <div class="row" style="margin-top: 5%">
+            <!-- PRIMARY SIZE -->
+            <div class="col-xs-6 col-sm-4 col-md-4" style="text-align: center; margin-top: 10px">
+                <select id="primary-size-select" name="primary_size" class="selectpicker dropup" title="select primary sizes..." data-size="5" data-width="100%" data-actions-box="true" data-dropup-auto="false" multiple>
+                    {% for primary_size in primary_sizes %}
+                        <option value="{{ primary_size.id }}">{{ primary_size }}</option>
+                    {% endfor %}
+                </select>
+                <!-- creates script tag which contains currently selected primary size ids -->
+                {{ current_primary_size_ids|json_script:"current-primary-size-ids" }}
+
+                <script>
+                    // list of ids
+                    let currentPrimarySizeIds = JSON.parse(document.getElementById('current-primary-size-ids').textContent);
+                    $("#primary-size-select").selectpicker('val', currentPrimarySizeIds)
+                </script>
+
+                <script>
+                    // automatically scroll currently selected row into view
+                    $('#primary-size-select').on('shown.bs.select', function () {
+                        let selectedVals = $(this).selectpicker('val')
+                        if (selectedVals.length > 0){
+                            let firstSelectedVal = selectedVals[0]
+                            let selectedText = $(this).find('option').filter(function(){return this.value === firstSelectedVal}).text()
+                            let optionElement = $(this).parent().find('li').filter(function(){return this.textContent === selectedText}).find('a')
+                            optionElement.attr({"aria-disabled": "false", "aria-selected": "true", "tabindex": "0"})
+                            optionElement.focus()}})
+                </script>
+            </div>
+
+            <!-- WAIST SIZE -->
+            <div class="col-xs-6 col-sm-4 col-md-4" style="text-align: center; margin-top: 10px">
+                <select id="waist-size-select" name="waist_size" class="selectpicker dropup" title="select waist sizes..." data-size="5" data-width="100%" data-actions-box="true" data-dropup-auto="false" multiple>
+                    {% for waist_size in waist_sizes %}
+                        <option value="{{ waist_size.id }}">{{ waist_size }}</option>
+                    {% endfor %}
+                </select>
+                <!-- creates script tag which contains currently selected waist size ids -->
+                {{ current_waist_size_ids|json_script:"current-waist-size-ids" }}
+
+                <script>
+                    // list of ids
+                    let currentWaistSizeIds = JSON.parse(document.getElementById('current-waist-size-ids').textContent);
+                    $("#waist-size-select").selectpicker('val', currentWaistSizeIds)
+                </script>
+
+                <script>
+                    // automatically scroll currently selected row into view
+                    $('#waist-size-select').on('shown.bs.select', function () {
+                        let selectedVals = $(this).selectpicker('val')
+                        if (selectedVals.length > 0){
+                            let firstSelectedVal = selectedVals[0]
+                            let selectedText = $(this).find('option').filter(function(){return this.value === firstSelectedVal}).text()
+                            let optionElement = $(this).parent().find('li').filter(function(){return this.textContent === selectedText}).find('a')
+                            optionElement.attr({"aria-disabled": "false", "aria-selected": "true", "tabindex": "0"})
+                            optionElement.focus()}})
+                </script>
+            </div>
+
+            <!-- SHOE SIZE -->
+            <div class="col-xs-6 col-sm-4 col-md-4" style="text-align: center; margin-top: 10px">
+                <select id="shoe-size-select" name="shoe_size" class="selectpicker dropup" title="select shoe sizes..." data-size="5" data-width="100%" data-actions-box="true"  multiple>
+                    {% for shoe_size in shoe_sizes %}
+                        <option value="{{ shoe_size.id }}">{{ shoe_size }}</option>
+                    {% endfor %}
+                </select>
+                <!-- creates script tag which contains currently selected shoe size ids -->
+                {{ current_shoe_size_ids|json_script:"current-shoe-size-ids" }}
+
+                <script>
+                    // list of ids
+                    let currentShoeSizeIds = JSON.parse(document.getElementById('current-shoe-size-ids').textContent);
+                    $("#shoe-size-select").selectpicker('val', currentShoeSizeIds)
+                </script>
+
+                <script>
+                    // automatically scroll currently selected row into view
+                    $('#shoe-size-select').on('shown.bs.select', function () {
+                        let selectedVals = $(this).selectpicker('val')
+                        if (selectedVals.length > 0){
+                            let firstSelectedVal = selectedVals[0]
+                            let selectedText = $(this).find('option').filter(function(){return this.value === firstSelectedVal}).text()
+                            let optionElement = $(this).parent().find('li').filter(function(){return this.textContent === selectedText}).find('a')
+                            optionElement.attr({"aria-disabled": "false", "aria-selected": "true", "tabindex": "0"})
+                            optionElement.focus()}})
+                </script>
+            </div>
+
+        </div>
     </fieldset>
-    <div class="form-group">
+
+    <div class="form-group" style="text-align: center">
         <button class="btn btn-outline-info" type="submit">Update</button>
     </div>
  </form>
+
 {% endblock profile_content %}

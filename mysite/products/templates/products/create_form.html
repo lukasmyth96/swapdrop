@@ -1,7 +1,9 @@
 {% extends "homepage/base.html" %}
 {% load crispy_forms_tags %}
+{% load static %}
 {% block content %}
     <div class="content-section">
+
         <form method="POST" enctype='multipart/form-data'>
             {% csrf_token %}
 
@@ -22,11 +24,109 @@
 
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">New Product</legend>
+
+              <!-- Container for croppie - contains placeholder image at start -->
+              <div id="croppie-container" style="width: 300px; height: 300px; margin-top: 25px; margin-bottom: 25px; margin-left: auto; margin-right: auto">
+                  <button id="upload-placeholder-image" onclick="triggerImageUpload();">
+                        <img src="{% static "assets/upload_image_placeholder.png" %}" style="width: 100%; height: 100%">
+                  </button>
+              </div>
+
+
                 {{ form|crispy }}
+                <input id="cropped-dimensions-input" name="cropped-dimensions" style="display: none">
+
             </fieldset>
             <div class="form-group">
                 <button class="btn btn-outline-info" type="submit">Upload</button>
             </div>
         </form>
+
+        <script>
+            function triggerImageUpload(){
+                // Trigger click on hidden file upload button
+                $("#id_image").click()
+            }
+        </script>
+
+        <script>
+            let uploadedImage = document.getElementById('id_image');
+
+            function readFileAsync(file) {
+              // This function returns a Promise with resolve value as a base64 encoding of the uploading image
+              // We do this so we can display the uploaded image in the cropper
+              return new Promise((resolve, reject) => {
+                let reader = new FileReader();
+
+                reader.onload = () => {
+                  resolve(reader.result);
+                };
+
+                reader.onerror = reject;
+
+                reader.readAsDataURL(file);
+              })
+            }
+
+            async function processFile() {
+                  // Converts uploaded file to base64 and starts a croppie with that image src
+
+                  $('#upload-placeholder-image').css('display', 'none');  // hide the placeholder image
+                  $('#croppie-container').croppie('destroy')  // destroy any existing croppies
+                  try {
+                    let file = uploadedImage.files[0];
+                    let src = await readFileAsync(file);
+
+                      // Start croppie with the uploaded image src
+                      $('#croppie-container')
+                      .css('display', 'block')  // make div container visible
+                      .croppie({
+                        viewport: {width: 200, height: 200},
+                        boundary: {width: 250, height: 250}})
+                      .croppie('bind', {url: src});
+
+                  } catch(err) {
+                    console.log(err);
+                  }
+                }
+
+            // Call the processFile every time the chosen image is changed
+            uploadedImage.addEventListener("change", processFile);
+
+        </script>
+
+        <script>
+            // get the cropped dimensions and store them as comma separated string in hidden form input
+            function getCropDimensions() {
+                let croppedDimensions = $('#croppie-container').croppie('get').points.join();
+                $('#cropped-dimensions-input').val(croppedDimensions);
+            }
+
+            // call function on every update to the crop
+            $('#croppie-container').on('update.croppie', getCropDimensions);
+        </script>
+
+
+
+        <script>
+            // Hide sizes that are only applicable to the gender not selected
+            $('#id_gender').on('change', function() {
+                let selectedValue = $("#id_gender").val();
+                let selectedGender = $("#id_gender").find("option").filter(function() {return $(this).val() === selectedValue;}).text()
+                let menSizes = $("#id_size").find("option").filter(function () { return $(this).html().includes("Men"); });
+                let womenSizes = $("#id_size").find("option").filter(function () { return $(this).html().includes("Women"); });
+                if (selectedGender === 'Menswear'){
+                    menSizes.show();
+                    womenSizes.hide();
+                } else if ((selectedGender === 'Womenswear')){
+                    menSizes.hide();
+                    womenSizes.show();
+                } else {
+                    // for Unisex
+                    menSizes.show();
+                    womenSizes.show();
+                }
+            })
+        </script>
     </div>
 {% endblock content %}

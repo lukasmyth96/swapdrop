@@ -15,6 +15,7 @@ class ProductListView(ListView):
     model = Product
     template_name = 'products/feed.html'
     context_object_name = 'products'
+    paginate_by = 36
     ordering = ['-date_posted']
 
     def get_queryset(self):
@@ -46,7 +47,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
-        return super().form_valid(form)
+        return super(ProductCreateView, self).form_valid(form)
 
 
 class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):

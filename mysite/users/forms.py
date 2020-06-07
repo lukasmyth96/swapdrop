@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from .models import Profile
 from django.contrib.auth.forms import UserCreationForm
 
+from users.validators import is_in_chichester
+
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
@@ -11,10 +13,23 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
+        exclude = ['user']
+
+    def __init__(self, *args, **kwargs):
+        super(UserRegisterForm, self).__init__(*args, **kwargs)
+        for fieldname in ['username', 'email', 'password1', 'password2']:
+            self.fields[fieldname].help_text = None
+
+
+class UserPostcodeForm(forms.ModelForm):
+    postcode = forms.CharField(validators=[is_in_chichester])
+
+    class Meta:
+        model = Profile
+        fields = ['postcode']
 
 
 class UserUpdateForm(forms.ModelForm):
-    email = forms.EmailField()
 
     class Meta:
         model = User
@@ -25,6 +40,11 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['image']
+
+    def __init__(self, *args, **kwargs):
+        super(ProfileUpdateForm, self).__init__(*args, **kwargs)
+        for fieldname in ['image']:
+            self.fields[fieldname].help_text = None
 
 
 class ShippingAddressUpdateForm(forms.ModelForm):

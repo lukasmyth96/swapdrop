@@ -1,0 +1,7 @@
+#id_image {
+    display: none;
+}
+
+label[for="id_image"] {
+    display: none;
+}

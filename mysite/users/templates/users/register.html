@@ -6,7 +6,10 @@
             {% csrf_token %}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Sign Up</legend>
-                {{ form|crispy }}
+                {{ postcode_form|crispy }}
+                <p class="postcode-warning"> Sorry - for now you must have a PO19 postcode to sign up </p>
+
+                {{ user_form|crispy }}
             </fieldset>
             <div class="form-group">
                 <button class="btn btn-outline-info" type="submit">Sign Up</button>
@@ -18,4 +21,16 @@
             </small>
         </div>
     </div>
+    <script>
+
+        $("#id_postcode").focus(function() {
+            $(".postcode-warning").hide();}
+            ).blur(function() {
+            if (this.value && !this.value.startsWith('PO19')){
+            $(".postcode-warning").show();
+            console.log('INVALID POSTCODE');
+            }
+            });
+    </script>
+
 {% endblock content %}

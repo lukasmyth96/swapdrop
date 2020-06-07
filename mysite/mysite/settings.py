@@ -22,8 +22,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '-f*vqbes1p!gto2kln0cc4^+k*$zasj^pd2u!n#g*+pj42l(rk'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -44,7 +42,10 @@ INSTALLED_APPS = [
     'swaps.apps.SwapsConfig',
     'checkout.apps.CheckoutConfig',
     'bookings.apps.BookingsConfig',
-    'django_user_agents'
+    'sizes.apps.SizesConfig',
+    'django_user_agents',
+    'storages',
+    'reset_migrations'
 ]
 
 MIDDLEWARE = [
@@ -81,17 +82,19 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'swapdrop_db',
-        'USER': 'luka',
-        'PASSWORD': 'test123',
-        'HOST': 'localhost',
-        'PORT': '5432'
+# production RDS database - env variables are exposed by default on AWS elastic beanstalk
+if not os.environ.get('DJANGO_DEVELOPMENT'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ['RDS_DB_NAME'],
+            'USER': os.environ['RDS_USERNAME'],
+            'PASSWORD': os.environ['RDS_PASSWORD'],
+            'HOST': os.environ['RDS_HOSTNAME'],
+            'PORT': os.environ['RDS_PORT'],
+        }
     }
-}
+    DEBUG = True
 
 
 # Password validation
@@ -130,9 +133,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -141,3 +144,30 @@ LOGIN_REDIRECT_URL = 'profile'
 LOGIN_URL = 'login'
 
 ALLOWED_HOSTS = ['*']
+
+AWS_S3_OBJECT_PARAMETERS = {
+    'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+    'CacheControl': 'max-age=94608000',
+}
+
+if not os.environ.get('DJANGO_DEVELOPMENT'):
+    # Production specific
+    AWS_STORAGE_BUCKET_NAME = os.environ.get('S3_BUCKET_NAME')
+    AWS_S3_REGION_NAME = 'eu-west-2'  # e.g. us-east-2
+    AWS_ACCESS_KEY_ID = 'AKIASOHMJCQWEXZ4ENVN'  # for django-user
+    AWS_SECRET_ACCESS_KEY = 'Cs43m15Wmup60ONLohQXLmdEsGWwgPidOdlz5PiG'  # for django-user
+    AWS_DEFAULT_ACL = None
+    AWS_S3_FILE_OVERWRITE = False
+    AWS_QUERYSTRING_AUTH = False
+
+    STATICFILES_LOCATION = 'static'
+    STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+
+    MEDIAFILES_LOCATION = 'media'
+    DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+
+
+# IMPORTANT - the following will override certain settings with whatever is declared in settings_dev.py if the
+# environment variable DJANGO_DEVELOPMENT is found.
+if os.environ.get('DJANGO_DEVELOPMENT'):
+    from mysite.settings_dev import *  # or specific overrides
