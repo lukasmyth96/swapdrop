@@ -1,6 +1,9 @@
 <! Used as a base component for product feed and profil feed - exposes single_product block to be extended>
-<div class="container-fluid">
-    <div class="row">
+<div>
+    <div style="text-align: center">
+        <input class="search-bar" type="text" placeholder="🔍">
+    </div>
+    <div class="row" style="margin-left: 10%; margin-right: 10%">
         {% for product in products %}
             {% block single_product %} {% endblock %}
         {% endfor %}

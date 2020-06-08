@@ -5,3 +5,33 @@
 label[for="id_image"] {
     display: none;
 }
+
+/*custom gutter for feed grid*/
+.custom-gutter {
+    padding-right:10px;
+    padding-left:10px;
+    margin-top: 10px;
+}
+
+.search-bar {
+    width: 50%;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    padding: 5px 5px 5px 20px;
+    font-size: 16px;
+    border-width: 1px;
+    border-color: #CCCCCC;
+    background-color: #FFFFFF;
+    color: rgb(259, 59, 0);
+    border-style: solid;
+    border-radius: 27px;
+    box-shadow: 0 0 5px rgba(66, 66, 66, .75);
+}
+
+.search-bar::placeholder{
+    color: rgb(259, 59, 0);
+}
+
+.search-bar:focus {
+     outline:none;
+}
