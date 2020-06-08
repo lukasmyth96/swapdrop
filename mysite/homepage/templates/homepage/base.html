@@ -42,15 +42,15 @@
 </head>
 <body>
     <header class="site-header">
-      <nav class="navbar bg-orange fixed-top" style="margin-right: 0">
+      <nav class="navbar bg-col shadow fixed-top" style="margin-right: 0">
                <div class="row" style="width: 100%;">
                    <div class="col-3">
                        {% if request|is_mobile %}
-                           <img src="{% static "assets/white_logo.png" %}" style="width: 40%">
+                           <img src="{% static "assets/red_and_orange_logo.png" %}" style="width: 40%; margin-top: 5%">
                        {% else %}
-                           <p class="nav-swapdrop"> Swapdrop </p>
+                           <p class="nav-swapdrop" style="float: left"> Swapdrop </p>
+                           <img src="{% static "assets/red_and_orange_logo.png" %}" style="width: 10%; margin-top: 3%; margin-right: 40%; float: right">
                        {% endif %}
-
                    </div>
 
                   <div class="col-6">
@@ -67,9 +67,9 @@
                    <div class="col-3" style="text-align: right; vertical-align: middle">
                        <a id="trigger" style="margin-right: -10%">
                            {% if request|is_mobile %}
-                               <img alt="menu icon" src="{% static "assets/three_bar_menu_icon.png" %}" style="width: 40%; margin-top: 7%; margin-right: -30%">
+                               <img alt="menu icon" src="{% static "assets/three_dot_menu_icon.png" %}" style="width: 30%; margin-top: 15%; margin-right: -30%">
                            {% else %}
-                               <img alt="menu icon" src="{% static "assets/three_bar_menu_icon.png" %}" style="width: 15%">
+                               <img alt="menu icon" src="{% static "assets/three_dot_menu_icon.png" %}" style="width: 15%">
                            {% endif %}
 
                        </a>
@@ -80,7 +80,6 @@
     <!-- Sidebar menu -->
     <div id="slider" class="slider" style="text-align: center">
       <ul style="list-style-type: none;">
-          <li> <a href="javascript:void(0)" class="closebtn" onclick="hideSlider()">&times;</a> </li>
           <li> <a href="{% url "shipping-address-info" %}">Shipping Address</a> </li>
           <li> <a href="{% url "profile-info" %}">Profile Info</a> </li>
           <li> <a href="{% url "terms-of-service" %}">Terms of Service</a> </li>
