@@ -13,7 +13,6 @@
 
     <link rel="stylesheet" type="text/css" href="{% static 'homepage/main.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'users/main.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'users/pill.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'swaps/main.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'products/main.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'checkout/main.css' %}">
@@ -31,8 +30,7 @@
 
     <script src={% static 'image-picker.js' %}></script>
     <script src={% static 'croppie.js' %}></script>
-    <script src={% static 'waypoint.js' %}></script>
-    <script src={% static 'infinite.js' %}></script>
+    <script src="{% static 'jquery.slidereveal.min.js' %}"></script>
 
     <link rel="shortcut icon" type="image/png" href="{% static 'assets/white_logo.png' %}"/>
 
@@ -67,7 +65,7 @@
                   </div>
 
                    <div class="col-3" style="text-align: right; vertical-align: middle">
-                       <a href="{% url 'shipping-address-info' %}" style="margin-right: -10%">
+                       <a id="trigger" style="margin-right: -10%">
                            {% if request|is_mobile %}
                                <img alt="menu icon" src="{% static "assets/three_bar_menu_icon.png" %}" style="width: 40%; margin-top: 7%; margin-right: -30%">
                            {% else %}
@@ -75,10 +73,44 @@
                            {% endif %}
 
                        </a>
-
                    </div>
                </div>
       </nav>
+
+    <!-- Sidebar menu -->
+    <div id="slider" class="slider" style="text-align: center">
+      <ul style="list-style-type: none;">
+          <li> <a href="javascript:void(0)" class="closebtn" onclick="hideSlider()">&times;</a> </li>
+          <li> <a href="{% url "shipping-address-info" %}">Shipping Address</a> </li>
+          <li> <a href="{% url "profile-info" %}">Profile Info</a> </li>
+          <li> <a href="{% url "terms-of-service" %}">Terms of Service</a> </li>
+      </ul>
+    </div>
+
+    <script>
+        $(function($) {
+          var slider = $("#slider").slideReveal({
+            trigger: $("#trigger"),
+            show: function(slider, trigger){$("#slider").css('display', 'block')},
+            hidden: function(slider, trigger){$("#slider").css('display', 'none')},
+            push: false,
+            overlay: true,
+            position: 'right',
+            width: '50%',
+            top: 100,
+            overlayColor: 'rgba(0,0,0,0.8)',
+            speed: 400,
+
+          });
+        });
+
+       function hideSlider(){
+           $("#slider").slideReveal("hide")
+       }
+
+    </script>
+
+
 
     {{ request.resolver_match.url_name|json_script:"current-url" }}
     <script>
