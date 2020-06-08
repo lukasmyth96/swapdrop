@@ -1,6 +1,11 @@
 {% extends "homepage/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
+
+    <div style="text-align: center">
+        <input class="search-bar" type="text" placeholder="🔍">
+    </div>
+
     <div class="infinite-container">
         {% include "products/_product_feed_component.html" %}
     </div>

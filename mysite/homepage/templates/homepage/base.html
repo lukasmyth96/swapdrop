@@ -1,12 +1,12 @@
 {% load static %}
 {% load user_agents %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width; initial-scale=1.0;">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -69,7 +69,7 @@
                            {% if request|is_mobile %}
                                <img alt="menu icon" src="{% static "assets/three_dot_menu_icon.png" %}" style="width: 30%; margin-top: 15%; margin-right: -30%">
                            {% else %}
-                               <img alt="menu icon" src="{% static "assets/three_dot_menu_icon.png" %}" style="width: 15%">
+                               <img alt="menu icon" src="{% static "assets/three_dot_menu_icon.png" %}" style="width: 30px; margin-top: 10px">
                            {% endif %}
 
                        </a>
