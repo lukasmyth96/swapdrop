@@ -88,3 +88,29 @@ a.article-title:hover {
   height: 25px;
   vertical-align: middle;
 }
+
+.slider {
+  display: none;
+  margin-right: 25%;
+}
+
+.slider li{
+  margin-top: 5%;
+}
+
+.slider a{
+  color: #cbd5db;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 125%;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.slider a.closebtn{
+  font-size: 250%;
+}
+
+.slider a:hover{
+  color: #ffffff;
+  font-weight: bolder;
+}

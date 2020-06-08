@@ -20,3 +20,8 @@ def landing_page(request):
     return render(request, template, context=context)
 
 
+def terms_of_service(request):
+
+    return render(request, 'homepage/terms_of_service.html')
+
+
