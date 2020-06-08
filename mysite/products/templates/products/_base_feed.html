@@ -1,6 +1,7 @@
-<! Used as a base component for product feed and profil feed - exposes single_product block to be extended>
+<! Used as a base component for product feed and profile feed - exposes single_product block to be extended>
+{% load user_agents %}
 <div>
-    <div class="row" style="margin-left: 10%; margin-right: 10%">
+    <div class="row" {% if request|is_pc %} style="margin-left: 10%; margin-right: 10%" {% endif %}>
         {% for product in products %}
             {% block single_product %} {% endblock %}
         {% endfor %}
