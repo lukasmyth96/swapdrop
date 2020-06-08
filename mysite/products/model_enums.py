@@ -45,6 +45,7 @@ class ClothingType(enum.Enum):
     ACCESSORIES = 12
     OTHER = 13
 
+
     @property
     def label(self):
         """ Override default label property - saves writing them all out"""
