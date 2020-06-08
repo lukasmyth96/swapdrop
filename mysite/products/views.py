@@ -16,6 +16,7 @@ class ProductListView(ListView):
     model = Product
     template_name = 'products/feed.html'
     context_object_name = 'products'
+    paginate_by = 36
     ordering = ['-date_posted']
 
     def get_queryset(self):
