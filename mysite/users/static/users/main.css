@@ -42,12 +42,6 @@
   border-radius: 5px;
 }
 
-.postcode-warning{
-  color: red;
-  display: none;
-  font-size: 2vw;
-  margin-left: 1%;
-}
 
 .btn.btn-info {
   background: grey;
@@ -62,8 +56,57 @@
 }
 
 /*Sign-Up Form*/
+
+.signup-container{
+  margin: 2% 30% 10% 30%;
+}
+
 .signup-legend{
   text-align: center;
+  color: grey;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16pt;
+  margin-bottom: 10%;
+}
+
+.postcode-warning{
+  text-align: center;
+  color: red;
+  display: none;
+  font-size: 10pt;
+  font-family: 'Montserrat', sans-serif;
+  margin-left: 1%;
+}
+
+.signup-footer{
+  text-align: center;
+  color: grey;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 8pt;
+  font-weight: bold;
+  margin-bottom: 10%;
+}
+
+.signup-button {
+  width: 90%;
+  background: rgb(255,59,0);
+  background: linear-gradient(45deg, rgba(255,59,0,1) 0%, rgba(255,59,0,1) 0%, rgba(255,100,0,1) 100%);
+  border-radius: 28px;
+  border: 1px solid #b4a9a9;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 8px 31px;
+  text-decoration: none;
+  text-shadow: 0 1px 0 #2f6627;
+}
+
+.textinput{
+  font-size: 10pt;
+  color: grey;
 }
 
 label[for="id_postcode"] {
