@@ -1,5 +1,5 @@
 body {
-  background: #fafafa;
+  background: white;
   color: #333333;
   margin-top: 5rem;
 }
@@ -13,11 +13,11 @@ ul {
 }
 
 .bg-col {
-  background-color: #fafafa;
+  background-color: white;
 }
 
 .shadow{
-  box-shadow: 0 6px 6px 0 rgba(12, 12, 12, 0.75);
+  box-shadow: 0 4px 10px 0 rgba(176,171,169,1);
 }
 
 .site-header .nav-swapdrop {
