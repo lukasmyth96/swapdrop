@@ -1,11 +1,11 @@
 {% extends "homepage/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <div class="content-section">
+    <div class="content-section" style="margin: 5% 20% 10% 20%">
         <form method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Sign Up</legend>
+                <legend class="signup-legend" >Sign Up</legend>
                 {{ postcode_form|crispy }}
                 <p class="postcode-warning"> Sorry - for now you must have a PO19 postcode to sign up </p>
 

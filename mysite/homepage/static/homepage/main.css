@@ -36,12 +36,12 @@ ul {
 }
 
 .nav-link-underline {
-  text-decoration: underline;
+  text-decoration: underline rgb(255, 59, 0);
 }
 
 .site-header .nav-link:hover {
   color: black;
-  text-decoration: underline;
+  font-size: 102%;
 }
 
 .site-header .nav-link.active {

@@ -8,7 +8,11 @@ from users.validators import is_in_chichester
 
 
 class UserRegisterForm(UserCreationForm):
-    email = forms.EmailField()
+    email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': 'email'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'username'}))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'password'}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'confirm password'}))
+
 
     class Meta:
         model = User
@@ -22,7 +26,8 @@ class UserRegisterForm(UserCreationForm):
 
 
 class UserPostcodeForm(forms.ModelForm):
-    postcode = forms.CharField(validators=[is_in_chichester])
+    postcode = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'postcode'}),
+                               validators=[is_in_chichester])
 
     class Meta:
         model = Profile
