@@ -57,8 +57,30 @@
 
 /*Sign-Up Form*/
 
+.signup-background{
+  width: 100%;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background: -webkit-gradient(linear, left top, right top, color-stop(50%,#fa430b), color-stop(50%,rgb(255, 255, 255)), color-stop(0%,rgb(240, 153, 54)));
+}
+
+.swapdrop-header {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20pt;
+  color: white;
+  font-weight: 800;
+  margin-left: 10%;
+  margin-top: 10%;
+}
+
+
 .signup-container{
-  margin: 2% 30% 10% 30%;
+  text-align: center;
+  background: white;
+  border: solid #bbb5b5 1px;
+  border-radius: 40px;
+  margin-top: 50px;
 }
 
 .signup-legend{
@@ -66,6 +88,7 @@
   color: grey;
   font-family: 'Montserrat', sans-serif;
   font-size: 16pt;
+  margin-top: 10%;
   margin-bottom: 10%;
 }
 
@@ -84,13 +107,13 @@
   font-family: 'Montserrat', sans-serif;
   font-size: 8pt;
   font-weight: bold;
-  margin-bottom: 10%;
+  margin-bottom: 25px;
 }
 
 .signup-button {
-  width: 90%;
-  background: rgb(255,59,0);
-  background: linear-gradient(45deg, rgba(255,59,0,1) 0%, rgba(255,59,0,1) 0%, rgba(255,100,0,1) 100%);
+  width: 80%;
+  left: -100%;
+  background: linear-gradient(45deg, rgba(255,59,0,1) 0%, rgba(255,100,0,1) 100%);
   border-radius: 28px;
   border: 1px solid #b4a9a9;
   display: inline-block;
@@ -102,9 +125,17 @@
   padding: 8px 31px;
   text-decoration: none;
   text-shadow: 0 1px 0 #2f6627;
+  transition: all 0.4s;
+}
+
+.signup-button:hover{
+  background: linear-gradient(45deg, rgba(255,100,0,1) 0%, rgba(255,59,0,1) 100%);
 }
 
 .textinput{
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
   font-size: 10pt;
   color: grey;
 }
