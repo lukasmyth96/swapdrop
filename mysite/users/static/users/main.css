@@ -65,6 +65,14 @@
   background: -webkit-gradient(linear, left top, right top, color-stop(50%,rgb(240, 153, 54)), color-stop(50%,rgb(255, 255, 255)), color-stop(0%,rgb(255, 59, 0)));
 }
 
+.signup-background-mobile{
+  width: 100%;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(45deg, rgba(255,59,0,1) 0%, rgba(255,100,0,1) 100%);
+}
+
 .swapdrop-header {
   font-family: 'Montserrat', sans-serif;
   font-size: 20pt;

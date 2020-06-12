@@ -37,7 +37,9 @@ def register(request):
     else:
         user_form = UserRegisterForm()
         postcode_form = UserPostcodeForm()
-    return render(request, 'users/register.html', {'user_form': user_form, 'postcode_form': postcode_form})
+
+    template = 'users/register_mobile.html' if request.user_agent.is_mobile else 'users/register.html'
+    return render(request, template, {'user_form': user_form, 'postcode_form': postcode_form})
 
 
 @login_required()
