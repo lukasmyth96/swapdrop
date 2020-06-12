@@ -52,15 +52,13 @@ def profile_info(request):
             request.user.profile.gender_preference = GenderOptions.WOMENSWEAR
         request.user.profile.save(update_fields=['gender_preference'])
 
-
-        # Process primary size selections
+        # Process size selections
         # combine selected Size ids from each of the three dropdowns
         selected_size_ids = request.POST.getlist('primary_size') + request.POST.getlist('waist_size') + request.POST.getlist('shoe_size')
         selected_size_ids = [int(_id) for _id in selected_size_ids]
         selected_sizes = Size.objects.filter(pk__in=selected_size_ids)
         request.user.profile.sizes.clear()
         request.user.profile.sizes.add(*selected_sizes)
-
 
         # Process profile pic update
         form = ProfileUpdateForm(instance=request.user.profile, data=request.POST, files=request.FILES)
