@@ -134,6 +134,11 @@
   background: linear-gradient(45deg, rgba(255,100,0,1) 0%, rgba(255,59,0,1) 100%);
 }
 
+.signup-button:focus{
+  /*aware this is bad practice -- needs changing*/
+  outline: none;
+}
+
 .signup-container input {
     width: 75%;
     font-size: 12pt;
@@ -147,6 +152,14 @@
 
 .signup-container label{
   display: none;
+}
+
+.signup-container .errorlist{
+
+  color: red;
+  font-size: 8pt;
+  font-family: 'Montserrat', sans-serif;
+  list-style: none
 }
 
 
