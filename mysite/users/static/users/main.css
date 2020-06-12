@@ -78,6 +78,14 @@
   font-size: 20pt;
   color: white;
   font-weight: 800;
+  margin-top: 50px;
+}
+
+.swapdrop-header-mobile {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20pt;
+  color: white;
+  font-weight: 800;
   margin-left: 10%;
   margin-top: 10%;
 }
