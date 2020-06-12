@@ -62,7 +62,7 @@
   min-height: 100vh;
   justify-content: center;
   align-items: center;
-  background: -webkit-gradient(linear, left top, right top, color-stop(50%,#fa430b), color-stop(50%,rgb(255, 255, 255)), color-stop(0%,rgb(240, 153, 54)));
+  background: -webkit-gradient(linear, left top, right top, color-stop(50%,rgb(240, 153, 54)), color-stop(50%,rgb(255, 255, 255)), color-stop(0%,rgb(255, 59, 0)));
 }
 
 .swapdrop-header {
@@ -134,12 +134,15 @@
   background: linear-gradient(45deg, rgba(255,100,0,1) 0%, rgba(255,59,0,1) 100%);
 }
 
-.textinput{
-  margin-left: auto;
-  margin-right: auto;
-  width: 80%;
-  font-size: 10pt;
-  color: grey;
+.signup-container input {
+    width: 80%;
+    font-size: 12pt;
+    font-family: 'Montserrat', sans-serif;
+    color: grey;
+    margin-bottom: 20px;
+    outline: 0;
+    border-width: 0 0 1px;
+    border-color: lightgray;
 }
 
 label[for="id_postcode"] {
