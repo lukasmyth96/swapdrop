@@ -1,3 +1,71 @@
+
+
+/*checkout.html*/
+
+.checkout-img-row{
+  margin-top: 10%;
+  margin-bottom: 5%;
+}
+
+@media only screen and (max-width: 600px) {
+  .checkout-img-row{
+      margin-top: 50px;
+  }
+}
+
+.checkout-img{
+  width: 50%;
+  border: 1px solid rgb(255, 59, 0);
+  border-radius: 40px;
+  box-shadow: 0 0 5px 4px rgb(255, 59, 0);
+}
+
+@media only screen and (max-width: 600px) {
+  .checkout-img{
+    width: 60%;
+    margin: 5%;
+  }
+}
+
+.checkout-button {
+  width: 20%;
+  left: -100%;
+  background: linear-gradient(45deg, rgba(255,59,0,1) 0%, rgba(255,100,0,1) 100%);
+  border-radius: 28px;
+  border: 1px solid #b4a9a9;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16pt;
+  font-weight: bold;
+  padding: 1% 2%;
+  text-decoration: none;
+  text-shadow: 0 1px 0 #2f6627;
+  transition: all 0.4s;
+}
+
+@media only screen and (max-width: 600px) {
+  .checkout-button{
+    width: 60%;
+    font-size: 12pt;
+    padding: 1% 4%;
+  }
+}
+
+.checkout-button:hover{
+  background: linear-gradient(45deg, rgba(255,100,0,1) 0%, rgba(255,59,0,1) 100%);
+}
+
+.checkout-button:focus{
+  outline: none;
+}
+
+/*Time slot page*/
+.time-slot-container{
+  text-align: center;
+}
+
 .invisible-radio {
   /* per https://a11yproject.com/posts/how-to-hide-content/ */
   position: absolute;
@@ -8,10 +76,29 @@
   clip: rect(1px, 1px, 1px, 1px);
 }
 
-.styled-radio {
-  background: #b0c6d5;
-  margin-top: 15px;
-  width: 500px;
-  height: 50px;
+.time-slot-label{
+  width: 40%;
 }
 
+@media only screen and (max-width: 600px) {
+  .time-slot-label{
+  width: 80%;
+  }
+}
+
+.time-slot-radio {
+  background: lightgray;
+  border: 1px solid lightgray;
+  border-radius: 40px;
+  box-shadow: 0 0 5px 4px lightgray;
+  margin-top: 15px;
+  padding: 5%;
+  width: 100%;
+  font-size: 12pt;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.time-slot-radio.active {
+    box-shadow: 0 0 5px 4px rgb(255, 59, 0);
+}

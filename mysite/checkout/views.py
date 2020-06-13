@@ -17,15 +17,25 @@ from bookings.model_enums import BookingType
 @login_required()
 def start_checkout(request, product_id):
     """
+    FIXME this should only be accesible via redirect from review offer OR???
+
     Entry-point for all checkouts - redirects to shipping-address-redirect if address not already given otherwise
     redirects to time-slot picker.
     """
-    address_form = ShippingAddressUpdateForm(instance=request.user.profile)
-    if address_form.is_initial_valid():
-        # if shipping address already given redirect straight to time slot pick
-        return redirect('pick-collection-time', product_id=product_id)
+    if request.method == 'POST':
+        address_form = ShippingAddressUpdateForm(instance=request.user.profile)
+        if address_form.is_initial_valid():
+            # if shipping address already given redirect straight to time slot pick
+            return redirect('pick-collection-time', product_id=product_id)
+        else:
+            return redirect('shipping-address-redirect', product_id=product_id)
     else:
-        return redirect('shipping-address-redirect', product_id=product_id)
+        # TODO error handling here
+        users_product = Product.objects.get(id=product_id)
+        swap = Swap.objects.get((Q(offered_product=users_product) | Q(desired_product=users_product)) & Q(status=SwapStatus.PENDING_CHECKOUT))
+        incoming_product = swap.desired_product if users_product == swap.offered_product else swap.offered_product
+        context = {'users_product': users_product, 'incoming_product': incoming_product}
+        return render(request, template_name='checkout/checkout.html', context=context)
 
 
 @login_required()
@@ -95,9 +105,10 @@ def _group_time_slots(time_slots):
             yield start_date + datetime.timedelta(n)
 
     grouped_time_slots = []
-    max_date = max([ts.date for ts in time_slots])  # get max date among time slots
-    for date in date_range(datetime.date.today(), max_date):
-        grouped_time_slots.append([ts for ts in time_slots if ts.date == date])
+    if time_slots:
+        max_date = max([ts.date for ts in time_slots])  # get max date among time slots
+        for date in date_range(datetime.date.today(), max_date):
+            grouped_time_slots.append([ts for ts in time_slots if ts.date == date])
 
     return grouped_time_slots
 
@@ -110,7 +121,6 @@ def _create_booking(selected_time_slot, product_id, owner):
                       product=product,
                       booking_type=BookingType.COLLECTION)
     booking.save()
-
 
 
 def _complete_checkout(product_id):
