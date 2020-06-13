@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import views as auth_views
 from django.contrib.auth import authenticate, login
 from django.views.generic import (
     ListView
@@ -40,6 +41,19 @@ def register(request):
 
     template = 'users/register_mobile.html' if request.user_agent.is_mobile else 'users/register.html'
     return render(request, template, {'user_form': user_form, 'postcode_form': postcode_form})
+
+
+class Login(auth_views.LoginView):
+
+    def __init__(self, *args, **kwargs):
+        super(Login, self).__init__(*args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        self.template_name = 'users/login_mobile.html' if request.user_agent.is_mobile else 'users/login.html'
+        return super(Login, self).get(request, *args, **kwargs)
+
+
+
 
 
 @login_required()
