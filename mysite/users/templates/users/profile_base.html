@@ -1,7 +1,7 @@
 {% extends "homepage/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <div class="content-section">
+    <div class="profile-base-container">
       <div class="media">
           <a class="btn" data-toggle="tooltip" title="Edit Profile" href="{% url "profile-info" %}">
             <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
@@ -9,8 +9,6 @@
         <div class="media-body">
             <h2 class="account-heading">{{ user.username }}</h2>
         </div>
-
-
 
       </div>
       {% block profile_content %}{% endblock %}

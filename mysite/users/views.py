@@ -53,11 +53,6 @@ class Login(auth_views.LoginView):
         self.template_name = 'users/login_mobile.html' if request.user_agent.is_mobile else 'users/login.html'
         return super(Login, self).get(request, *args, **kwargs)
 
-
-
-
-
-@login_required()
 def profile_info(request):
     if request.method == 'POST':
 
@@ -102,7 +97,6 @@ def profile_info(request):
         return render(request, 'users/profile_info.html', context=context)
 
 
-@login_required()
 def shipping_address_info(request):
 
     if request.method == 'POST':
