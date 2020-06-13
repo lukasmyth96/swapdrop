@@ -26,15 +26,43 @@
                 <legend class="border-bottom mb-4">New Product</legend>
 
               <!-- Container for croppie - contains placeholder image at start -->
-              <div id="croppie-container" style="width: 300px; height: 300px; margin-top: 25px; margin-bottom: 25px; margin-left: auto; margin-right: auto">
-                  <button id="upload-placeholder-image" onclick="triggerImageUpload();">
-                        <img src="{% static "assets/upload_image_placeholder.png" %}" style="width: 100%; height: 100%">
-                  </button>
+              <!-- NOTE- do NOT change the IDs carelessly here as they are used for the image cropping! -->
+              <div class="row">
+                  <div class="col-6">
+                    <div id="croppie_container_image" style="width: 300px; height: 300px; margin-left: auto; margin-right: auto">
+                          <button id="upload_placeholder_image" onclick="triggerImageUpload(this);">
+                                <img src="{% static "assets/upload_image_placeholder.png" %}" style="width: 100%; height: 100%">
+                          </button>
+                      </div>
+                  </div>
+                  <div class="col-6">
+                    <div id="croppie_container_image2" style="width: 300px; height: 300px; margin-left: auto; margin-right: auto">
+                          <button id="upload_placeholder_image2" onclick="triggerImageUpload(this);">
+                                <img src="{% static "assets/upload_image_placeholder.png" %}" style="width: 100%; height: 100%">
+                          </button>
+                      </div>
+                  </div>
+                  <div class="col-6">
+                    <div id="croppie_container_image3" style="width: 300px; height: 300px; margin-left: auto; margin-right: auto">
+                          <button id="upload_placeholder_image3" onclick="triggerImageUpload(this);">
+                                <img src="{% static "assets/upload_image_placeholder.png" %}" style="width: 100%; height: 100%">
+                          </button>
+                      </div>
+                  </div>
+                  <div class="col-6">
+                    <div id="croppie_container_image4" style="width: 300px; height: 300px; margin-left: auto; margin-right: auto">
+                          <button id="upload_placeholder_image4"  onclick="triggerImageUpload(this);">
+                                <img src="{% static "assets/upload_image_placeholder.png" %}" style="width: 100%; height: 100%">
+                          </button>
+                      </div>
+                  </div>
               </div>
 
-
                 {{ form|crispy }}
-                <input id="cropped-dimensions-input" name="cropped-dimensions" style="display: none">
+                <input id="cropped_dimensions_image" name="cropped_dimensions_image" style="display: none">
+                <input id="cropped_dimensions_image2" name="cropped_dimensions_image2" style="display: none">
+                <input id="cropped_dimensions_image3" name="cropped_dimensions_image3" style="display: none">
+                <input id="cropped_dimensions_image4" name="cropped_dimensions_image4" style="display: none">
 
             </fieldset>
             <div class="form-group">
@@ -43,14 +71,21 @@
         </form>
 
         <script>
-            function triggerImageUpload(){
+            function triggerImageUpload(btn){
                 // Trigger click on hidden file upload button
-                $("#id_image").click()
+                const targetElementFieldName = btn.id.split('_').pop()  // e.g. 'image', 'image2' etc.
+                const targetIdToClick = 'id_' + targetElementFieldName  // id of the hidden upload button
+                document.getElementById(targetIdToClick).click()  // click the hidden upload button
             }
         </script>
 
         <script>
+
+            // hidden upload <input> elements for each image
             let uploadedImage = document.getElementById('id_image');
+            let uploadedImage2 = document.getElementById('id_image2');
+            let uploadedImage3 = document.getElementById('id_image3');
+            let uploadedImage4 = document.getElementById('id_image4');
 
             function readFileAsync(file) {
               // This function returns a Promise with resolve value as a base64 encoding of the uploading image
@@ -68,22 +103,23 @@
               })
             }
 
-            async function processFile() {
+            async function processFile(event) {
                   // Converts uploaded file to base64 and starts a croppie with that image src
-
-                  $('#upload-placeholder-image').css('display', 'none');  // hide the placeholder image
-                  $('#croppie-container').croppie('destroy')  // destroy any existing croppies
+                  const targetElementFieldName = event.target.id.split('_').pop()  // e.g. 'image', 'image2' etc.
+                  $('#upload_placeholder_' + targetElementFieldName).css('display', 'none');  // hide the placeholder image
+                  const croppieContainer = $('#croppie_container_' + targetElementFieldName)
+                  croppieContainer.croppie('destroy')  // destroy any existing croppies
                   try {
-                    let file = uploadedImage.files[0];
-                    let src = await readFileAsync(file);
+                    const file = event.target.files[0];  // get the uploaded file
+                    const src = await readFileAsync(file);  // read base64 str from file to display
 
                       // Start croppie with the uploaded image src
-                      $('#croppie-container')
+                      croppieContainer
                       .css('display', 'block')  // make div container visible
                       .croppie({
                         viewport: {width: 200, height: 200},
                         boundary: {width: 250, height: 250}})
-                      .croppie('bind', {url: src});
+                      .croppie('bind', {url: src});  // display uploaded image in croppied container
 
                   } catch(err) {
                     console.log(err);
@@ -92,18 +128,26 @@
 
             // Call the processFile every time the chosen image is changed
             uploadedImage.addEventListener("change", processFile);
+            uploadedImage2.addEventListener("change", processFile)
+            uploadedImage3.addEventListener("change", processFile)
+            uploadedImage4.addEventListener("change", processFile)
 
         </script>
 
         <script>
             // get the cropped dimensions and store them as comma separated string in hidden form input
-            function getCropDimensions() {
-                let croppedDimensions = $('#croppie-container').croppie('get').points.join();
-                $('#cropped-dimensions-input').val(croppedDimensions);
+            function getCropDimensions(event) {
+                const croppieContainer = event.target;
+                const targetElementFieldName = croppieContainer.id.split('_').pop()  // e.g. 'image', 'image2' etc.
+                const croppedDimensions = $('#croppie_container_' + targetElementFieldName).croppie('get').points.join();
+                $('#cropped_dimensions_' + targetElementFieldName).val(croppedDimensions);  // store value in hidden <input>
             }
 
-            // call function on every update to the crop
-            $('#croppie-container').on('update.croppie', getCropDimensions);
+            // Each time crop changes store the crop dimensions in a hidden input
+            $('#croppie_container_image').on('update.croppie', getCropDimensions);
+            $('#croppie_container_image2').on('update.croppie', getCropDimensions);
+            $('#croppie_container_image3').on('update.croppie', getCropDimensions);
+            $('#croppie_container_image4').on('update.croppie', getCropDimensions);
         </script>
 
 
