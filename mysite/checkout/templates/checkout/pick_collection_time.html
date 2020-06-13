@@ -20,18 +20,22 @@
             {% csrf_token %}
             <div>
                 <div style="padding-bottom: 25px">
-                    {% for time_slot_group in grouped_time_slots %}
-                        {% for time_slot in time_slot_group %}
-                            <div>
-                                <input type="radio" name="time-slot-radio" id="{{ time_slot.id }}" value="{{ time_slot.id }}" class="invisible-radio">
-                                <label for="{{ time_slot.id }}" onclick="changeColour(this);">
-                                    <div class="row styled-radio red">
-                                        {{ time_slot }}
-                                    </div>
-                                </label>
-                            </div>
+                    {% if grouped_time_slots %}
+                        {% for time_slot_group in grouped_time_slots %}
+                            {% for time_slot in time_slot_group %}
+                                <div>
+                                    <input type="radio" name="time-slot-radio" id="{{ time_slot.id }}" value="{{ time_slot.id }}" class="invisible-radio">
+                                    <label for="{{ time_slot.id }}" onclick="changeColour(this);">
+                                        <div class="row styled-radio red">
+                                            {{ time_slot }}
+                                        </div>
+                                    </label>
+                                </div>
+                            {% endfor %}
                         {% endfor %}
-                    {% endfor %}
+                    {% else %}
+                        <h2>oops.. no time slots available this week :(</h2>
+                    {% endif %}
                 </div>
 
                 <button class="btn btn-outline-info" type="submit">Submit Booking</button>

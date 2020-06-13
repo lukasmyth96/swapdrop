@@ -105,9 +105,10 @@ def _group_time_slots(time_slots):
             yield start_date + datetime.timedelta(n)
 
     grouped_time_slots = []
-    max_date = max([ts.date for ts in time_slots])  # get max date among time slots
-    for date in date_range(datetime.date.today(), max_date):
-        grouped_time_slots.append([ts for ts in time_slots if ts.date == date])
+    if time_slots:
+        max_date = max([ts.date for ts in time_slots])  # get max date among time slots
+        for date in date_range(datetime.date.today(), max_date):
+            grouped_time_slots.append([ts for ts in time_slots if ts.date == date])
 
     return grouped_time_slots
 
@@ -120,7 +121,6 @@ def _create_booking(selected_time_slot, product_id, owner):
                       product=product,
                       booking_type=BookingType.COLLECTION)
     booking.save()
-
 
 
 def _complete_checkout(product_id):
