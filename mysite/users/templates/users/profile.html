@@ -1,16 +1,30 @@
 {% extends "homepage/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-      <div class="media">
-          <a class="btn" data-toggle="tooltip" title="Edit Profile" href="{% url "profile-info" %}">
-            <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
-        </a>
-        <div class="media-body">
-            <h2 class="account-heading">{{ user.username }}</h2>
+      <div class="row" style="margin-left: 10%; margin-right: 10%">
+        <div class="col-3">
+            <a class="btn" data-toggle="tooltip" title="Edit Profile" href="{% url "profile-info" %}">
+                <img class="rounded-circle profile-img" src="{{ user.profile.image.url }}">
+            </a>
         </div>
-      </div>
-      <div style="text-align: center">
-            <a class="btn btn-outline-info" style="width: 30%; margin-bottom: 20px" href="{% url 'product-create' %}">Upload Item</a>
+
+        <div class="col-6">
+            <ul class="profile-text-container" style="list-style: none;">
+                <li>
+                    <h2 class="profile-username">{{ user.username }}</h2>
+                </li>
+                <li>
+                    <p> Bio will go here.....</p>
+                </li>
+            </ul>
+
+        </div>
+
+        <div class="col-3">
+            <a href="{% url 'product-create' %}">
+                <button class="upload-button"> + </button>
+            </a>
+        </div>
       </div>
 
       {% include "users/_profile_feed_component.html" %}

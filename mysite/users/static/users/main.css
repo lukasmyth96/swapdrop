@@ -1,28 +1,48 @@
 
 
-@media only screen and (max-width: 600px) {
-  .profile-base-container{
-      margin-top: 50px;
-  }
-}
-
-.account-img {
-  height: 125px;
-  width: 125px;
+.profile-img {
+  width: 100%;
   margin-right: 20px;
   margin-bottom: 16px;
   outline:none;
-  border-color:#9ecaed;
-  box-shadow:0 0 20px #9ecaed;
+  border-color:rgb(255, 59, 0);
+  box-shadow:0 0 20px rgb(255, 59, 0);
 }
 
-.account-img:hover {
-    box-shadow:0 0 40px #9ecaed;
+.profile-img:hover {
+    box-shadow:0 0 40px rgb(255, 59, 0);
 }
 
-.account-heading {
+.profile-text-container{
+  list-style: none;
+  margin-left: -10%;
+}
+
+.profile-username {
+  font-family: 'Montserrat', sans-serif;
   font-size: 2.5rem;
 }
+
+.upload-button{
+  background: radial-gradient(circle, rgba(255,129,0,1) 0%, rgba(255,59,0,1) 100%);
+  width: 75px;
+  height: 75px;
+  font-size: 30pt;
+  color: silver;
+  font-weight: bolder;
+  margin-top: 25%;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.upload-button:hover{
+  background: radial-gradient(circle, rgba(255,59,0,1) 0%, rgba(255,129,0,1) 100%);
+}
+
+.upload-button:focus{
+  outline: none;
+}
+
 
 /* Container needed to position the button. Adjust the width as needed */
 .product-container {
