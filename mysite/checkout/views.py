@@ -11,26 +11,27 @@ from swaps.models import Swap
 from swaps.models import SwapStatus
 from bookings.models import TimeSlot, Booking
 from bookings.model_enums import BookingType
-from checkout.permissions import owns_product
+from checkout.permissions import owns_product, verify_checkout_progress, CheckoutStatus
 
 
 @owns_product
 def start_checkout(request, product_id):
     """
-    FIXME this should only be accesible via redirect from review offer OR???
-
     Entry-point for all checkouts - redirects to shipping-address-redirect if address not already given otherwise
     redirects to time-slot picker.
     """
     if request.method == 'POST':
         address_form = ShippingAddressUpdateForm(instance=request.user.profile)
+
+        request.session['checkout_status'] = {product_id: CheckoutStatus.CHECKOUT_STARTED.name}
+
         if address_form.is_initial_valid():
             # if shipping address already given redirect straight to time slot pick
+            request.session['checkout_status'] = {product_id: CheckoutStatus.ADDRESS_GIVEN.name}
             return redirect('pick-collection-time', product_id=product_id)
         else:
             return redirect('shipping-address-redirect', product_id=product_id)
     else:
-        # TODO error handling here
         users_product = Product.objects.get(id=product_id)
         try:
             swap = Swap.objects.get((Q(offered_product=users_product) | Q(desired_product=users_product)) & Q(status=SwapStatus.PENDING_CHECKOUT))
@@ -42,8 +43,7 @@ def start_checkout(request, product_id):
             return redirect('profile')
 
 
-
-
+@verify_checkout_progress(required_checkout_status=CheckoutStatus.CHECKOUT_STARTED)
 @owns_product
 def shipping_address_redirect(request, product_id):
 
@@ -51,14 +51,17 @@ def shipping_address_redirect(request, product_id):
         address_form = ShippingAddressUpdateForm(instance=request.user.profile, data=request.POST)
         if address_form.is_valid():
             address_form.save()
+            request.session['checkout_status'] = {product_id: CheckoutStatus.ADDRESS_GIVEN.name}
             return redirect('pick-collection-time', product_id=product_id)
     else:
         address_form = ShippingAddressUpdateForm(instance=request.user.profile)
         return render(request, 'checkout/shipping_address_redirect.html', context={'address_form': address_form})
 
 
+@verify_checkout_progress(required_checkout_status=CheckoutStatus.ADDRESS_GIVEN)
 @owns_product
 def pick_collection_time(request, product_id):
+
     if request.method == 'POST':
         try:
             selected_time_slot_id = int(request.POST.get('time-slot-radio'))
