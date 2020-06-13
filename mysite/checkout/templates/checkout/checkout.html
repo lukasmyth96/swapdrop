@@ -1,22 +1,20 @@
 {% extends "homepage/base.html" %}
 {% block content %}
 
-    <div class="row">
-        <div class="col-6">
-            <h1> Users product</h1>
-            <img src="{{ users_product.image.url }}">
+    <div>
+        <div class="row checkout-img-row">
+            <div class="col-12 col-md-6" style="text-align: center">
+                <img class="checkout-img" src="{{ users_product.image.url }}">
+            </div>
+            <div class="col-12 col-md-6" style="text-align: center">
+                <img class="checkout-img" src="{{ incoming_product.image.url }}">
+            </div>
         </div>
-        <div class="col-6">
-            <h1> Incoming product</h1>
-            <img src="{{ incoming_product.image.url }}">
-        </div>
-    </div>
 
-    <div class="row">
         <form method="post">
             {% csrf_token %}
             <div class="form-group" style="text-align: center">
-                <button type="submit">Checkout</button>
+                <button class="checkout-button" type="submit">Checkout</button>
             </div>
         </form>
     </div>
