@@ -3,7 +3,40 @@
 {% block content %}
         <div class="row">
             <div class="col">
-                <img src="{{ product.image.url }}" width="100%">
+                <!-- The slideshow -->
+                <div id="demo" class="carousel slide" data-ride="carousel">
+                    {# <img src="{{ product.image.url }}" width="100%">#}
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="{{ product.image.url }}" width="100%">
+                        </div>
+                        {% if product.image2 %}
+                            <div class="carousel-item">
+                                <img src="{{ product.image2.url }}" width="100%">
+                            </div>
+                        {% endif %}
+                        {% if product.image3 %}
+                            <div class="carousel-item">
+                                <img src="{{ product.image3.url }}" width="100%">
+                            </div>
+                        {% endif %}
+                        {% if product.image4 %}
+                            <div class="carousel-item">
+                                <img src="{{ product.image4.url }}" width="100%">
+                            </div>
+                        {% endif %}
+                    </div>
+
+                     {% if product.image2.url or product.image3.url or product.image4.url %}
+                        <!-- Left and right controls -->
+                        <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                        </a>
+                        <a class="carousel-control-next" href="#demo" data-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                        </a>
+                    {% endif %}
+                </div>
             </div>
 
             <div class="col">
