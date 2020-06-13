@@ -1,12 +1,4 @@
 
-.profile-base-container{
-  width: 90%;
-  margin-left: auto;
-  margin-right: auto;
-  border: solid #bbb5b5 1px;
-  border-radius: 40px;
-  padding: 25px;
-}
 
 @media only screen and (max-width: 600px) {
   .profile-base-container{
