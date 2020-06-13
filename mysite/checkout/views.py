@@ -2,7 +2,6 @@ import datetime
 
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 
 from users.forms import ShippingAddressUpdateForm
@@ -12,9 +11,10 @@ from swaps.models import Swap
 from swaps.models import SwapStatus
 from bookings.models import TimeSlot, Booking
 from bookings.model_enums import BookingType
+from checkout.permissions import owns_product
 
 
-@login_required()
+@owns_product
 def start_checkout(request, product_id):
     """
     FIXME this should only be accesible via redirect from review offer OR???
@@ -38,7 +38,7 @@ def start_checkout(request, product_id):
         return render(request, template_name='checkout/checkout.html', context=context)
 
 
-@login_required()
+@owns_product
 def shipping_address_redirect(request, product_id):
 
     if request.method == 'POST':
@@ -51,7 +51,7 @@ def shipping_address_redirect(request, product_id):
         return render(request, 'checkout/shipping_address_redirect.html', context={'address_form': address_form})
 
 
-@login_required()
+@owns_product
 def pick_collection_time(request, product_id):
     if request.method == 'POST':
         try:
