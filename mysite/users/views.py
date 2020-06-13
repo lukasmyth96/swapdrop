@@ -46,6 +46,7 @@ def register(request):
 class Login(auth_views.LoginView):
 
     def __init__(self, *args, **kwargs):
+        """ Overriding base LoginView to make template name different for mobile/desktop"""
         super(Login, self).__init__(*args, **kwargs)
 
     def get(self, request, *args, **kwargs):
