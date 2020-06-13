@@ -17,15 +17,25 @@ from bookings.model_enums import BookingType
 @login_required()
 def start_checkout(request, product_id):
     """
+    FIXME this should only be accesible via redirect from review offer OR???
+
     Entry-point for all checkouts - redirects to shipping-address-redirect if address not already given otherwise
     redirects to time-slot picker.
     """
-    address_form = ShippingAddressUpdateForm(instance=request.user.profile)
-    if address_form.is_initial_valid():
-        # if shipping address already given redirect straight to time slot pick
-        return redirect('pick-collection-time', product_id=product_id)
+    if request.method == 'POST':
+        address_form = ShippingAddressUpdateForm(instance=request.user.profile)
+        if address_form.is_initial_valid():
+            # if shipping address already given redirect straight to time slot pick
+            return redirect('pick-collection-time', product_id=product_id)
+        else:
+            return redirect('shipping-address-redirect', product_id=product_id)
     else:
-        return redirect('shipping-address-redirect', product_id=product_id)
+        # TODO error handling here
+        users_product = Product.objects.get(id=product_id)
+        swap = Swap.objects.get((Q(offered_product=users_product) | Q(desired_product=users_product)) & Q(status=SwapStatus.PENDING_CHECKOUT))
+        incoming_product = swap.desired_product if users_product == swap.offered_product else swap.offered_product
+        context = {'users_product': users_product, 'incoming_product': incoming_product}
+        return render(request, template_name='checkout/checkout.html', context=context)
 
 
 @login_required()

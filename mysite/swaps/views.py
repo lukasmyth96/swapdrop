@@ -61,7 +61,6 @@ class MakeOfferListView(ListView):
         return redirect('product-feed')
 
 
-
 class ReviewOffersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
     model = Product
@@ -101,8 +100,8 @@ class ReviewOffersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
         current_product.save(update_fields=['status'])
 
         # Update status of each offer and update the status of accepted product to PENDING_CHECKOUT
-        selected_product_id = int(selected_product_id)
-        offers_for_product = self.get_offers_for_product(current_product=current_product)  # get list of offered products
+        offers_for_product = self.get_offers_for_product(current_product=current_product)  # get list of swaps that are offers for this product
+        swap_id = None  # default TODO refactor this
         for offer in offers_for_product:
             offered_product = offer.offered_product
             if offered_product.id == selected_product_id:
