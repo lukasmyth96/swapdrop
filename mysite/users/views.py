@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import views as auth_views
 from django.contrib.auth import authenticate, login
 from django.views.generic import (
     ListView
@@ -37,7 +38,23 @@ def register(request):
     else:
         user_form = UserRegisterForm()
         postcode_form = UserPostcodeForm()
-    return render(request, 'users/register.html', {'user_form': user_form, 'postcode_form': postcode_form})
+
+    template = 'users/register_mobile.html' if request.user_agent.is_mobile else 'users/register.html'
+    return render(request, template, {'user_form': user_form, 'postcode_form': postcode_form})
+
+
+class Login(auth_views.LoginView):
+
+    def __init__(self, *args, **kwargs):
+        """ Overriding base LoginView to make template name different for mobile/desktop"""
+        super(Login, self).__init__(*args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        self.template_name = 'users/login_mobile.html' if request.user_agent.is_mobile else 'users/login.html'
+        return super(Login, self).get(request, *args, **kwargs)
+
+
+
 
 
 @login_required()
@@ -52,15 +69,13 @@ def profile_info(request):
             request.user.profile.gender_preference = GenderOptions.WOMENSWEAR
         request.user.profile.save(update_fields=['gender_preference'])
 
-
-        # Process primary size selections
+        # Process size selections
         # combine selected Size ids from each of the three dropdowns
         selected_size_ids = request.POST.getlist('primary_size') + request.POST.getlist('waist_size') + request.POST.getlist('shoe_size')
         selected_size_ids = [int(_id) for _id in selected_size_ids]
         selected_sizes = Size.objects.filter(pk__in=selected_size_ids)
         request.user.profile.sizes.clear()
         request.user.profile.sizes.add(*selected_sizes)
-
 
         # Process profile pic update
         form = ProfileUpdateForm(instance=request.user.profile, data=request.POST, files=request.FILES)

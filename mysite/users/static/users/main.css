@@ -42,12 +42,6 @@
   border-radius: 5px;
 }
 
-.postcode-warning{
-  color: red;
-  display: none;
-  font-size: 2vw;
-  margin-left: 1%;
-}
 
 .btn.btn-info {
   background: grey;
@@ -60,6 +54,132 @@
   -webkit-box-shadow: none;
   box-shadow: none;
 }
+
+/*Sign-Up Form*/
+
+.signup-background{
+  width: 100%;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgb(255, 59, 0)), color-stop(50%,rgb(240, 153, 54)), color-stop(50%,rgb(255, 255, 255)));
+}
+
+.signup-background-mobile{
+  width: 100%;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background: rgb(255,59,0);
+  background: radial-gradient(circle, rgba(255,59,0,1) 0%, rgba(255,129,0,1) 100%);
+}
+
+.swapdrop-header {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20pt;
+  color: white;
+  font-weight: 800;
+  margin-top: 50px;
+  margin-left: 50px;
+}
+
+.swapdrop-header-mobile {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 30pt;
+  color: white;
+  font-weight: 800;
+  padding-top: 20%;
+}
+
+
+.signup-container{
+  text-align: center;
+  background: white;
+  border: solid #bbb5b5 1px;
+  border-radius: 40px;
+  margin-top: 50px;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+.signup-legend{
+  text-align: center;
+  color: grey;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16pt;
+  margin-top: 10%;
+  margin-bottom: 10%;
+}
+
+.postcode-warning{
+  text-align: center;
+  color: red;
+  display: none;
+  font-size: 8pt;
+  font-family: 'Montserrat', sans-serif;
+  margin-left: 1%;
+}
+
+.signup-footer{
+  text-align: center;
+  color: grey;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 8pt;
+  font-weight: bold;
+  margin-bottom: 25px;
+}
+
+.signup-button {
+  width: 80%;
+  left: -100%;
+  background: linear-gradient(45deg, rgba(255,59,0,1) 0%, rgba(255,100,0,1) 100%);
+  border-radius: 28px;
+  border: 1px solid #b4a9a9;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 8px 31px;
+  text-decoration: none;
+  text-shadow: 0 1px 0 #2f6627;
+  transition: all 0.4s;
+}
+
+.signup-button:hover{
+  background: linear-gradient(45deg, rgba(255,100,0,1) 0%, rgba(255,59,0,1) 100%);
+}
+
+.signup-button:focus{
+  /*aware this is bad practice -- needs changing*/
+  outline: none;
+}
+
+.signup-container input {
+    width: 75%;
+    font-size: 12pt;
+    font-family: 'Montserrat', sans-serif;
+    color: grey;
+    margin-bottom: 20px;
+    outline: 0;
+    border-width: 0 0 1px;
+    border-color: lightgray;
+}
+
+.signup-container label{
+  display: none;
+}
+
+.signup-container .errorlist{
+
+  color: red;
+  font-size: 8pt;
+  font-family: 'Montserrat', sans-serif;
+  list-style: none
+}
+
+
 
 
 
