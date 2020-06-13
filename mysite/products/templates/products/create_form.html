@@ -7,20 +7,6 @@
         <form method="POST" enctype='multipart/form-data'>
             {% csrf_token %}
 
-            {% if form.errors %}
-                {% for field in form %}
-                    {% for error in field.errors %}
-                        <div class="alert alert-danger">
-                            <strong>{{ error|escape }}</strong>
-                        </div>
-                    {% endfor %}
-                {% endfor %}
-                {% for error in form.non_field_errors %}
-                    <div class="alert alert-danger">
-                        <strong>{{ error|escape }}</strong>
-                    </div>
-                {% endfor %}
-            {% endif %}
 
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">New Product</legend>
@@ -65,6 +51,23 @@
                 <input id="crop_dimensions_image4" name="crop_dimensions_image4" style="display: none">
 
             </fieldset>
+
+            <!-- Display form errors-->
+            {% if form.errors %}
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{ error }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error }}</strong>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
             <div class="form-group">
                 <button class="btn btn-outline-info" type="submit">Upload</button>
             </div>
