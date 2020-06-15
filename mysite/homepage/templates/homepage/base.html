@@ -59,7 +59,7 @@
                             <a id="feed-nav-link" class="nav-item nav-link" href="{% url 'product-feed' %}">Feed</a>
                           </li>
                           <li class="nav-item" style="margin-right: auto">
-                            <a id="profile-nav-link" class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+                            <a id="profile-nav-link" class="nav-item nav-link" href="{% url 'profile-your-items' %}">Profile</a>
                           </li>
                       </ul>
                   </div>
@@ -112,13 +112,13 @@
 
 
 
-    {{ request.resolver_match.url_name|json_script:"current-url" }}
+    {{ request.resolver_match.url_name|json_script:"current-url-name" }}
     <script>
         // add underline to Feed or Profile depending on URL
-        let currentUrl = JSON.parse(document.getElementById('current-url').textContent);
-        if (currentUrl.includes('profile')){
+        let currentUrlName = JSON.parse(document.getElementById('current-url-name').textContent);
+        if (currentUrlName.includes('profile')){
             $("#profile-nav-link").addClass("nav-link-underline")
-        } else if (currentUrl.includes('feed')){
+        } else if (currentUrlName.includes('feed')){
             $("#feed-nav-link").addClass("nav-link-underline")
         }
     </script>

@@ -77,7 +77,7 @@ def profile_info(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Your profile has been updated')
-            return redirect('profile')
+            return redirect('profile-your-items')
 
     else:
         form = ProfileUpdateForm(instance=request.user.profile)
@@ -104,7 +104,7 @@ def shipping_address_info(request):
         if address_form.is_valid():
             address_form.save()
             messages.success(request, 'Your shipping address has been updated')
-            return redirect('profile')
+            return redirect('profile-your-items')
 
     else:
         address_form = ShippingAddressUpdateForm(instance=request.user.profile)
@@ -114,7 +114,7 @@ def shipping_address_info(request):
 
 class ProfileProductsListView(ListView):
     model = Product
-    template_name = 'users/profile.html'
+    template_name = 'users/profile_your_items.html'
     context_object_name = 'products'
     ordering = ['-date_posted']
 

@@ -40,7 +40,7 @@ def start_checkout(request, product_id):
             return render(request, template_name='checkout/checkout.html', context=context)
         except Swap.DoesNotExist:
             messages.warning(request, 'oops.. looks like this product isn\'t ready for checkout yet')
-            return redirect('profile')
+            return redirect('profile-your-items')
 
 
 @verify_checkout_progress(required_checkout_status=CheckoutStatus.CHECKOUT_STARTED)
@@ -83,7 +83,7 @@ def pick_collection_time(request, product_id):
         else:
             messages.error(request, 'Error occurred during checkout completion')
 
-        return redirect('profile')
+        return redirect('profile-your-items')
 
     else:  # GET request
         max_date_to_show = datetime.date.today() + datetime.timedelta(days=5)

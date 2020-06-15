@@ -28,5 +28,28 @@
         </div>
       </div>
 
+      <div class="row profile-tab-row" {% if request|is_pc %} style="margin-left: 20%; margin-right: 20%" {% endif %}>
+        <div class="col-6 profile-tab-col">
+            <a id="your-items-link">
+                Your items
+            </a>
+        </div>
+        <div class="col-6 profile-tab-col">
+            <a id="offers-made-link">
+                Offers made
+            </a>
+        </div>
+      </div>
+
+        {{ request.resolver_match.url_name|json_script:"current-url" }}
+        <script>
+            // add underline to 'your items' or 'offers made' tab depending on url name
+            // currentUrlName is defined in base.html
+            if (currentUrlName.includes('your-items')) {
+                $("#your-items-link").parent().addClass("selected_profile_tab_underline")
+            } else if (currentUrlName.includes('offers-made')) {
+                $("#offers-made-link").parent().addClass("selected_profile_tab_underline")
+            }
+        </script>
       {% include "users/_profile_feed_component.html" %}
 {% endblock content %}

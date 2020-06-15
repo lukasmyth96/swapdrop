@@ -1,9 +1,10 @@
 
 
 .profile-img {
-  width: 80%;
-  margin-right: 20px;
-  margin-bottom: 16px;
+  width: 100px;
+  height: 100px;
+  margin-top: auto;
+  margin-bottom: auto;
   outline:none;
   border-color:rgb(255, 59, 0);
   box-shadow:0 0 20px rgb(255, 59, 0);
@@ -19,22 +20,23 @@
 
 .profile-text-container{
   list-style: none;
-  margin-left: -10%;
+  margin-left: -25%;
 }
 
 .profile-username {
   font-family: 'Montserrat', sans-serif;
-  font-size: 2.5rem;
+  font-size: 24pt;
 }
 
 .upload-button{
   background: radial-gradient(circle, rgba(255,129,0,1) 0%, rgba(255,59,0,1) 100%);
-  width: 75px;
-  height: 75px;
-  font-size: 30pt;
+  width: 50px;
+  height: 50px;
+  font-size: 20pt;
   color: silver;
   font-weight: bolder;
-  margin-top: 25%;
+  margin-top: auto;
+  margin-bottom: auto;
   border-radius: 50%;
   cursor: pointer;
 }
@@ -45,6 +47,20 @@
 
 .upload-button:focus{
   outline: none;
+}
+
+.profile-tab-row{
+  margin-top: 50px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.profile-tab-col{
+  cursor: pointer;
+}
+
+.selected_profile_tab_underline{
+  border-bottom: 1px solid orangered;
 }
 
 
