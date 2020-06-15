@@ -134,7 +134,8 @@ class ProfileOffersMadeListView(ListView):
     def get_queryset(self):
         """ Return all products that currently logged in user has made an offer on"""
         offers_made = Swap.objects.filter(offered_product__owner=self.request.user)
-        products_bidded_on = [offer.desired_product for offer in offers_made]
+        # making unique list because there can be multiple offers on the same product
+        products_bidded_on = list(set([offer.desired_product for offer in offers_made]))
         return products_bidded_on
 
 

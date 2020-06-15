@@ -1,4 +1,11 @@
 {% extends "users/_profile_base.html" %}
 {% block profile_feed %}
-    {% include "users/_your_items_feed.html" %}
+
+    {% if products %}
+        {% include "users/_offers_made_feed.html" %}
+    {% else %}
+        <div style="text-align: center; margin-top: 50px">
+            Items you make offers on will appear here
+        </div>
+    {% endif %}
 {% endblock profile_feed %}
