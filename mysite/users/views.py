@@ -9,10 +9,9 @@ from django.views.generic import (
 
 
 from products.models import Product
-
+from swaps.models import Swap
 from sizes.models import Size
 from sizes.model_enums import GenderOptions, SizeTypes
-
 from users.forms import UserRegisterForm, UserPostcodeForm, UserUpdateForm, ProfileUpdateForm, ShippingAddressUpdateForm
 from users.models import Profile
 
@@ -52,6 +51,7 @@ class Login(auth_views.LoginView):
     def get(self, request, *args, **kwargs):
         self.template_name = 'users/login_mobile.html' if request.user_agent.is_mobile else 'users/login.html'
         return super(Login, self).get(request, *args, **kwargs)
+
 
 def profile_info(request):
     if request.method == 'POST':
@@ -112,7 +112,7 @@ def shipping_address_info(request):
         return render(request, 'users/shipping_address_info.html', context=context)
 
 
-class ProfileProductsListView(ListView):
+class ProfileYourItemsListView(ListView):
     model = Product
     template_name = 'users/profile_your_items.html'
     context_object_name = 'products'
@@ -124,6 +124,18 @@ class ProfileProductsListView(ListView):
         users_products = all_products.filter(owner=self.request.user)
         return users_products
 
+
+class ProfileOffersMadeListView(ListView):
+    model = Product
+    template_name = 'users/profile_offers_made.html'
+    context_object_name = 'products'
+    ordering = ['-date_posted']
+
+    def get_queryset(self):
+        """ Return all products that currently logged in user has made an offer on"""
+        offers_made = Swap.objects.filter(offered_product__owner=self.request.user)
+        products_bidded_on = [offer.desired_product for offer in offers_made]
+        return products_bidded_on
 
 
 

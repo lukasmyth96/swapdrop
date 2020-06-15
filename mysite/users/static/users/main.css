@@ -59,8 +59,13 @@
   cursor: pointer;
 }
 
+.profile-tab-col a{
+  color: inherit;
+  text-decoration: none;
+}
+
 .selected_profile_tab_underline{
-  border-bottom: 1px solid orangered;
+  border-bottom: 2px solid orangered;
 }
 
 
