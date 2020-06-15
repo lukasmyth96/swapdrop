@@ -1,9 +1,10 @@
 {% extends "homepage/base.html" %}
 {% load crispy_forms_tags %}
+{% load user_agents %}
 {% block content %}
-      <div class="row" style="margin-left: 10%; margin-right: 10%">
+      <div class="row" {% if request|is_pc %} style="margin-left: 20%; margin-right: 20%" {% endif %}>
         <div class="col-3">
-            <a class="btn" data-toggle="tooltip" title="Edit Profile" href="{% url "profile-info" %}">
+            <a class="profile-img-btn" data-toggle="tooltip" title="Edit Profile" href="{% url "profile-info" %}">
                 <img class="rounded-circle profile-img" src="{{ user.profile.image.url }}">
             </a>
         </div>
