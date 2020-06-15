@@ -2,18 +2,13 @@
 {% block single_product %}
     <div>
         <label for="{{ product.id }}" onclick="changeBorderColour(this);">
-            <img class="grid-item thumbnail" src="{{ product.image.url }}" style="border-width: 5px; border-color: green; border-style: solid; height: 100%; width: 100%; visibility: hidden;">
+            <img class="grid-item thumbnail offer-img" src="{{ product.image.url }}" style="visibility: hidden;">
         </label>
-        <input type="checkbox" id="{{ product.id }}" name="{{ product.id }}" checked="checked" style="display: none">
+        <input type="checkbox" id="{{ product.id }}" name="{{ product.id }}" style="display: none">
   </div>
   <script>
     function changeBorderColour(el) {
-        let image = el.getElementsByTagName('img')[0];
-        if (image.style.borderColor === 'white')
-            {image.style.borderColor = 'green';}
-        else {
-            {image.style.borderColor = 'white';}
-        }
+        $(el).find('img').toggleClass('offer-img-active')
     }
   </script>
 {% endblock %}

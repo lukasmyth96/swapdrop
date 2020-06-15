@@ -1,0 +1,10 @@
+
+.offer-img{
+    border: 5px solid white;
+    width: 100%;
+
+}
+
+.offer-img-active{
+    border-color: orangered;
+}
