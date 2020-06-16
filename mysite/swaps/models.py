@@ -13,6 +13,7 @@ class Swap(models.Model):
     desired_product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='swaps_desired')
     offered_product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='swaps_offered')
     date_offered = models.DateTimeField(default=timezone.now)
+    date_accepted = models.DateTimeField(null=True, blank=True)
     status = enum.EnumField(SwapStatus, default=SwapStatus.PENDING_REVIEW)
 
     def __str__(self):
