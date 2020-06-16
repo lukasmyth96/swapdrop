@@ -48,6 +48,7 @@ class Product(models.Model):
         return reverse('product-detail', kwargs={'pk': self.pk})
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        # FIXME will the lines below cause issues if we update the product??
         self.image = self.crop_resize_rename_image(self.image, self.crop_dimensions_image, 'image')
         self.image2 = self.crop_resize_rename_image(self.image2, self.crop_dimensions_image2, 'image2')
         self.image3 = self.crop_resize_rename_image(self.image3, self.crop_dimensions_image3, 'image3')
@@ -82,18 +83,16 @@ class Product(models.Model):
         return len(Swap.objects.filter(desired_product=self, status=SwapStatus.PENDING_REVIEW))
 
     @property
-    def minutes_left_to_checkout(self):
+    def hours_left_to_checkout(self):
         """ Returns the time left to complete checkout of this product before status automatically reverts back to
         LIVE and the Swap gets cancelled
         """
         Swap = apps.get_model('swaps', 'Swap')
-        minutes_left_to_checkout = None
+        hours_left_to_checkout = None
         if self.status == ProductStatus.PENDING_CHECKOUT:
             swap = Swap.objects.get((Q(offered_product=self) | Q(desired_product=self))
                                     & Q(status=SwapStatus.PENDING_CHECKOUT))
-            timeout_time = swap.date_accepted + datetime.timedelta(minutes=40)  # FIXME add this in settings.py
-            time_left_to_checkout = timeout_time - timezone.now()
-            minutes_left_to_checkout = math.floor(time_left_to_checkout.seconds / 60)
-        return minutes_left_to_checkout
+            hours_left_to_checkout = swap.hours_left_to_checkout
+        return hours_left_to_checkout
 
 

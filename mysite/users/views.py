@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import authenticate, login
 from django.views.generic import (
@@ -9,7 +9,7 @@ from django.views.generic import (
 
 
 from products.models import Product
-from swaps.models import Swap
+from swaps.models import Swap, SwapStatus
 from sizes.models import Size
 from sizes.model_enums import GenderOptions, SizeTypes
 from users.forms import UserRegisterForm, UserPostcodeForm, UserUpdateForm, ProfileUpdateForm, ShippingAddressUpdateForm
@@ -118,9 +118,19 @@ class ProfileYourItemsListView(ListView):
     context_object_name = 'products'
     ordering = ['-date_posted']
 
+    def get(self, request, *args, **kwargs):
+        """ """
+        # Check for and process and timed-out swaps belonging to this user TODO move this logic somewhere else
+        users_pending_swaps = Swap.objects.filter((Q(offered_product__owner=self.request.user) | Q(desired_product__owner=self.request.user))
+                                                  & Q(status=SwapStatus.PENDING_CHECKOUT))
+        for swap in users_pending_swaps:
+            if swap.hours_left_to_checkout == 0:
+                swap.timeout_reached()
+        return super(ProfileYourItemsListView, self).get(request, *args, **kwargs)
+
     def get_queryset(self):
         """ Returns all products owned by currently logged in user"""
-        all_products = super().get_queryset()
+        all_products = super(ProfileYourItemsListView, self).get_queryset()
         users_products = all_products.filter(owner=self.request.user)
         return users_products
 

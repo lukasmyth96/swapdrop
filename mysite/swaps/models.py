@@ -1,8 +1,12 @@
+import datetime
+import math
+
 from django.db import models
 from django.utils import timezone
 from django_enumfield import enum
 from django.contrib.auth.models import User
 
+from mysite.settings import CHECKOUT_TIMEOUT_HOURS
 from products.models import Product
 from products.model_enums import ProductStatus
 from .model_enums import SwapStatus
@@ -30,3 +34,22 @@ class Swap(models.Model):
         if (self.offered_product.status == ProductStatus.DELIVERED) and (self.desired_product.status == ProductStatus.DELIVERED):
             self.status = SwapStatus.SWAP_COMPLETE
             self.save(update_fields=['status'])
+
+    def timeout_reached(self):
+        self.status = SwapStatus.TIMED_OUT
+        self.save(update_fields=['status'])
+        self.offered_product.status = ProductStatus.LIVE
+        self.offered_product.save(update_fields=['status'])
+        self.desired_product.status = ProductStatus.LIVE
+        self.desired_product.save(update_fields=['status'])
+
+    @property
+    def hours_left_to_checkout(self):
+        hours_left_to_checkout = None
+        if self.status == SwapStatus.PENDING_CHECKOUT:
+            timeout_time = self.date_accepted + datetime.timedelta(hours=CHECKOUT_TIMEOUT_HOURS)
+            time_left_to_checkout = timeout_time - timezone.now()
+            hours_left_to_checkout = max(0, math.floor(time_left_to_checkout.total_seconds() / 3600))
+
+        return hours_left_to_checkout
+
