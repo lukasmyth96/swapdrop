@@ -1,7 +1,10 @@
+import math
+import datetime
 import os
 from io import BytesIO
 
 from django.db import models
+from django.db.models import Q
 from django.core.files import File
 from django.apps import apps
 from django.utils import timezone
@@ -77,4 +80,20 @@ class Product(models.Model):
         """
         Swap = apps.get_model('swaps', 'Swap')
         return len(Swap.objects.filter(desired_product=self, status=SwapStatus.PENDING_REVIEW))
+
+    @property
+    def minutes_left_to_checkout(self):
+        """ Returns the time left to complete checkout of this product before status automatically reverts back to
+        LIVE and the Swap gets cancelled
+        """
+        Swap = apps.get_model('swaps', 'Swap')
+        minutes_left_to_checkout = None
+        if self.status == ProductStatus.PENDING_CHECKOUT:
+            swap = Swap.objects.get((Q(offered_product=self) | Q(desired_product=self))
+                                    & Q(status=SwapStatus.PENDING_CHECKOUT))
+            timeout_time = swap.date_accepted + datetime.timedelta(minutes=40)  # FIXME add this in settings.py
+            time_left_to_checkout = timeout_time - timezone.now()
+            minutes_left_to_checkout = math.floor(time_left_to_checkout.seconds / 60)
+        return minutes_left_to_checkout
+
 
