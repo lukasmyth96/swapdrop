@@ -1,0 +1,17 @@
+{% extends "products/_base_feed.html" %}
+{% block single_product %}
+    <div>
+        <label for="{{ product.id }}" onclick="changeBorderColour(this);">
+            <img class="grid-item thumbnail offer-img" src="{{ product.image.url }}" style="visibility: hidden;">
+        </label>
+          <!-- Hidden radio button to contain id of selected product -->
+        <input type="radio" id="{{ product.id }}" name="product_id" value="{{ product.id }}" style="display: none">
+    </div>
+    <script>
+        function changeBorderColour(element) {
+            console.log('I have been clicked');
+            $(".offer-img").removeClass('offer-img-active');
+            $(element).find("img").addClass('offer-img-active');
+        }
+    </script>
+{% endblock %}

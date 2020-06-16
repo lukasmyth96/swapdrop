@@ -1,569 +1,379 @@
 {% extends "homepage/base.html" %}
 {% load static %}
+{% load user_agents %}
 {% block content %}
-    <div>
+    <div {% if request|is_pc %} style="margin-left: 20%; margin-right: 20%" {% else %} style="margin-left: 10%; margin-right: 10%"  {% endif %}>
+        <h1 style="font-size: 40px">Terms of Service</h1>
+        <br>
+        <h2 style="font-size: 20px">Terms and Definitions</h2><br>
+        <p>Throughout this document and our <strong><i>service</i></strong>, we interchangeably use the terms “we”, “us”
+            and “our” to refer to Swapdrop. Swapdrop offers this website and our services including all our facilities,
+            tools and platforms available from this site to “You”, the “User” or the “Party” conditioned upon your
+            acceptance of all terms, conditions, policies and notices stated here.
 
-        <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                style="font-size:24pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Terms of Service</span>
-        </p>
-        <p><br></p>
-        <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                style="font-size:16pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Terms and Definitions</span>
-        </p>
-        <p><br></p>
-        <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                style="font-size:11pt;font-family:Arial;color:#212529;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Throughout this document and our&nbsp;</span><span
-                style="font-size:11pt;font-family:Arial;color:#212529;background-color:#ffffff;font-weight:700;font-style:italic;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">service</span><span
-                style="font-size:11pt;font-family:Arial;color:#212529;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">, we interchangeably use the terms &ldquo;we&rdquo;, &ldquo;us&rdquo; and &ldquo;our&rdquo; &nbsp;to refer to Swapdrop. Swapdrop offers this website and our services including all our facilities, tools and platforms available from this site to &ldquo;You&rdquo;, the &ldquo;User&rdquo; or the &ldquo;Party&rdquo; conditioned upon your acceptance of all terms, conditions, policies and notices stated here.</span>
-        </p>
-        <p><br></p>
-        <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                style="font-size:11pt;font-family:Arial;color:#212529;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">We define a &ldquo;Swap&rdquo; to constitute a one-for-one exchange of two items of clothes, shoes or other accepted items, between two individuals (users) without monetary exchange.&nbsp;</span><span
-                style="font-size:11pt;font-family:Arial;color:#212529;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br></span><span
-                style="font-size:11pt;font-family:Arial;color:#212529;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br></span><span
-                style="font-size:11pt;font-family:Arial;color:#212529;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">We define a &ldquo;Feed&rdquo; to constitute as a presented grid of images of users items with the availability to view information on any item on the feed and make an &ldquo;Offer&rdquo; to any item as seen on the feed.&nbsp;</span><span
-                style="font-size:11pt;font-family:Arial;color:#212529;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br></span><span
-                style="font-size:11pt;font-family:Arial;color:#212529;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br></span><span
-                style="font-size:11pt;font-family:Arial;color:#212529;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">We define an &ldquo;Offer&rdquo; to constitute as a sent presentation of an item from one user to another user to be either rejected or accepted.&nbsp;</span><span
-                style="font-size:11pt;font-family:Arial;color:#212529;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br></span><span
-                style="font-size:11pt;font-family:Arial;color:#212529;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br></span><span
-                style="font-size:11pt;font-family:Arial;color:#212529;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">We define a &ldquo;Live&rdquo; state of an item to be when the owner of an item has not yet accepted any offer on the given item.</span>
-        </p>
-        <p><br></p>
-        <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                style="font-size:11pt;font-family:Arial;color:#212529;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">We define a &ldquo;Matched&rdquo; state of an item to be when an owner of an item has accepted an offer on the given item but both users within the swap have not yet checked out.</span>
-        </p>
-        <p><br></p>
-        <p><br></p>
-        <p><br></p>
-        <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                style="font-size:16pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">&nbsp;Service</span>
-        </p>
-        <p><br></p>
-        <ol style="margin-top:0;margin-bottom:0;">
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Swapdrop operates a social peer-to-peer clothes swapping platform which enables the connection, platform and distribution of a Swap of clothes / shoes or other closely associated items between two consenting users through the use of our website (the &lsquo;</span><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:700;font-style:italic;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">service</span><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">&rsquo;).</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">The service is operated by SWAPDROP LTD, incorporated and registered with Companies House UK under company number 12594521.</span>
-                </p>
-            </li>
-        </ol>
-        <p><br></p>
-        <p><br></p>
-        <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                style="font-size:16pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">&nbsp;Function</span>
-        </p>
-        <p><br></p>
-        <p><br></p>
-        <ol style="margin-top:0;margin-bottom:0;">
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Our website is an online platform where our users can make, receive, review, reject and accept an offer to swap with other users. We use optional filters to present you with relevant item suggestions and display your items to the most relevant users. We present our users with a feed of other users&#39; items and allow users to view other users&#39; profiles. Our users can make a swap offer to any item of any user, selecting as many of their items to offer as they like. Users can then review their offers and reject as many offers as they like but can only accept&nbsp;</span><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:underline;-webkit-text-decoration-skip:none;text-decoration-skip-ink:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">one</span><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">&nbsp;offer (item) to swap. A swap will always consist of one item of any given user for one item of a different user. Once both users have accepted and consented to a swap, the two parties in the swap will choose a pickup time and a delivery address and complete payment for our service and our courier system will carry out the swap.</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">The site hosts third-party content and we&nbsp;</span><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:underline;-webkit-text-decoration-skip:none;text-decoration-skip-ink:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">do not</span><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">&nbsp;take responsibility or are in any way obliged to engage in disputes between our users.</span>
-                </p>
-            </li>
-        </ol>
-        <p><br></p>
-        <p><br></p>
-        <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                style="font-size:16pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Requirements to use our service</span>
-        </p>
-        <p><br></p>
-        <p><br></p>
-        <ol style="margin-top:0;margin-bottom:0;">
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">This document sets the terms and conditions for the use of our service and your relationship with us.</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">By creating an account with us and/or accessing or using our service you agree to the Terms of Services in their entirety as outlined in this document.</span>
-                </p>
-            </li>
-        </ol>
-        <p><br></p>
-        <p><br></p>
-        <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                style="font-size:16pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Account Creation and Requirements</span>
-        </p>
-        <p><br></p>
-        <ol style="margin-top:0;margin-bottom:0;">
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">To use our service you must set up an account with a username and password and provide us with an email address and your current households postcode. We encourage you to create a strong password of at least 8 characters, using a mixture of upper and lower case letters, numbers and symbols.</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">You must reside at a valid &lsquo;PO19&rsquo; UK postcode in order to create an account and use our service. Swapdrop reserves the right to limit access to our service and site by territorial restrictions.</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">You must be at least 16 years old to register an account with Swapdrop. Swapdrop does not knowingly collect or solicit information or data from anyone under the age of 16. &nbsp;Upon an event where we become aware of the use of our services by an individual under the age of 16 years old, we shall remove their account, associated information and data as soon as possible.</span>
-                </p>
-            </li>
-        </ol>
-        <p><br></p>
-        <p><br></p>
-        <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                style="font-size:16pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Swapping Platform&nbsp;</span>
-        </p>
-        <p><br></p>
-        <ol style="margin-top:0;margin-bottom:0;">
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">On creating an account, our service allows users to upload items which they are looking to swap on to their profile. Other users can then make a swap offer on these items. These items will also appear in the &lsquo;swap feed&rsquo; amongst other users items.&nbsp;</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Users can make an offer on any live item on our platform. Users have full freedom on which offer(s) to accept or reject.</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">On the occasion that a swap offer is accepted, users have 48 hours to complete the swap through completing the checkout process. The items will enter a matched state once an offer is accepted and no other users will be able to make an offer on either of these items. If checkout is not completed by both users within the 48 hours period both items will return to the live state.</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">We only permit a swap to take place through payment on our site and through using our integrated pickup and courier system. Users carrying out swaps out of our site breaches our usage policy and may face removal from the site and termination of their account.</span>
-                </p>
-            </li>
-        </ol>
-        <p><br></p>
-        <p><br></p>
-        <p><br></p>
-        <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                style="font-size:16pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Transactions and Payment&nbsp;</span><span
-                style="font-size:16pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br></span><span
-                style="font-size:16pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br></span>
-        </p>
-        <ol style="margin-top:0;margin-bottom:0;">
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">When you have submitted a payment for a swap you agree to enter a contract with the user with whom you are swapping. You may only terminate the contract to swap with another user where permitted by law.</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#000000;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">When you enter into a contract to swap an item on your profile, you warrant and undertake that you have the legal ownership and right to enter into such a transaction with the given item which you are providing.</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Swapdrop offers payment through Square, a third-party payments system provider. Payments can be completed through our website or through a card payment at your address.&nbsp;</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">By using Square, you hereby consent and authorise Swapdrop and Square to share any information and payment instructions you provide in order to complete the payments through Square payments systems. When using our payment services you agree with our payment providers terms and conditions.</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Any agreement to swap between users is a contractual agreement between the two users and Swapdrop takes no responsibility for the safety, quality, legality or legitimacy of any listed items.&nbsp;</span>
-                </p>
-            </li>
-        </ol>
-        <p><br></p>
-        <p><br></p>
-        <p><br></p>
-        <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                style="font-size:16pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">User Content</span>
-        </p>
-        <p><br></p>
-        <ol style="margin-top:0;margin-bottom:0;">
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Any images or text uploaded must abide by the law, the ethos of Swapdrop and be free from harmful imagery, discrimination, profanity or fraud.&nbsp;</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">You must own any items listed within your profile. You must have the complete rights to any images or text uploaded to your profile.</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">On uploading images to your account you grant Swapdrop express permission to alter, edit and use your images for any purposes related to our business, expressly for use within advertisement of our service.&nbsp;</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Swapdrop takes no responsibility for the moderation or reviewing of any user uploaded content.&nbsp;</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Swapdrop reserves the right to remove any user content if we deem it to be in breach of our Terms of Service.</span>
-                </p>
-            </li>
-        </ol>
-        <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br></span><span
-                style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br></span><span
-                style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br></span><span
-                style="font-size:16pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Courier System</span>
-        </p>
-        <p><br></p>
-        <ol style="margin-top:0;margin-bottom:0;">
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Swapdrop as part of our service provides a courier service which is used for the pick-up and delivery of all swaps carried out through our service.&nbsp;</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">The courier service is used for every swap carried out on our site and is paid for as part of our service fee.&nbsp;</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">By entering and reviewing a delivery address and pickup time during check out, you confirm that you will be present at the given address at the selected time and ready and available to hand over the swapped item to our delivery driver.&nbsp;</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">We reserve the right to refuse a refund and/or delivery of your swap if you are not available or present at the given delivery address at the selected pickup time.</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">The delivery of both items will only occur once both items are in our possession.</span>
-                </p>
-            </li>
-        </ol>
-        <p><br></p>
-        <p><br></p>
-        <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                style="font-size:16pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Rules of Acceptable Use</span>
-        </p>
-        <p><br></p>
-        <ol style="margin-top:0;margin-bottom:0;">
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Alongside the requirements set about throughout this document (Terms of Service) in order to use our site and/or service you must also oblige and follow our Rules of Acceptable Use as outlined within this section.</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">You must have access and ownership of the email address with which you register your account under. It is your responsibility to read and respect any correspondences we may send to your email.</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">On creating an account the personal information must not be false or misleading.</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Each individual is only permitted to create and maintain one account on our site.</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Users must not list items which do not come under our acceptable items list (Clothes/Shoes/Clothing Accessories/Jewelry) or any items which may be considered offensive or against Swapdrop ethos. We reserve the right to remove any item listed on our site without notice.</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Users must not organise a swap agreed on our service out of our site or through the use of a payment method not provided by Swapdrop.</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Users must not knowingly accept an offer without full intention to proceed with the payment and carrying out of the swap.</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Users must not make an offer to swap without full intention to proceed with the payment and carrying out of the swap.&nbsp;</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Users are not permitted to carry out drop shipping or any other misleading swapping practices. You must at the time of listing an item have full and express ownership and rights to swap the given item.</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">If we find you have broken or fail to comply with our Rules of Acceptable Use or any part of our Terms of Service we may without notice suspend or terminate your account and associated content and prevent you from creating a new account on our site.</span>
-                </p>
-            </li>
-        </ol>
-        <p><br></p>
-        <p><br></p>
-        <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                style="font-size:16pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Indemnity</span>
-        </p>
-        <p><br></p>
-        <ol style="margin-top:0;margin-bottom:0;">
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#000000;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">By creating an account our users shall fully indemnify, hold harmless and defend Swapdrop and its directors, officers, employees, agents, stockholders and Affiliates from and against all claims, demands, actions, suits, damages, liabilities, losses, settlements, judgments, costs and expenses (including but not limited to reasonable attorney&rsquo;s fees and costs), whether or not involving a third party claim, which arise out of any breach a user may make to our Terms of Service or by</span><span
-                        style="font-size:12pt;font-family:Arial;color:#212529;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">&nbsp;</span><span
-                        style="font-size:11pt;font-family:Arial;color:#000000;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">violation of any law or the rights of a third-party.</span>
-                </p>
-            </li>
-        </ol>
-        <p><br></p>
-        <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                style="font-size:16pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">&nbsp;Disclaimer of Warranties / Limitation of Liability</span>
-        </p>
-        <p><br></p>
-        <ol style="margin-top:0;margin-bottom:0;">
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#333333;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#333333;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">In no case do Swapdrap, it&rsquo;s employees, directors,&nbsp;</span><span
-                        style="font-size:11pt;font-family:Arial;color:#212529;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">officers, employees, affiliates, agents, contractors, interns, suppliers, service providers or licensors accept any liability for:</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#212529;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;margin-left: 36pt;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#212529;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Death or personal injury caused by our negligence</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#212529;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;margin-left: 36pt;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#212529;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Fraud or fraudulent misrepresentation</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#212529;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;margin-left: 36pt;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#212529;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Any another type of liability which cannot by law be excluded or limited</span>
-                </p>
-            </li>
-        </ol>
-        <ol start="2" style="margin-top:0;margin-bottom:0;">
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#212529;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#212529;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Though our Terms of Service or usage of our site or it&rsquo;s contained content we do not make any warranties or representations, whether express or implied that this site, our service or any affiliated content are: Error free, accurate, up-to-date, timely or secure.</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#212529;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#212529;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">You agree that we may remove the service for indefinite periods of time or cancel the service at any time, without notice to you. &nbsp;</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#212529;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#212529;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">To the extent as permitted by law, we exclude all conditions, warranties, representations or other terms which may apply to this site, any content or the services on it.</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#212529;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#212529;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">We provide an online platform facility and courier service to enable individuals to swap items of clothes or close associates with one another. Our users are solely responsible for the swap transaction agreed and entered through the use of our site.&nbsp;</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;background-color:#ffffff;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#000000;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">We are not responsible for any action or inaction of users of the Site or Services, or content provided by users of the Site including, without limitation:</span>
-                </p>
-            </li>
-        </ol>
-        <ol style="margin-top:0;margin-bottom:0;">
-            <ol style="margin-top:0;margin-bottom:0;">
-                <li dir="ltr"
-                    style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                    <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                            style="font-size:11pt;font-family:Arial;color:#000000;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">the descriptions or photos of items, including their accuracy and completeness;</span>
-                    </p>
-                </li>
-            </ol>
-        </ol>
-        <ol start="7" style="margin-top:0;margin-bottom:0;">
-            <ol style="margin-top:0;margin-bottom:0;">
-                <li dir="ltr"
-                    style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                    <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                            style="font-size:11pt;font-family:Arial;color:#000000;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">the quality, legality or safety of the items;</span>
-                    </p>
-                </li>
-                <li dir="ltr"
-                    style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                    <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                            style="font-size:11pt;font-family:Arial;color:#000000;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">the seller&rsquo;s, exchanger&rsquo;s or giver&rsquo;s title or description to the items; or</span>
-                    </p>
-                </li>
-                <li dir="ltr"
-                    style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                    <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                            style="font-size:11pt;font-family:Arial;color:#000000;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">any users right to enter into a swap.</span>
-                    </p>
-                </li>
-            </ol>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;background-color:#ffffff;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#000000;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">In respect of any dispute you may have with another user of the Site, you agree to:</span>
-                </p>
-                <ol style="margin-top:0;margin-bottom:0;">
-                    <li dir="ltr"
-                        style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                        <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                                style="font-size:11pt;font-family:Arial;color:#000000;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">waive any claim you may have against us in connection with such dispute; and</span>
-                        </p>
-                    </li>
-                    <li dir="ltr"
-                        style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                        <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                                style="font-size:11pt;font-family:Arial;color:#000000;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">indemnify us for any loss or liability we incur as a result of any claim made against us by such user or any other third party as a result of such dispute.</span>
-                        </p>
-                    </li>
-                </ol>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;background-color:#ffffff;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#000000;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">We not accept liability liable for any loss or damage caused by a virus, distributed denial-of-service attack, or other technologically harmful material that may infect your computer equipment, computer programs, data or other proprietary material due to your use of our Site or Services, or to your downloading of any content on it, or on any website linked to it.</span>
-                </p>
-            </li>
-        </ol>
-        <p dir="ltr" style="line-height:1.38;background-color:#ffffff;margin-top:31pt;margin-bottom:0pt;"><span
-                style="font-size:16pt;font-family:Arial;color:#000000;background-color:#ffffff;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Termination of Use</span>
-        </p>
-        <ol style="margin-top:0;margin-bottom:0;">
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;background-color:#ffffff;margin-top:31pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#000000;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Our Terms of Service and associated documents are effective up to the point at which you decided you can no longer oblige and agree to anything within our Terms of Service, at which point you must stop using our service immediately.</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#000000;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Upon termination of use of our service you should contact us at contact@swapdrop.email in order for us to deactivate and delete your account and any associated content and data.</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#000000;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">We may terminate your account and remove associated content if we find or judge you to be in breach of our Terms of Service. Termination of account is under our sole discretion and may occur without notice.</span>
-                </p>
-            </li>
-        </ol>
-        <p dir="ltr" style="line-height:1.38;margin-top:46pt;margin-bottom:0pt;"><span
-                style="font-size:16pt;font-family:Arial;color:#000000;background-color:#ffffff;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Governing Law</span>
-        </p>
-        <ol style="margin-top:0;margin-bottom:0;">
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:46pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#000000;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">These Terms of Service and any separate agreements provided by our service shall be governed by and construed in accordance with the laws of the United Kingdom.</span>
-                </p>
-            </li>
-        </ol>
-        <p dir="ltr" style="line-height:1.38;margin-top:46pt;margin-bottom:0pt;"><span
-                style="font-size:16pt;font-family:Arial;color:#000000;background-color:#ffffff;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Changes to Terms of Service</span>
-        </p>
-        <ol style="margin-top:0;margin-bottom:0;">
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:46pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#000000;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">You can review the most current version of the Terms of Service at any time through this page.</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#000000;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">We reserve the right, at our sole discretion, to update, change or replace any part of these Terms of Service by posting updates and changes to our website. It is your responsibility to check our website periodically for changes. Your continued use of or access to our website or the Service following the posting of any changes to these Terms of Service constitutes acceptance of those changes.</span>
-                </p>
-            </li>
-        </ol>
-        <p dir="ltr" style="line-height:1.38;margin-top:46pt;margin-bottom:0pt;"><span
-                style="font-size:16pt;font-family:Arial;color:#000000;background-color:#ffffff;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Queries / Disputes</span>
-        </p>
-        <ol style="margin-top:0;margin-bottom:0;">
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:46pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#000000;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">If you have any queries or disputes relating to these Terms of Service or the use of our service in any capacity, please contact us at first instance at contact@swapdrop.email&nbsp;</span>
-                </p>
-            </li>
-            <li dir="ltr"
-                style="list-style-type:decimal;font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;">
-                <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                        style="font-size:11pt;font-family:Arial;color:#000000;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">We shall strive to work with you to resolve your dispute informally within 7 working days.</span>
-                </p>
-            </li>
-        </ol>
-        <p dir="ltr" style="line-height:1.38;margin-left: 36pt;margin-top:0pt;margin-bottom:0pt;"><span
-                style="font-size:11pt;font-family:Arial;color:#212529;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br></span>
-        </p>
-        <p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span
-                style="font-size:11pt;font-family:Arial;color:#212529;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br></span>
-        </p>
-        <p dir="ltr"
-           style="line-height:1.38;margin-left: 36pt;background-color:#ffffff;margin-top:31pt;margin-bottom:0pt;"><span
-                style="font-size:11pt;font-family:Arial;color:#000000;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">.</span>
-        </p>
-        <p><br></p>
-        <p><br></p>
+        <p>We define a “Swap” to constitute a one-for-one exchange of two items of clothes, shoes or other accepted
+            items, between two individuals (users) without monetary exchange.</p>
 
-    </div>
+        <p>We define a “Feed” to constitute as a presented grid of images of users items with the availability to view
+            information on any item on the feed and make an “Offer” to any item as seen on the feed.
+        </p>
+        <p>We define an “Offer” to constitute as a sent presentation of an item from one user to another user to be
+            either rejected or accepted.</p>
+
+        <p>We define a “Live” state of an item to be when the owner of an item has not yet accepted any offer on the
+            given item.</p>
+
+        <p>We define a “Matched” state of an item to be when an owner of an item has accepted an offer on the given item
+            but both users within the swap have not yet checked out.</p>
+        </p>
+        <br>
+        <h2>Service</h2>
+
+        <br>
+        <p>
+        <ol>
+            <li>Swapdrop operates a social peer-to-peer clothes swapping platform which enables the connection, platform
+                and distribution of a Swap of clothes / shoes or other closely associated items between two consenting
+                users through the use of our website (the ‘<strong><i>service</i></strong>’).
+            <li>The service is operated by SWAPDROP LTD, incorporated and registered with Companies House UK under
+                company number 12594521.
+            </li>
+        </ol>
+        </p>
+
+        <br>
+        <h2>Function</h2>
+
+        <br>
+        <p>
+        <ol>
+            <li>Our website is an online platform where our users can make, receive, review, reject and accept an offer
+                to swap with other users. We use optional filters to present you with relevant item suggestions and
+                display your items to the most relevant users. We present our users with a feed of other users' items
+                and allow users to view other users' profiles. Our users can make a swap offer to any item of any user,
+                selecting as many of their items to offer as they like. Users can then review their offers and reject as
+                many offers as they like but can only accept one offer (item) to swap. A swap will always consist of one
+                item of any given user for one item of a different user. Once both users have accepted and consented to
+                a swap, the two parties in the swap will choose a pickup time and a delivery address and complete
+                payment for our service and our courier system will carry out the swap.
+            </li>
+            <li>The site hosts third-party content and we <u>do not</u> take responsibility or are in any way obliged to
+                engage in disputes between our users.
+            </li>
+        </ol>
+        </p>
+
+        <br>
+        <h2>Requirements to use our service</h2>
+
+        <br>
+        <p>
+        <ol>
+            <li>This document sets the terms and conditions for the use of our service and your relationship with us.
+            </li>
+            <li>By creating an account with us and/or accessing or using our service you agree to the Terms of Services
+                in their entirety as outlined in this document.
+            </li>
+        </ol>
+        </P>
+
+        <br>
+        <h2>Account Creation and Requirements</h2>
+
+        <br>
+        <p>
+        <ol>
+            <li>To use our service you must set up an account with a username and password and provide us with an email
+                address and your current households postcode. We encourage you to create a strong password of at least 8
+                characters, using a mixture of upper and lower case letters, numbers and symbols.
+            </li>
+
+            <li>You must reside at a valid ‘PO19’ UK postcode in order to create an account and use our service.
+                Swapdrop reserves the right to limit access to our service and site by territorial restrictions.
+            </li>
+
+            <li>You must be at least 16 years old to register an account with Swapdrop. Swapdrop does not knowingly
+                collect or solicit information or data from anyone under the age of 16. Upon an event where we become
+                aware of the use of our services by an individual under the age of 16 years old, we shall remove their
+                account, associated information and data as soon as possible.
+            </li>
+        </ol>
+        </p>
+        <br>
+        <h2>Swapping Platform</h2>
+
+        <br>
+        <p>
+        <ol>
+            <li>On creating an account, our service allows users to upload items which they are looking to swap on to
+                their profile. Other users can then make a swap offer on these items. These items will also appear in
+                the ‘swap feed’ amongst other users items.
+            </li>
+            <li>Users can make an offer on any live item on our platform. Users have full freedom on which offer(s) to
+                accept or reject.
+            </li>
+            <li>On the occasion that a swap offer is accepted, users have 48 hours to complete the swap through
+                completing the checkout process. The items will enter a matched state once an offer is accepted and no
+                other users will be able to make an offer on either of these items. If checkout is not completed by both
+                users within the 48 hours period both items will return to the live state.
+            </li>
+            <li>We only permit a swap to take place through payment on our site and through using our integrated pickup
+                and courier system. Users carrying out swaps out of our site breaches our usage policy and may face
+                removal from the site and termination of their account.
+            </li>
+        </ol>
+        </p>
+        <br>
+        <h2>Transactions and Payment </h2>
+
+        <br>
+        <p>
+        <ol>
+            <li>When you have submitted a payment for a swap you agree to enter a contract with the user with whom you
+                are swapping. You may only terminate the contract to swap with another user where permitted by law.
+            </li>
+
+            <li>When you enter into a contract to swap an item on your profile, you warrant and undertake that you have
+                the legal ownership and right to enter into such a transaction with the given item which you are
+                providing.
+            </li>
+
+            <li>Swapdrop offers payment through Square, a third-party payments system provider. Payments can be
+                completed through our website or through a card payment at your address.
+            </li>
+
+            <li>By using Square, you hereby consent and authorise Swapdrop and Square to share any information and
+                payment instructions you provide in order to complete the payments through Square payments systems. When
+                using our payment services you agree with our payment providers terms and conditions.
+            </li>
+
+            <li>Any agreement to swap between users is a contractual agreement between the two users and Swapdrop takes
+                no responsibility for the safety, quality, legality or legitimacy of any listed items.
+            </li>
+        </ol>
+        </p>
+
+        <br>
+        <h2>User Content</h2>
+
+        <br>
+        <p>
+        <ol>
+            <li>Any images or text uploaded must abide by the law, the ethos of Swapdrop and be free from harmful
+                imagery, discrimination, profanity or fraud.
+            </li>
+
+            <li>You must own any items listed within your profile. You must have the complete rights to any images or
+                text uploaded to your profile.
+            </li>
+
+            <li>On uploading images to your account you grant Swapdrop express permission to alter, edit and use your
+                images for any purposes related to our business, expressly for use within advertisement of our service.
+            </li>
+
+            <li>Swapdrop takes no responsibility for the moderation or reviewing of any user uploaded content.</li>
+
+            <li>Swapdrop reserves the right to remove any user content if we deem it to be in breach of our Terms of
+                Service.
+            </li>
+        </ol>
+        </p>
+
+        <br>
+        <h2>Courier System</h2>
+
+        <br>
+        <p>
+        <ol>
+            <li>Swapdrop as part of our service provides a courier service which is used for the pick-up and delivery of
+                all swaps carried out through our service.
+            </li>
+
+            <li>The courier service is used for every swap carried out on our site and is paid for as part of our
+                service fee.
+            </li>
+
+            <li>By entering and reviewing a delivery address and pickup time during check out, you confirm that you will
+                be present at the given address at the selected time and ready and available to hand over the swapped
+                item to our delivery driver.
+            </li>
+
+            <li>We reserve the right to refuse a refund and/or delivery of your swap if you are not available or present
+                at the given delivery address at the selected pickup time.
+            </li>
+
+            <li>The delivery of both items will only occur once both items are in our possession.</li>
+        </ol>
+        </p>
+
+        <br>
+        <h2>Rules of Acceptable Use</h2>
+
+        <br>
+        <p>
+        <ol>
+            <li>Alongside the requirements set about throughout this document (Terms of Service) in order to use our
+                site and/or service you must also oblige and follow our Rules of Acceptable Use as outlined within this
+                section.
+            </li>
+
+            <li>You must have access and ownership of the email address with which you register your account under. It
+                is your responsibility to read and respect any correspondences we may send to your email.
+            </li>
+
+            <li>On creating an account the personal information must not be false or misleading.</li>
+
+            <li>Each individual is only permitted to create and maintain one account on our site.</li>
+
+            <li>Users must not list items which do not come under our acceptable items list (Clothes/Shoes/Clothing
+                Accessories/Jewellery) or any items which may be considered offensive or against Swapdrop ethos. We
+                reserve the right to remove any item listed on our site without notice.
+            </li>
+
+            <li>Users must not organise a swap agreed on our service out of our site or through the use of a payment
+                method not provided by Swapdrop.
+            </li>
+
+            <li>Users must not knowingly accept an offer without full intention to proceed with the payment and carrying
+                out of the swap.
+            </li>
+
+            <li>Users must not make an offer to swap without full intention to proceed with the payment and carrying out
+                of the swap.
+            </li>
+
+            <li>Users are not permitted to carry out drop shipping or any other misleading swapping practices. You must
+                at the time of listing an item have full and express ownership and rights to swap the given item.
+            </li>
+            <li>If we find you have broken or fail to comply with our Rules of Acceptable Use or any part of our Terms
+                of Service we may without notice suspend or terminate your account and associated content and prevent
+                you from creating a new account on our site.
+            </li>
+        </ol>
+        </p>
+        <br>
+        <h2>Indemnity</h2>
+
+        <br>
+        <p>
+        <OL>
+            <li>By creating an account our users shall fully indemnify, hold harmless and defend Swapdrop and its
+                directors, officers, employees, agents, stockholders and Affiliates from and against all claims,
+                demands, actions, suits, damages, liabilities, losses, settlements, judgments, costs and expenses
+                (including but not limited to reasonable lawyer's fees and costs), whether or not involving a third
+                party claim, which arise out of any breach a user may make to our Terms of Service or by violation of
+                any law or the rights of a third-party.
+            </li>
+        </OL>
+        </p>
+
+        <br>
+        <h2>Disclaimer of Warranties / Limitation of Liability</h2>
+
+        <br>
+        <p>
+        <ol>
+            <li>In no case do Swapdrap, it’s employees, directors, officers, employees, affiliates, agents, contractors,
+                interns, suppliers, service providers or licensors accept any liability for:
+            </li>
+            <ul >
+                <li>Death or personal injury caused by our negligence</li>
+                <li>Fraud or fraudulent misrepresentation</li>
+                <li>Any other type of liability which cannot by law be excluded or limited</li>
+            </ul>
+            <li>Though our Terms of Service or usage of our site or it’s contained content we do not make any warranties
+                or representations, whether express or implied that this site, our service or any affiliated content
+                are: Error free, accurate, up-to-date, timely or secure.
+            </li>
+            <li>You agree that we may remove the service for indefinite periods of time or cancel the service at any
+                time, without notice to you.
+            </li>
+            <li>To the extent as permitted by law, we exclude all conditions, warranties, representations or other terms
+                which may apply to this site, any content or the services on it.
+            </li>
+            <li>We provide an online platform facility and courier service to enable individuals to swap items of
+                clothes or close associates with one another. Our users are solely responsible for the swap transaction
+                agreed and entered through the use of our site.
+            </li>
+            <li>We are not responsible for any action or inaction of users of the Site or Services, or content provided
+                by users of the Site including, without limitation:
+            </li>
+            <ul>
+                <li>the descriptions or photos of items, including their accuracy and completeness</li>
+                <li>the quality, legality or safety of the items</li>
+                <li>the seller’s, exchanger’s or giver’s title or description to the items or</li>
+                <li>any users right to enter into a swap.</li>
+            </ul>
+
+            <li>In respect of any dispute you may have with another user of the Site, you agree to:</li>
+            <ul>
+                <li>waive any claim you may have against us in connection with such dispute; and</li>
+                <li>indemnify us for any loss or liability we incur as a result of any claim made against us by such
+                    user or any other third party as a result of such dispute.
+                </li>
+            </ul>
+
+            <li>We do not accept liability for any loss or damage caused by a virus, distributed denial-of-service
+                attack, or other technologically harmful material that may infect your computer equipment, computer
+                programs, data or other proprietary material due to your use of our Site or Services, or to your
+                downloading of any content on it, or on any website linked to it
+            </li>
+        </ol>
+        </p>
+        <br>
+        <h2>Termination of Use</h2>
+        <br>
+        <p>
+        <ol>
+            <li>Our Terms of Service and associated documents are effective up to the point at which you decided you can
+                no longer oblige and agree to anything within our Terms of Service, at which point you must stop using
+                our service immediately.
+            </li>
+            <li>Upon termination of use of our service you should contact us at contact@swapdrop.email in order for us
+                to deactivate and delete your account and any associated content and data.
+            </li>
+            <li>We may terminate your account and remove associated content if we find or judge you to be in breach of
+                our Terms of Service. Termination of account is under our sole discretion and may occur without notice.
+            </li>
+        </ol>
+        </p>
+        <br>
+        <h2>Governing Law</h2>
+
+        <br>
+        <p>
+        <ol>
+            <li>These Terms of Service and any separate agreements provided by our service shall be governed by and
+                construed in accordance with the laws of the United Kingdom.
+            </li>
+        </ol>
+        </p>
+
+        <br>
+        <h2>Changes to Terms of Service</h2>
+
+        <br>
+        <p>
+        <ol>
+            <li>You can review the most current version of the Terms of Service at any time through this page.</li>
+            <li>We reserve the right, at our sole discretion, to update, change or replace any part of these Terms of
+                Service by posting updates and changes to our website. It is your responsibility to check our website
+                periodically for changes. Your continued use of or access to our website or the Service following the
+                posting of any changes to these Terms of Service constitutes acceptance of those changes.
+            </li>
+        </ol>
+        </p>
+
+        <br>
+        <h2>Queries / Disputes</h2>
+
+        <br>
+        <P>
+        <ol>
+            <li>If you have any queries or disputes relating to these Terms of Service or the use of our service in any
+                capacity, please contact us at first instance at contact@swapdrop.email
+            </li>
+            <li>We shall strive to work with you to resolve your dispute informally within 7 working days.</li>
+        </ol>
+        </P></div>
 {% endblock content %}

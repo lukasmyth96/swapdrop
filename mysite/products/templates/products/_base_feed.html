@@ -1,9 +1,11 @@
 <! Used as a base component for product feed and profile feed - exposes single_product block to be extended>
 {% load user_agents %}
 <div>
-    <div class="row" {% if request|is_pc %} style="margin-left: 10%; margin-right: 10%" {% endif %}>
+    <div class="row" {% if request|is_pc %} style="margin-left: 20%; margin-right: 20%" {% endif %}>
         {% for product in products %}
-            {% block single_product %} {% endblock %}
+            <div class="col-4 col-md-3 custom-gutter">
+                {% block single_product %} {% endblock %}
+            </div>
         {% endfor %}
     </div>
 </div>

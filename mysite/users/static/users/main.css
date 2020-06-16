@@ -1,41 +1,77 @@
 
-.profile-base-container{
-  width: 90%;
-  margin-left: auto;
-  margin-right: auto;
-  border: solid #bbb5b5 1px;
-  border-radius: 40px;
-  padding: 25px;
-}
 
-@media only screen and (max-width: 600px) {
-  .profile-base-container{
-      margin-top: 50px;
-  }
-}
-
-.account-img {
-  height: 125px;
-  width: 125px;
-  margin-right: 20px;
-  margin-bottom: 16px;
+.profile-img {
+  width: 100px;
+  height: 100px;
+  margin-top: auto;
+  margin-bottom: auto;
   outline:none;
-  border-color:#9ecaed;
-  box-shadow:0 0 20px #9ecaed;
+  border-color:rgb(255, 59, 0);
+  box-shadow:0 0 20px rgb(255, 59, 0);
 }
 
-.account-img:hover {
-    box-shadow:0 0 40px #9ecaed;
+.profile-img:hover {
+    box-shadow:0 0 40px rgb(255, 59, 0);
 }
 
-.account-heading {
-  font-size: 2.5rem;
+.profile-img-btn:focus{
+  outline: none;
 }
+
+.profile-text-container{
+  list-style: none;
+  margin-left: -25%;
+}
+
+.profile-username {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24pt;
+}
+
+.upload-button{
+  background: radial-gradient(circle, rgba(255,129,0,1) 0%, rgba(255,59,0,1) 100%);
+  width: 50px;
+  height: 50px;
+  font-size: 20pt;
+  color: silver;
+  font-weight: bolder;
+  margin-top: auto;
+  margin-bottom: auto;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.upload-button:hover{
+  background: radial-gradient(circle, rgba(255,59,0,1) 0%, rgba(255,129,0,1) 100%);
+}
+
+.upload-button:focus{
+  outline: none;
+}
+
+.profile-tab-row{
+  margin-top: 50px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.profile-tab-col{
+  cursor: pointer;
+}
+
+.profile-tab-col a{
+  color: inherit;
+  text-decoration: none;
+}
+
+.selected_profile_tab_underline{
+  border-bottom: 2px solid orangered;
+}
+
 
 /* Container needed to position the button. Adjust the width as needed */
 .product-container {
   position: relative;
-  width: 50%;
 }
 
 /* Make the image responsive */

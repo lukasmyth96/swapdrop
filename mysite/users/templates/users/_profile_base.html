@@ -1,0 +1,57 @@
+<!-- Base class for 'Your items' and 'Offers made' pages-->
+{% extends "homepage/base.html" %}
+{% load crispy_forms_tags %}
+{% load user_agents %}
+{% block content %}
+      <div class="row" {% if request|is_pc %} style="margin-left: 20%; margin-right: 20%" {% endif %}>
+        <div class="col-3">
+            <a class="profile-img-btn" data-toggle="tooltip" title="Edit Profile" href="{% url "profile-info" %}">
+                <img class="rounded-circle profile-img" src="{{ user.profile.image.url }}">
+            </a>
+        </div>
+
+        <div class="col-6">
+            <ul class="profile-text-container" style="list-style: none;">
+                <li>
+                    <h2 class="profile-username">{{ user.username }}</h2>
+                </li>
+                <li>
+                    <p> Bio will go here.....</p>
+                </li>
+            </ul>
+
+        </div>
+
+        <div class="col-3">
+            <a href="{% url 'product-create' %}">
+                <button class="upload-button"> + </button>
+            </a>
+        </div>
+      </div>
+
+      <div class="row profile-tab-row" {% if request|is_pc %} style="margin-left: 20%; margin-right: 20%" {% endif %}>
+        <div class="col-6 profile-tab-col">
+            <a id="your-items-link" href="{% url "profile-your-items" %}">
+                Your items
+            </a>
+        </div>
+        <div class="col-6 profile-tab-col">
+            <a id="offers-made-link" href="{% url "profile-offers-made" %}">
+                Offers made
+            </a>
+        </div>
+      </div>
+
+        {{ request.resolver_match.url_name|json_script:"current-url" }}
+        <script>
+            // add underline to 'your items' or 'offers made' tab depending on url name
+            // currentUrlName is defined in base.html
+            if (currentUrlName.includes('your-items')) {
+                $("#your-items-link").parent().addClass("selected_profile_tab_underline")
+            } else if (currentUrlName.includes('offers-made')) {
+                $("#offers-made-link").parent().addClass("selected_profile_tab_underline")
+            }
+        </script>
+       {% block profile_feed %}
+       {% endblock %}
+{% endblock content %}
