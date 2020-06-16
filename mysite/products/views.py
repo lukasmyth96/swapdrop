@@ -1,4 +1,4 @@
-from django.urls import reverse
+from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (
     ListView,
@@ -51,7 +51,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductCreateForm
     template_name = 'products/create_form.html'
-    success_url = reverse(viewname='profile-your-items')
+    success_url = reverse_lazy(viewname='profile-your-items')
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
@@ -62,7 +62,7 @@ class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Product
     form_class = ProductUpdateForm
     template_name = 'products/update_form.html'
-    success_url = reverse(viewname='profile-your-items')
+    success_url = reverse_lazy(viewname='profile-your-items')
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
@@ -77,7 +77,7 @@ class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Product
-    success_url = reverse(viewname='profile-your-items')
+    success_url = reverse_lazy(viewname='profile-your-items')
 
     def test_func(self):
         product = self.get_object()
