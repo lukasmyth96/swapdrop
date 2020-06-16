@@ -9,8 +9,9 @@
     </div>
     <script>
         function changeBorderColour(element) {
+            console.log('I have been clicked');
             $(".offer-img").removeClass('offer-img-active');
-            $(element).addClass('offer-img-active');
+            $(element).find("img").addClass('offer-img-active');
         }
     </script>
 {% endblock %}
