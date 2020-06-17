@@ -1,12 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <div>
-        I am the dashboard
+{% extends "homepage/base.html" %}
+{% block content %}
+    <div style="text-align: center">
+        <h3>Welcome to the Swapdrop dashboard</h3>
+            <a class="btn btn-outline-primary"
+               style="margin-top: 50px"
+               href="{% url "upcoming-bookings" %}">
+            Upcoming Bookings
+            </a>
     </div>
-</body>
-</html>
+{% endblock content %}

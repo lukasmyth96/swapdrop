@@ -1,0 +1,45 @@
+{% extends "homepage/base.html" %}
+{% block content %}
+    <style>
+        table {
+          table-layout: fixed;
+          width: 90%;
+          margin-top: 25px;
+        }
+
+        td, th {
+          border: 1px solid black;
+          text-align: center;
+          padding: 8px;
+        }
+
+        tr{
+            height: 50px;
+        }
+
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+    </style>
+    <div style="text-align: center">
+        <h3>Upcoming Bookings:</h3>
+        <table style="margin-left: auto; margin-right: auto">
+            <tr style="background-color: rgb(255, 59, 0)">
+                <th>Booking Type</th>
+                <th>User</th>
+                <th>Date</th>
+                <th>Time Slot</th>
+                <th>More Info</th>
+            </tr>
+            {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking.booking_type}}</td>
+                    <td>{{ booking.owner.username}}</td>
+                    <td>{{ booking.time_slot.day_str}} {{ booking.time_slot.date_str}}</td>
+                    <td>{{ booking.time_slot.time}}</td>
+                    <td> <a href="#"> more info </a> </td>
+                </tr>
+            {% endfor%}
+        </table>
+    </div>
+{% endblock content %}

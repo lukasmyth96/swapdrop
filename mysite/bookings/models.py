@@ -17,7 +17,7 @@ class TimeSlot(models.Model):
     capacity = models.PositiveIntegerField()
 
     def __str__(self):
-        date_string = self.date.strftime('%A %d %B %Y')
+        date_string = self.date.strftime('%A %d %B')
         time_string = self.time.label
         return f'{date_string} @{time_string}'
 
