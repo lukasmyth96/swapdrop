@@ -1,0 +1,46 @@
+{% extends "homepage/base.html" %}
+{% block content %}
+    <style>
+        table {
+          table-layout: fixed;
+          width: 80%;
+          margin-top: 25px;
+          margin-left: auto;
+          margin-right: auto;
+          border: 1px solid black;
+          background-color: lightgray;
+        }
+
+        td, th {
+          text-align: center;
+          padding: 8px;
+        }
+
+    </style>
+
+    <div style="text-align: center">
+        <h6> {{ booking.booking_type }} for {{ booking.owner }} - {{ booking.time_slot.time }}
+                on {{ booking.time_slot.day_str}} {{ booking.time_slot.date_str}}</h6>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-md-6" style="text-align: center">
+            <img src="{{ booking.product.image.url }}" style="width: 80%">
+        </div>
+        <div class="col-12 col-md-6" style="text-align: center">
+            <div style="text-align: center">
+                <table>
+                    <tr> <th> {{ booking.booking_type }} Address: </th> </tr>
+                    <tr> <td> {{ booking.owner.profile.house_name_number }} {{ booking.owner.profile.address_line_1 }} </td>  </tr>
+                    {% if booking.owner.profile.address_line_2 %}
+                        <tr> <td> {{ booking.owner.profile.address_line_2 }} </td>  </tr>
+                    {% endif %}
+                    <tr> <td> {{ booking.owner.profile.town_city }} </td>  </tr>
+                    <tr> <td> {{ booking.owner.profile.county }} </td>  </tr>
+                    <tr> <td> {{ booking.owner.profile.postcode }} </td>  </tr>
+                    <tr> <td> <a target="_blank" href="https://www.google.co.uk/maps/place/{{ booking.owner.profile.postcode }}"> click to view on map </a> </td> </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
