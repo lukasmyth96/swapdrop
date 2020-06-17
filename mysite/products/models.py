@@ -1,7 +1,10 @@
+import math
+import datetime
 import os
 from io import BytesIO
 
 from django.db import models
+from django.db.models import Q
 from django.core.files import File
 from django.apps import apps
 from django.utils import timezone
@@ -45,6 +48,7 @@ class Product(models.Model):
         return reverse('product-detail', kwargs={'pk': self.pk})
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        # FIXME will the lines below cause issues if we update the product??
         self.image = self.crop_resize_rename_image(self.image, self.crop_dimensions_image, 'image')
         self.image2 = self.crop_resize_rename_image(self.image2, self.crop_dimensions_image2, 'image2')
         self.image3 = self.crop_resize_rename_image(self.image3, self.crop_dimensions_image3, 'image3')
@@ -77,4 +81,18 @@ class Product(models.Model):
         """
         Swap = apps.get_model('swaps', 'Swap')
         return len(Swap.objects.filter(desired_product=self, status=SwapStatus.PENDING_REVIEW))
+
+    @property
+    def hours_left_to_checkout(self):
+        """ Returns the time left to complete checkout of this product before status automatically reverts back to
+        LIVE and the Swap gets cancelled
+        """
+        Swap = apps.get_model('swaps', 'Swap')
+        hours_left_to_checkout = None
+        if self.status == ProductStatus.PENDING_CHECKOUT:
+            swap = Swap.objects.get((Q(offered_product=self) | Q(desired_product=self))
+                                    & Q(status=SwapStatus.PENDING_CHECKOUT))
+            hours_left_to_checkout = swap.hours_left_to_checkout
+        return hours_left_to_checkout
+
 

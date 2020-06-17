@@ -1,5 +1,6 @@
 from django.shortcuts import redirect
 from django.contrib import messages
+from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView
 
@@ -101,17 +102,17 @@ class ReviewOffersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
         # Update status of each offer and update the status of accepted product to PENDING_CHECKOUT
         offers_for_product = self.get_offers_for_product(current_product=current_product)  # get list of swaps that are offers for this product
-        swap_id = None  # default TODO refactor this
         for offer in offers_for_product:
             offered_product = offer.offered_product
             if offered_product.id == selected_product_id:
                 offer.status = SwapStatus.PENDING_CHECKOUT  # update status of swap
+                offer.date_accepted = timezone.now()  # set match time
                 offered_product.status = ProductStatus.PENDING_CHECKOUT  # update status of accepted product
                 offered_product.save(update_fields=['status'])
             else:
                 offer.status = SwapStatus.REJECTED
 
-            offer.save(update_fields=['status'])  # update status in db
+            offer.save(update_fields=['status', 'date_accepted'])  # update status in db
 
         return redirect('checkout', product_id=current_product.id)
 
