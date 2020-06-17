@@ -30,7 +30,7 @@ ul {
 
 .site-header .nav-link {
   font-family: 'Montserrat', sans-serif;
-  color: rgba(23, 21, 21, 0.96);
+  color: rgba(42, 38, 38, 0.96);
   font-weight: bold;
   font-size: 100%;
 }
@@ -41,7 +41,6 @@ ul {
 
 .site-header .nav-link:hover {
   color: black;
-  font-size: 102%;
 }
 
 .site-header .nav-link.active {
@@ -86,9 +85,13 @@ a.article-title:hover {
   vertical-align: middle;
 }
 
+.menu-icon:hover{
+  cursor: pointer;
+}
+
 .slider {
   display: none;
-  margin-right: 30%;
+  margin-right: 25%;
 }
 
 .slider li{
