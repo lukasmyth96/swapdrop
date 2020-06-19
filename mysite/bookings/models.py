@@ -71,6 +71,7 @@ class Booking(models.Model):
         return f'{self.time_slot.__str__()} - {self.booking_type.label} from \'{self.owner.username}\' - status: {self.status.name}'
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        """ Update status of product once booking marked as complete"""
         if self.status == BookingStatus.COMPLETE:
             if self.booking_type == BookingType.COLLECTION:
                 self.product.status = ProductStatus.COLLECTED

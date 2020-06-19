@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test
 from django.views.generic import ListView, DetailView, FormView
 
@@ -29,10 +30,18 @@ class BookingDetail(DetailView):
         return context
 
 
-class BookingStatusUpdate(FormView):
+def booking_status_update(request, booking_id):
+    """ Update the status of a single booking and the product it corresponds to"""
+    if request.method == 'POST':
+        booking = Booking.objects.get(id=booking_id)
+        form = BookingStatusUpdateForm(instance=booking, data=request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Booking completed')
+        else:
+            messages.warning(request, 'Something went wrong!')
+        return redirect('upcoming-bookings')
 
-    form_class = BookingStatusUpdateForm
-    success_url = reverse_lazy('upcoming-bookings')
 
 
 
