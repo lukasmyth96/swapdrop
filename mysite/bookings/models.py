@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django_enumfield import enum
 
 from .model_enums import Slot, BookingType, BookingStatus
-from products.models import Product
+from products.models import Product, ProductStatus
 
 
 class TimeSlot(models.Model):
@@ -70,7 +70,14 @@ class Booking(models.Model):
     def __str__(self):
         return f'{self.time_slot.__str__()} - {self.booking_type.label} from \'{self.owner.username}\' - status: {self.status.name}'
 
-
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        if self.status == BookingStatus.COMPLETE:
+            if self.booking_type == BookingType.COLLECTION:
+                self.product.status = ProductStatus.COLLECTED
+            elif self.booking_type == BookingType.DELIVERY:
+                self.product.status = ProductStatus.DELIVERED
+            self.product.save(update_fields=['status'])
+        return super(Booking, self).save(force_insert, force_update, using, update_fields)
 
 
 

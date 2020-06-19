@@ -25,15 +25,17 @@
         <h3>Upcoming Bookings:</h3>
         <table style="margin-left: auto; margin-right: auto">
             <tr style="background-color: rgb(255, 59, 0)">
-                <th>Booking Type</th>
+                <th> Type </th>
+                <th> Status </th>
                 <th>User</th>
                 <th>Date</th>
-                <th>Time Slot</th>
-                <th>More Info</th>
+                <th>Time</th>
+                <th> Info</th>
             </tr>
             {% for booking in bookings %}
                 <tr>
                     <td>{{ booking.booking_type}}</td>
+                    <td>{{ booking.status.name }}</td>
                     <td>{{ booking.owner.username}}</td>
                     <td>{{ booking.time_slot.day_str}} {{ booking.time_slot.date_str}}</td>
                     <td>{{ booking.time_slot.time}}</td>
