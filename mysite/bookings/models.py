@@ -5,7 +5,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django_enumfield import enum
 
-from .model_enums import Slot, BookingType
+from .model_enums import Slot, BookingType, BookingStatus
 from products.models import Product
 
 
@@ -64,12 +64,11 @@ class Booking(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     booking_type = enum.EnumField(BookingType)
+    status = enum.EnumField(BookingStatus, default=BookingStatus.PENDING)
     date_booked = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        abbrv_product_name = self.product.name if len(self.product.name) < 20 else f'{self.product.name[:20]}...'
-        return f'{self.time_slot.__str__()} - {self.booking_type.label} ' \
-               f'of \'{abbrv_product_name}\' from \'{self.owner.username}\''
+        return f'{self.time_slot.__str__()} - {self.booking_type.label} from \'{self.owner.username}\' - status: {self.status.name}'
 
 
 
