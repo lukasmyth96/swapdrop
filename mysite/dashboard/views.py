@@ -58,7 +58,7 @@ def booking_status_update(request, booking_id):
             # If collection marked as complete then auto create a delivery booking for that product
             if (booking.booking_type == BookingType.COLLECTION) and (new_booking_status == BookingStatus.COMPLETE):
                 try:
-                    _create_delivery_booking(product=booking.product)
+                    _create_delivery_booking(product=booking.product, swap=booking.swap)
                     messages.success(request, 'Created delivery booking for this product')
                 except Exception as err:
                     messages.warning(request, f'Error - failed to create delivery booking for this product: {err}')
@@ -67,7 +67,7 @@ def booking_status_update(request, booking_id):
         return redirect('upcoming-bookings')
 
 
-def _create_delivery_booking(product):
+def _create_delivery_booking(product, swap):
     """
     Create a delivery booking for a given product where the owner of the booking will be the user who will be receving
     the product.
@@ -81,8 +81,7 @@ def _create_delivery_booking(product):
     -------
 
     """
-    swap = Swap.objects.get((Q(offered_product=product) | Q(desired_product=product))
-                            & Q(status=SwapStatus.PENDING_CHECKOUT))
+
     if swap.offered_product == product:
         other_product = swap.desired_product
     else:
@@ -91,6 +90,7 @@ def _create_delivery_booking(product):
     user_to_deliver_to = other_product.owner
     booking = Booking(time_slot=None,
                       product=product,
+                      swap=swap,
                       owner=user_to_deliver_to,
                       booking_type=BookingType.DELIVERY)
     booking.save()

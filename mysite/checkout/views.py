@@ -125,9 +125,11 @@ def _group_time_slots(time_slots):
 def _create_collection_booking(selected_time_slot, product_id, owner):
     """ Create and save collection Booking in chosen time slot"""
     product = Product.objects.get(id=product_id)
+    swap = Swap.objects.get((Q(offered_product=product) | Q(desired_product=product)) & Q(status=SwapStatus.PENDING_CHECKOUT))
     booking = Booking(time_slot=selected_time_slot,
                       owner=owner,
                       product=product,
+                      swap=swap,
                       booking_type=BookingType.COLLECTION)
     booking.save()
 

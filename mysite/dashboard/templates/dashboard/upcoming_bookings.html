@@ -25,8 +25,8 @@
         <h3>Upcoming Bookings:</h3>
         <table style="margin-left: auto; margin-right: auto">
             <tr style="background-color: rgb(255, 59, 0)">
-                <th> Type </th>
-                <th> Status </th>
+                <th>Type</th>
+                <th>Image</th>
                 <th>User</th>
                 <th>Date</th>
                 <th>Time</th>
@@ -35,7 +35,7 @@
             {% for booking in bookings %}
                 <tr>
                     <td>{{ booking.booking_type}}</td>
-                    <td>{{ booking.status.name }}</td>
+                    <td> <img src="{{ booking.product.image.url }}" style="width: 80%"> </td>
                     <td>{{ booking.owner.username}}</td>
                     <td>{{ booking.time_slot.day_str}} {{ booking.time_slot.date_str}}</td>
                     <td>{{ booking.time_slot.time}}</td>
