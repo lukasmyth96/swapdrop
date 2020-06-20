@@ -35,8 +35,11 @@ def start_checkout(request, product_id):
         users_product = Product.objects.get(id=product_id)
         try:
             swap = Swap.objects.get((Q(offered_product=users_product) | Q(desired_product=users_product)) & Q(status=SwapStatus.PENDING_CHECKOUT))
-            incoming_product = swap.desired_product if users_product == swap.offered_product else swap.offered_product
-            context = {'users_product': users_product, 'incoming_product': incoming_product}
+            if swap.offered_product == users_product:
+                other_users_product = swap.desired_product
+            else:
+                other_users_product = swap.offered_product
+            context = {'users_product': users_product, 'other_users_product': other_users_product}
             return render(request, template_name='checkout/checkout.html', context=context)
         except Swap.DoesNotExist:
             messages.warning(request, 'oops.. looks like this product isn\'t ready for checkout yet')
