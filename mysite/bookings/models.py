@@ -24,8 +24,8 @@ class TimeSlot(models.Model):
 
     @property
     def day_str(self):
-        """ Returns e.g. Mon, Tue etc."""
-        return self.date.strftime('%a')
+        """ Returns e.g. Monday, Tuesday etc."""
+        return self.date.strftime('%A')
 
     @property
     def date_str(self):
