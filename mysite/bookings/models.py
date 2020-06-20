@@ -7,6 +7,7 @@ from django_enumfield import enum
 
 from .model_enums import Slot, BookingType, BookingStatus
 from products.models import Product, ProductStatus
+from swaps.models import Swap
 
 
 class TimeSlot(models.Model):
@@ -41,8 +42,6 @@ class TimeSlot(models.Model):
         suffix = date_suffix.get(self.date.day, 'th')
         return f'{self.date.day}{suffix}'
 
-
-
     @property
     def bookings(self):
         """ Returns QuerySet of bookings in this time slot"""
@@ -60,9 +59,11 @@ class TimeSlot(models.Model):
 
 class Booking(models.Model):
 
-    time_slot = models.ForeignKey(TimeSlot, on_delete=models.CASCADE)
+    # time slot can be null because we want to automatically create bookings for delivery without a sepcific time
+    time_slot = models.ForeignKey(TimeSlot, on_delete=models.CASCADE, blank=True, null=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    swap = models.ForeignKey(Swap, on_delete=models.CASCADE)
     booking_type = enum.EnumField(BookingType)
     status = enum.EnumField(BookingStatus, default=BookingStatus.PENDING)
     date_booked = models.DateTimeField(default=timezone.now)
@@ -79,6 +80,8 @@ class Booking(models.Model):
                 self.product.status = ProductStatus.DELIVERED
             self.product.save(update_fields=['status'])
         return super(Booking, self).save(force_insert, force_update, using, update_fields)
+
+
 
 
 
