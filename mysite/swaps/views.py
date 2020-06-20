@@ -118,34 +118,52 @@ def review_single_offer(request, offered_product_id, users_product_id):
     try:
         offered_product = Product.objects.get(id=offered_product_id)
         users_product = Product.objects.get(id=users_product_id)
+
+        if offered_product.status != ProductStatus.LIVE:
+            messages.info(request, 'This product is no longer LIVE')
+            return redirect('profile-your-items')
+
     except:
         raise Http404('Oops - one of these products doesn\'t exist')
 
     if request.method == 'POST':
-        """ accept offer """
-        users_product.status = ProductStatus.PENDING_CHECKOUT
-        users_product.save(update_fields=['status'])
-
-        offered_product.status = ProductStatus.PENDING_CHECKOUT
-        offered_product.save(update_fields=['status'])
-
-        accepted_swap = Swap.objects.get(offered_product=offered_product, desired_product=users_product)
-        accepted_swap.status = SwapStatus.PENDING_CHECKOUT
-        accepted_swap.date_accepted = timezone.now()  # set match time
-        accepted_swap.save(update_fields=['status', 'date_accepted'])
-
-        # Reject other offers
-        rejected_swaps = Swap.objects.filter(desired_product=users_product).exclude(offered_product=offered_product)
-        for rejected_swap in rejected_swaps:
-            rejected_swap.status = SwapStatus.REJECTED
-            rejected_swap.save(update_fields=['status'])
-
-        return redirect('checkout', product_id=users_product.id)
+        if 'accept_offer' in request.POST:
+            _process_offer_acceptance(users_product=users_product, offered_product=offered_product)
+            return redirect('checkout', product_id=users_product.id)
+        elif 'reject_offer' in request.POST:
+            _process_offer_rejection(users_product=users_product, offered_product=offered_product)
+            messages.success(request, 'Offer rejected successfully')
+            return redirect('review-offers', product_id=users_product.id)
 
     else:
         context = {'product': offered_product,  # NOTE - important that context name is 'product'
                    'users_product': users_product}
         return render(request, template_name="swaps/review_single_offer.html", context=context)
+
+
+def _process_offer_acceptance(users_product, offered_product):
+    """ Process offer acceptance"""
+    users_product.status = ProductStatus.PENDING_CHECKOUT
+    users_product.save(update_fields=['status'])
+
+    offered_product.status = ProductStatus.PENDING_CHECKOUT
+    offered_product.save(update_fields=['status'])
+
+    accepted_swap = Swap.objects.get(offered_product=offered_product, desired_product=users_product)
+    accepted_swap.status = SwapStatus.PENDING_CHECKOUT
+    accepted_swap.date_accepted = timezone.now()  # set match time
+    accepted_swap.save(update_fields=['status', 'date_accepted'])
+
+    # Reject other offers
+    rejected_swaps = Swap.objects.filter(desired_product=users_product).exclude(offered_product=offered_product)
+    for rejected_swap in rejected_swaps:
+        rejected_swap.status = SwapStatus.REJECTED
+        rejected_swap.save(update_fields=['status'])
+
+def _process_offer_rejection(users_product, offered_product):
+    rejected_swap = Swap.objects.get(offered_product=offered_product, desired_product=users_product)
+    rejected_swap.status = SwapStatus.REJECTED
+    rejected_swap.save(update_fields=['status'])
 
 
 
