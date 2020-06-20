@@ -71,7 +71,7 @@ def pick_collection_time(request, product_id):
 
         # Create collection booking within selected time-slot
         selected_time_slot = TimeSlot.objects.get(id=selected_time_slot_id)
-        _create_booking(selected_time_slot=selected_time_slot, product_id=product_id, owner=request.user)
+        _create_collection_booking(selected_time_slot=selected_time_slot, product_id=product_id, owner=request.user)
         time_slot_str = selected_time_slot.date.strftime('%A') + ' at ' + selected_time_slot.time.label
         messages.success(request, f'Collection booking confirmed for {time_slot_str}')
 
@@ -122,12 +122,14 @@ def _group_time_slots(time_slots):
     return grouped_time_slots
 
 
-def _create_booking(selected_time_slot, product_id, owner):
+def _create_collection_booking(selected_time_slot, product_id, owner):
     """ Create and save collection Booking in chosen time slot"""
     product = Product.objects.get(id=product_id)
+    swap = Swap.objects.get((Q(offered_product=product) | Q(desired_product=product)) & Q(status=SwapStatus.PENDING_CHECKOUT))
     booking = Booking(time_slot=selected_time_slot,
                       owner=owner,
                       product=product,
+                      swap=swap,
                       booking_type=BookingType.COLLECTION)
     booking.save()
 

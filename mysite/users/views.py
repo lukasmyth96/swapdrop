@@ -49,8 +49,12 @@ class Login(auth_views.LoginView):
         super(Login, self).__init__(*args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        self.template_name = 'users/login_mobile.html' if request.user_agent.is_mobile else 'users/login.html'
+        self.template_name = 'users/login_mobile.html' if self.request.user_agent.is_mobile else 'users/login.html'
         return super(Login, self).get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        self.template_name = 'users/login_mobile.html' if self.request.user_agent.is_mobile else 'users/login.html'
+        return super(Login, self).post(request, *args, **kwargs)
 
 
 def profile_info(request):

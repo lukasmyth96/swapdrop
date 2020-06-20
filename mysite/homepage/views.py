@@ -25,3 +25,8 @@ def terms_of_service(request):
     return render(request, 'homepage/terms_of_service.html')
 
 
+def privacy(request):
+
+    return render(request, 'homepage/privacy.html')
+
+

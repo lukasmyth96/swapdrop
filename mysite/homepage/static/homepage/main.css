@@ -30,7 +30,7 @@ ul {
 
 .site-header .nav-link {
   font-family: 'Montserrat', sans-serif;
-  color: rgba(23, 21, 21, 0.96);
+  color: rgba(42, 38, 38, 0.96);
   font-weight: bold;
   font-size: 100%;
 }
@@ -41,7 +41,6 @@ ul {
 
 .site-header .nav-link:hover {
   color: black;
-  font-size: 102%;
 }
 
 .site-header .nav-link.active {
@@ -86,6 +85,10 @@ a.article-title:hover {
   vertical-align: middle;
 }
 
+.menu-icon:hover{
+  cursor: pointer;
+}
+
 .slider {
   display: none;
   margin-right: 25%;
@@ -98,9 +101,19 @@ a.article-title:hover {
 .slider a{
   color: #cbd5db;
   font-family: 'Montserrat', sans-serif;
-  font-size: 125%;
+  font-size: 20pt;
   font-weight: bold;
   text-decoration: none;
+}
+
+@media only screen and (max-width: 600px) {
+  .slider{
+    margin-right: 35%;
+  }
+
+  .slider a{
+    font-size: 15pt;
+  }
 }
 
 .slider a.closebtn{

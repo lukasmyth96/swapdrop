@@ -1,0 +1,11 @@
+{% extends "homepage/base.html" %}
+{% block content %}
+    <div style="text-align: center">
+        <h3>Welcome to the Swapdrop dashboard</h3>
+            <a class="btn btn-outline-primary"
+               style="margin-top: 50px"
+               href="{% url "upcoming-bookings" %}">
+            Upcoming Bookings
+            </a>
+    </div>
+{% endblock content %}
