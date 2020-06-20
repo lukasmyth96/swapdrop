@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import Http404
 from django.contrib import messages
 from django.db.models import Q
 from django.contrib.auth.models import User
@@ -156,11 +157,14 @@ def shipping_address_info(request):
 
 def profile_other_user(request, user_id):
     """ View for viewing another users profile """
-    user = User.objects.get(id=user_id)
-    products = Product.objects.filter(owner=user)
-    context = {'other_user': user,
-               'products': products}
-    return render(request, template_name='users/profile_other_user.html', context=context)
+    try:
+        user = User.objects.get(id=user_id)
+        products = Product.objects.filter(owner=user)
+        context = {'other_user': user,
+                   'products': products}
+        return render(request, template_name='users/profile_other_user.html', context=context)
+    except User.DoesNotExist:
+        raise Http404('Oops - this user doesn\'t exist')
 
 
 

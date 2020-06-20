@@ -41,7 +41,7 @@
 
             <div class="col-12 col-md-6" style="text-align: center">
               <h2 class="article-title">{{ product.name }}</h2>
-              <h6 class="article-title">Owner: {{ product.owner.username }}</h6>
+              <a href="{% url "profile-other-user" product.owner.id %}"> Owner: {{ product.owner.username }}</a>
               <h6 class="article-title">Status: {{ product.status.label }}</h6>
               <h6 class="article-title">Size: {{ product.size }}</h6>
 

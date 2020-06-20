@@ -49,8 +49,12 @@
   outline: none;
 }
 
+.profile-header-row{
+  margin-bottom: 25px;
+}
+
 .profile-tab-row{
-  margin-top: 50px;
+  margin-top: 10px;
   margin-bottom: 10px;
   text-align: center;
 }
