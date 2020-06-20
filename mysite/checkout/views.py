@@ -90,10 +90,11 @@ def confirm_payment(request, product_id, selected_time_slot_id):
         messages.warning(request, 'time slot does not exist')
         return redirect('profile-your-items')
 
+    product = Product.objects.get(id=product_id)
+
     if request.method == 'POST':
 
         # Update product status to CHECKOUT_COMPLETE
-        product = Product.objects.get(id=product_id)
         product.status = ProductStatus.CHECKOUT_COMPLETE
         product.save(update_fields=['status'])
 
@@ -110,7 +111,7 @@ def confirm_payment(request, product_id, selected_time_slot_id):
         return redirect('profile-your-items')
 
     else:  # GET request
-        return render(request, template_name="checkout/confirm_payment.html")
+        return render(request, template_name="checkout/confirm_payment.html", context={'product': product})
 
 
 
