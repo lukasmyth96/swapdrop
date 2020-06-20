@@ -1,0 +1,9 @@
+{% extends "products/_base_product_detail.html" %}
+
+{% block product_detail_action %}
+    <form method="post">
+        {% csrf_token %}
+        <button class="btn btn-secondary btn-sm mt-1 mb-1" type="submit" name="accept_offer"> Accept Offer </button>
+        <button class="btn btn-danger btn-sm mt-1 mb-1" type="submit" name="reject_offer"> Reject Offer </button>
+    </form>
+{% endblock product_detail_action %}
