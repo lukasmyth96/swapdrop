@@ -28,7 +28,6 @@ class Profile(models.Model):
     gender_preference = enum.EnumField(GenderOptions, blank=True, null=True)  # menswear, womenswear
     sizes = models.ManyToManyField(Size)
 
-
     def __str__(self):
         return f'{self.user.username}'
 

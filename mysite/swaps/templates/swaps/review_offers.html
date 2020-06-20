@@ -1,16 +1,13 @@
 {% extends "homepage/base.html" %}
+{% load user_agents %}
 {% block content %}
     {%  if products %}
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="form-group" style="text-align: center">
-                <h2>Select one offer you'd like to accept</h2>
-                <button class="btn btn-outline-info" type="submit">Accept Offer</button>
-            </div>
 
-            {% include "swaps/_review_offers_feed_component.html" %}
+        <div {% if request|is_mobile %} style="margin-left: 5%; margin-right: 5%" {% else %} style="margin-left: 20%; margin-right: 20%" {% endif %}>
+            <h3> expand an item to accept or reject it </h3>
+            {% include "swaps/_review_offers_feed.html" %}
+        </div>
 
-        </form>
     {% else %}
         <div class="form-group" style="text-align: center">
             <h2>no offers yet - check back later!</h2>

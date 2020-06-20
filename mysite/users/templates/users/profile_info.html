@@ -1,7 +1,7 @@
-{% extends "users/profile_base.html" %}
+{% extends "homepage/base.html" %}
 {% load crispy_forms_tags %}
 {% load user_agents %}
-{% block profile_content %}
+{% block content %}
   <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <fieldset class="form-group">
@@ -131,4 +131,4 @@
     </div>
  </form>
 
-{% endblock profile_content %}
+{% endblock content %}

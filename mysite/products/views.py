@@ -1,3 +1,4 @@
+from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (
     ListView,
@@ -7,6 +8,7 @@ from django.views.generic import (
     DeleteView
 )
 from .models import Product, ProductStatus
+from sizes.model_enums import GenderOptions
 from swaps.models import Swap
 from .forms import ProductCreateForm, ProductUpdateForm
 
@@ -21,29 +23,35 @@ class ProductListView(ListView):
     def get_queryset(self):
         """ Returns all LIVE (non-matched) products the current user does not own and hasn't already made an offer for"""
 
-        live_products = Product.objects.filter(status=ProductStatus.LIVE)  # Get QuerySet of all LIVE products
-        other_peoples_products = live_products.exclude(owner=self.request.user)  # Filter products owned by me
+        # 1) Filter for LIVE products only
+        filtered_products = Product.objects.filter(status=ProductStatus.LIVE)
 
-        # Get set of product ids for products I've already made an offer on (so don't want to see in my feed again)
-        my_offers = Swap.objects.filter(offered_product__owner__exact=self.request.user)
-        already_offered_on_product_ids = set([offer.desired_product.id for offer in my_offers])
+        # 2) Exclude products current user owns
+        filtered_products = filtered_products.exclude(owner=self.request.user)
 
-        # Get other peoples products I've not already made an offer of
-        other_peoples_products_not_already_offered_for = other_peoples_products.exclude(id__in=already_offered_on_product_ids)
+        # 3) Filter by current users gender preference
+        users_gender_preference = self.request.user.profile.gender_preference
+        if users_gender_preference not in [GenderOptions.UNISEX, None]:
+            filtered_products = filtered_products.filter(gender__in=[users_gender_preference, GenderOptions.UNISEX])
 
-        return other_peoples_products_not_already_offered_for
+        # 4) Exclude products current user has made offer on already
+        users_offers = Swap.objects.filter(offered_product__owner__exact=self.request.user)
+        already_offered_on_product_ids = set([offer.desired_product.id for offer in users_offers])
+        filtered_products = filtered_products.exclude(id__in=already_offered_on_product_ids)
+
+        return filtered_products
 
 
 class ProductDetailView(DetailView):
     model = Product
-    template_name = 'products/detail.html'
+    template_name = 'products/product_detail.html'
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductCreateForm
     template_name = 'products/create_form.html'
-    success_url = '/profile'
+    success_url = reverse_lazy(viewname='profile-your-items')
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
@@ -54,7 +62,7 @@ class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Product
     form_class = ProductUpdateForm
     template_name = 'products/update_form.html'
-    success_url = '/profile'
+    success_url = reverse_lazy(viewname='profile-your-items')
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
@@ -69,7 +77,7 @@ class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Product
-    success_url = '/profile'
+    success_url = reverse_lazy(viewname='profile-your-items')
 
     def test_func(self):
         product = self.get_object()

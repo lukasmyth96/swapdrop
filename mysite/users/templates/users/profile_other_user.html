@@ -1,0 +1,17 @@
+{% extends "users/_profile_base.html" %}
+<!-- NOTE - other_user is used as variable instead of user here as 'user' always refers to currently logged in user -->
+{% block profile_pic %}
+    <img class="rounded-circle profile-img" src="{{ other_user.profile.image.url }}">
+{% endblock %}
+
+{% block users_username %}
+    <h2 class="profile-username">{{ other_user.username }}</h2>
+{% endblock users_username %}
+
+{% block users_bio %}
+    <p> Bio of {{ other_user.username }}</p>
+{% endblock users_bio %}
+
+{% block profile_feed %}
+    {% include "users/_other_users_profile_feed.html" %}
+{% endblock profile_feed %}

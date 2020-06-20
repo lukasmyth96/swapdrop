@@ -1,5 +1,5 @@
 body {
-  background: #fafafa;
+  background: white;
   color: #333333;
   margin-top: 5rem;
 }
@@ -12,39 +12,35 @@ ul {
   margin: 0;
 }
 
-.bg-orange {
-  background-color: rgb(255, 59, 0);
+.bg-col {
+  background-color: white;
 }
 
-.vertical-center {
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
+.shadow{
+  box-shadow: 0 4px 10px 0 rgba(176,171,169,1);
 }
 
 .site-header .nav-swapdrop {
-  color: #ffffff;
+  color: rgb(255, 59, 0);
   font-family: 'Montserrat', sans-serif;
-  font-size: 2.5vw;
+  font-size: 2vw;
   font-weight: 800;
   margin-bottom: 0;
 }
 
 .site-header .nav-link {
   font-family: 'Montserrat', sans-serif;
-  color: #cbd5db;
+  color: rgba(42, 38, 38, 0.96);
   font-weight: bold;
   font-size: 100%;
 }
 
 .nav-link-underline {
-  text-decoration: underline;
+  text-decoration: underline rgb(255, 59, 0);
 }
 
 .site-header .nav-link:hover {
-  color: #ffffff;
+  color: black;
 }
 
 .site-header .nav-link.active {
@@ -55,7 +51,7 @@ ul {
   background: #ffffff;
   padding: 10px 20px;
   border: 1px solid #dddddd;
-  border-radius: 3px;
+  border-radius: 25px;
   margin-bottom: 20px;
 }
 
@@ -87,4 +83,44 @@ a.article-title:hover {
   width: 25px;
   height: 25px;
   vertical-align: middle;
+}
+
+.menu-icon:hover{
+  cursor: pointer;
+}
+
+.slider {
+  display: none;
+  margin-right: 25%;
+}
+
+.slider li{
+  margin-top: 5%;
+}
+
+.slider a{
+  color: #cbd5db;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20pt;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+@media only screen and (max-width: 600px) {
+  .slider{
+    margin-right: 35%;
+  }
+
+  .slider a{
+    font-size: 15pt;
+  }
+}
+
+.slider a.closebtn{
+  font-size: 250%;
+}
+
+.slider a:hover{
+  color: #ffffff;
+  font-weight: bolder;
 }

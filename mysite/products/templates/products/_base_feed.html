@@ -1,8 +1,11 @@
-<! Used as a base component for product feed and profil feed - exposes single_product block to be extended>
-<div class="container-fluid">
+<! Used as a base component for product feed and profile feed - exposes single_product block to be extended>
+{% load user_agents %}
+<div>
     <div class="row">
         {% for product in products %}
-            {% block single_product %} {% endblock %}
+            <div class="col-4 col-md-3 custom-gutter">
+                {% block single_product %} {% endblock %}
+            </div>
         {% endfor %}
     </div>
 </div>

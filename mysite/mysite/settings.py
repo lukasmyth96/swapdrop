@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'dashboard.apps.DashboardConfig',
     'homepage.apps.HomepageConfig',
     'users.apps.UsersConfig',
     'products.apps.ProductsConfig',
@@ -64,7 +65,7 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -140,8 +141,12 @@ MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = 'profile'
+LOGIN_REDIRECT_URL = 'profile-your-items'
 LOGIN_URL = 'login'
+LOGOUT_REDIRECT_URL = 'login'
+
+
+CHECKOUT_TIMEOUT_HOURS = 48
 
 ALLOWED_HOSTS = ['*']
 

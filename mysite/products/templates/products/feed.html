@@ -1,12 +1,19 @@
 {% extends "homepage/base.html" %}
 {% load crispy_forms_tags %}
+{% load user_agents %}
 {% block content %}
-    <div class="infinite-container">
-        {% include "products/_product_feed_component.html" %}
-    </div>
+
+    <div {% if request|is_mobile %} style="margin-left: 5%; margin-right: 5%" {% else %} style="margin-left: 20%; margin-right: 20%" {% endif %}>
+        <div style="text-align: center">
+            <input class="search-bar" type="text" placeholder="🔍">
+        </div>
+
+        <div>
+            {% include "products/_product_feed.html" %}
+        </div>
 
 
-    <div class="pagination">
+        <div class="pagination">
         <span class="step-links" style="margin-left: auto; margin-right: auto; margin-top: 5%; margin-bottom: 5%">
             {% if page_obj.has_previous %}
                 <a href="?page=1">&laquo; first</a>
@@ -22,5 +29,7 @@
                 <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
             {% endif %}
         </span>
+        </div>
     </div>
+
 {% endblock content %}

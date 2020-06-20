@@ -2,13 +2,16 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from .models import Profile
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 from users.validators import is_in_chichester
 
 
 class UserRegisterForm(UserCreationForm):
-    email = forms.EmailField()
+    email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': 'email'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'username'}))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'password'}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'confirm password'}))
 
     class Meta:
         model = User
@@ -22,11 +25,20 @@ class UserRegisterForm(UserCreationForm):
 
 
 class UserPostcodeForm(forms.ModelForm):
-    postcode = forms.CharField(validators=[is_in_chichester])
+    postcode = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'postcode'}),
+                               validators=[is_in_chichester])
 
     class Meta:
         model = Profile
         fields = ['postcode']
+
+
+class UserLoginForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super(UserLoginForm, self).__init__(*args, **kwargs)
+
+    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'username'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'password'}))
 
 
 class UserUpdateForm(forms.ModelForm):
@@ -50,7 +62,7 @@ class ProfileUpdateForm(forms.ModelForm):
 class ShippingAddressUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
-        exclude = ['image', 'user']  # ie include all fields except image (house_name_number, address...)
+        exclude = ['image', 'user', 'gender_preference', 'sizes']  # ie include all fields except image (house_name_number, address...)
         labels = {'house_name_number': 'House Name/Number',  # django automates this. override bad ones.
                   'address_line_1': 'Address Line 1',
                   'address_line_2': 'Address Line 2',

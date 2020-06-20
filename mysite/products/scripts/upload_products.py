@@ -19,6 +19,9 @@ if __name__ == '__main__':
     """
     This script is used to upload fake products using scraped product images stored in a single folder.
 
+    NOTE - you must populate the DB with size objects before running this script
+    NOTE - you must set DJANGO_DEVELOPMENT=true in the environment variables for this script
+
     For image file in src dir:
     - copies file into media/product_pics
     - rename file
@@ -29,7 +32,7 @@ if __name__ == '__main__':
     src_dir = '/home/luka/Pictures/Swapdrop'
     dest_dir = '/home/luka/PycharmProjects/SWAPDROP/mysite/media/product_pics'
     media_dir = '/media/product_pics'
-    max_to_upload = 100
+    max_to_upload = 24
 
     filenames = [file for file in os.listdir(src_dir) if file.endswith('.jpg')]
     for idx, filename in tqdm(enumerate(filenames)):

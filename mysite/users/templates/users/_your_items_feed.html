@@ -1,14 +1,14 @@
 {% extends "products/_base_feed.html" %}
 {% block single_product %}
-  <div class="col-md-3 product-container" style="margin-top:20px">
+  <div class="product-container">
       <a href="{% url 'product-detail' product.id %}" style="width: 100%">
         <img class="grid-item thumbnail" src="{{ product.image.url }}" style="width: 100%; visibility: hidden">
       </a>
 
       {% if product.status.label == 'Live' %}
-          <a class="offer-status-icon" style="visibility: hidden" href="{% url 'review-offers' product.id %}"> {{ product.number_of_offers }} offers</a>
+          <a class="offer-status-icon" style="visibility: hidden" href="{% url 'review-offers' product.id %}"> {{ product.number_of_offers }}</a>
       {% elif product.status.label == 'Pending Checkout'%}
-          <a class="offer-status-icon" style="visibility: hidden" href="{% url 'checkout' product.id%}">Matched! Click to Checkout</a>
+          <a class="offer-status-icon" style="visibility: hidden" href="{% url 'checkout' product.id%}">{{ product.hours_left_to_checkout }}hrs left to checkout</a>
       {% elif product.status.label == 'Checkout Complete'%}
           <p class="offer-status-icon" style="visibility: hidden"> Collecting Soon!</p>
       {% elif product.status.label == 'Collected'%}
