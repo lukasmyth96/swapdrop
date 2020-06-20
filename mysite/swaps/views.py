@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from django.http import Http404
 from django.contrib import messages
 from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -82,6 +83,14 @@ class ReviewOffersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
         return offered_products
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        """ Add users_product to context so URLs can be created for links to review_single_offer
+        FIXME - this probably isn't needed but can't get to work by getting users_product_id directly in template
+        """
+        context = super(ReviewOffersListView, self).get_context_data(object_list=object_list, **kwargs)
+        context['users_product'] = self.users_product
+        return context
+
     @property
     def users_product(self):
         users_product_id = self.kwargs.get('product_id')
@@ -94,55 +103,10 @@ class ReviewOffersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
             return True
         return False
 
-    # def post(self, request, product_id):
-    #     """ Process acceptance of offer"""
-    #
-    #     selected_product_id_str = request.POST.get('product_id')
-    #     if selected_product_id_str is None:
-    #         # Show warning if no items have been offered
-    #         messages.warning(request, 'You must select one offer to accept')
-    #         return redirect('review-offers', product_id=product_id)
-    #
-    #     selected_product_id = int(selected_product_id_str)  # cast to int
-    #
-    #     # Update status of current product to PENDING_CHECKOUT
-    #     current_product = self.get_current_product(product_id=product_id)  # Product object
-    #     assert current_product.status == ProductStatus.LIVE
-    #     current_product.status = ProductStatus.PENDING_CHECKOUT
-    #     current_product.save(update_fields=['status'])
-    #
-    #     # Update status of each offer and update the status of accepted product to PENDING_CHECKOUT
-    #     offers_for_product = self.get_offers_for_product(current_product=current_product)  # get list of swaps that are offers for this product
-    #     for offer in offers_for_product:
-    #         offered_product = offer.offered_product
-    #         if offered_product.id == selected_product_id:
-    #             offer.status = SwapStatus.PENDING_CHECKOUT  # update status of swap
-    #             offer.date_accepted = timezone.now()  # set match time
-    #             offered_product.status = ProductStatus.PENDING_CHECKOUT  # update status of accepted product
-    #             offered_product.save(update_fields=['status'])
-    #         else:
-    #             offer.status = SwapStatus.REJECTED
-    #
-    #         offer.save(update_fields=['status', 'date_accepted'])  # update status in db
-    #
-    #     return redirect('checkout', product_id=current_product.id)
-
-    # def get_current_product(self, product_id=None):
-    #     if product_id is None:
-    #         product_id = self.kwargs.get('product_id')  # for get requests
-    #     current_product = Product.objects.get(id=product_id)
-    #     return current_product
-    #
-    # @staticmethod
-    # def get_offers_for_product(current_product):
-    #     """ Returns QuerySet of all offers for this product """
-    #     offers_for_this_product = Swap.objects.filter(desired_product=current_product, status=SwapStatus.PENDING_REVIEW)
-    #     return offers_for_this_product
-
 
 def review_single_offer(request, offered_product_id, users_product_id):
     """
-    Review a single offer
+    Review a single offer and process offer acceptance
     Parameters
     ----------
     request
@@ -151,8 +115,11 @@ def review_single_offer(request, offered_product_id, users_product_id):
     users_product_id: int
         ID of product that user owns and that the offer has been made for
     """
-    offered_product = Product.objects.get(id=offered_product_id)
-    users_product = Product.objects.get(id=users_product_id)
+    try:
+        offered_product = Product.objects.get(id=offered_product_id)
+        users_product = Product.objects.get(id=users_product_id)
+    except:
+        raise Http404('Oops - one of these products doesn\'t exist')
 
     if request.method == 'POST':
         """ accept offer """
