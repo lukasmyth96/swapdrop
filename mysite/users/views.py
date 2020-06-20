@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.db.models import Q
+from django.contrib.auth.models import User
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import authenticate, login
 from django.views.generic import (
@@ -151,6 +152,15 @@ def shipping_address_info(request):
         address_form = ShippingAddressUpdateForm(instance=request.user.profile)
         context = {'address_form': address_form}
         return render(request, 'users/shipping_address_info.html', context=context)
+
+
+def profile_other_user(request, user_id):
+    """ View for viewing another users profile """
+    user = User.objects.get(id=user_id)
+    products = Product.objects.filter(owner=user)
+    context = {'other_user': user,
+               'products': products}
+    return render(request, template_name='users/profile_other_user.html', context=context)
 
 
 

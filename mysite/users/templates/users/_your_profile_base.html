@@ -1,5 +1,19 @@
 {% extends "users/_profile_base.html" %}
 
+{% block profile_pic %}
+    <a class="profile-img-btn" data-toggle="tooltip" title="Edit Profile" href="{% url "profile-info" %}">
+        <img class="rounded-circle profile-img" src="{{ user.profile.image.url }}">
+    </a>
+{% endblock profile_pic %}
+
+{% block users_username %}
+    <h2 class="profile-username">{{ user.username }}</h2>
+{% endblock users_username %}
+
+{% block users_bio %}
+    <p> Current logged in users bio</p>
+{% endblock users_bio %}
+
 {% block upload_button %}
     <a href="{% url 'product-create' %}">
         <button class="upload-button"> +</button>

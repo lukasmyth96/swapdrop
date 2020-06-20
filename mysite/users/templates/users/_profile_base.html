@@ -6,18 +6,20 @@
     <div {% if request|is_mobile %} style="margin-left: 5%; margin-right: 5%" {% else %} style="margin-left: 20%; margin-right: 20%" {% endif %}>
         <div class="row">
             <div class="col-3">
-                <a class="profile-img-btn" data-toggle="tooltip" title="Edit Profile" href="{% url "profile-info" %}">
-                    <img class="rounded-circle profile-img" src="{{ user.profile.image.url }}">
-                </a>
+                <!-- Block below will be filled by profile pic of user - will differ for your profile vs other users-->
+                {% block profile_pic %}
+                {% endblock profile_pic %}
             </div>
 
             <div class="col-6">
                 <ul class="profile-text-container" style="list-style: none;">
                     <li>
-                        <h2 class="profile-username">{{ user.username }}</h2>
+                        {% block users_username %}
+                        {% endblock users_username %}
                     </li>
                     <li>
-                        <p> Bio will go here.....</p>
+                        {% block users_bio %}
+                        {% endblock users_bio %}
                     </li>
                 </ul>
 
