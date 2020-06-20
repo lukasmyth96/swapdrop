@@ -115,6 +115,7 @@ def review_single_offer(request, offered_product_id, users_product_id):
     users_product_id: int
         ID of product that user owns and that the offer has been made for
     """
+
     try:
         offered_product = Product.objects.get(id=offered_product_id)
         users_product = Product.objects.get(id=users_product_id)
