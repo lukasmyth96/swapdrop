@@ -36,8 +36,8 @@ async function processFile(event) {
         croppieContainer
             .css('display', 'block')  // make div container visible
             .croppie({
-                viewport: {width: 200, height: 200},
-                boundary: {width: 250, height: 250}
+                viewport: {width: 150, height: 150},
+                boundary: {width: 200, height: 200}
             })
             .croppie('bind', {url: src});  // display uploaded image in croppied container
 

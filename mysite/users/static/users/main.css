@@ -199,7 +199,6 @@
   font-weight: bold;
   padding: 8px 31px;
   text-decoration: none;
-  text-shadow: 0 1px 0 #2f6627;
   transition: all 0.4s;
 }
 
@@ -238,6 +237,41 @@
 label[for="id_image"] {
     display: none;
 }
+
+
+.gender-radio{
+  text-align: center;
+  margin: 20px;
+  width: 50%;
+  left: -100%;
+  background: #FFFFFF;
+  border-radius: 32px;
+  border: 1px solid #b4a9a9;
+  box-shadow: 0 3px 6px #00000029;
+  display: inline-block;
+  cursor: pointer;
+  color: #616161;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  padding: 8px;
+  text-decoration: none;
+  transition: all 0.4s;
+}
+
+@media only screen and (max-width: 600px) {
+  .gender-radio{
+      width: 80%;
+      font-size: 12px;
+  }
+}
+
+:checked + label{
+  color: white;
+  background: linear-gradient(45deg, rgba(255,100,0,1) 0%, rgba(255,59,0,1) 100%);
+}
+
+
 
 
 
