@@ -2,21 +2,14 @@ body {
   background: white;
   color: #333333;
   margin-top: 5rem;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  color: #444444;
-}
-
-ul {
-  margin: 0;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .bg-col {
   background-color: white;
 }
 
-.shadow{
+.site-header-shadow{
   box-shadow: 0 4px 10px 0 rgba(176,171,169,1);
 }
 
@@ -29,15 +22,24 @@ ul {
 }
 
 .site-header .nav-link {
-  font-family: 'Montserrat', sans-serif;
   color: rgba(42, 38, 38, 0.96);
   font-weight: bold;
-  font-size: 100%;
+  font-size: 20px;
 }
 
-.nav-link-underline {
-  text-decoration: underline rgb(255, 59, 0);
+.nav-pills{
+  margin-left: 10%;
 }
+
+@media only screen and (max-width: 600px) {
+.site-header .nav-link {
+  font-size: 16px;
+}
+.nav-pills{
+  margin-left: 0;
+}
+}
+
 
 .site-header .nav-link:hover {
   color: black;
