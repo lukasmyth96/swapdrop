@@ -4,9 +4,13 @@
 {% load static %}
 {% block content %}
 
+  <div class="row" style="margin-bottom: 5%">
+    <h4> Profile Info </h4>
+  </div>
+
     <!-- Container for croppie - contains placeholder image at start -->
   <!-- NOTE- do NOT change the IDs carelessly here as they are used for the image cropping! -->
-  <div class="row">
+  <div class="row" style="margin-bottom: 25px">
       <div class="col-12">
         <div id="croppie_container_image" style="width: 200px; height: 200px; margin-left: auto; margin-right: auto;">
               <button id="upload_placeholder_image" onclick="triggerImageUpload(this);" style="border: none; outline: none; background-color: inherit">
@@ -24,7 +28,7 @@
         <input id="crop_dimensions_image" name="crop_dimensions_image" style="display: none">
 
 
-        <div class="row" style="margin-left: 10px; margin-top: 5%">
+        <div class="row" style="margin-top: 5%">
            <h6> Primarily looking for: </h6>
         </div>
 
@@ -56,7 +60,7 @@
         </script>
 
 
-        <div class="row" style="margin-left: 10px; margin-top: 5%">
+        <div class="row" style="margin-top: 5%">
            <h6> Your sizes: </h6>
         </div>
 
