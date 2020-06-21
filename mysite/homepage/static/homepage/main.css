@@ -49,14 +49,6 @@ body {
   font-weight: 500;
 }
 
-.content-section {
-  background: #ffffff;
-  padding: 10px 20px;
-  border: 1px solid #dddddd;
-  border-radius: 25px;
-  margin-bottom: 20px;
-}
-
 .article-title {
   color: #444444;
 }
@@ -125,4 +117,17 @@ a.article-title:hover {
 .slider a:hover{
   color: #ffffff;
   font-weight: bolder;
+}
+
+.croppie-div{
+  width: 70%;
+  margin: 5% auto 5% auto;
+}
+
+.croppie-div button{
+  background: inherit;
+  outline: none;
+  border: 1px solid #707070;
+  border-radius: 5%;
+  box-shadow: 0 0 5px 4px lightgray;
 }
