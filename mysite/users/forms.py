@@ -58,6 +58,17 @@ class ProfileUpdateForm(forms.ModelForm):
         for fieldname in ['image']:
             self.fields[fieldname].help_text = None
 
+    def save(self, commit=True):
+        self.instance.crop_dimensions_image = self.extract_crop_dims_from_post_data('crop_dimensions_image')
+        return super(ProfileUpdateForm, self).save(commit=True)
+
+    def extract_crop_dims_from_post_data(self, field_name):
+        try:
+            dims = [int(dim) for dim in self.data.get(field_name).split(',')]
+        except ValueError:
+            dims = None  # means no image was uploaded for this field
+        return dims
+
 
 class ShippingAddressUpdateForm(forms.ModelForm):
     class Meta:
