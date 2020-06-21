@@ -21,12 +21,17 @@ def landing_page(request):
 
 
 def terms_of_service(request):
-
     return render(request, 'homepage/terms_of_service.html')
 
 
 def privacy(request):
-
     return render(request, 'homepage/privacy.html')
+
+
+def faq(request):
+    if request.user.is_authenticated:
+        return render(request, 'homepage/faq_logged_in.html')
+    else:
+        return render(request, 'homepage/faq_logged_out.html')
 
 

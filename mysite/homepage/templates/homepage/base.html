@@ -18,6 +18,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'checkout/main.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'homepage/image-picker.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'homepage/croppie.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'homepage/faq.css' %}">
+
 
     <!-- Optional JavaScript -->
     <!-- Popper.js, then Bootstrap JS -->
@@ -32,6 +34,7 @@
     <script src={% static 'croppie.js' %}></script>
     <script src="{% static 'jquery.slidereveal.min.js' %}"></script>
 
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <link rel="shortcut icon" type="image/png" href="{% static 'assets/orange_logo_transparent_background.png' %}"/>
     <link rel="apple-touch-icon" type="image/png" href="{% static 'assets/orange_logo_transparent_background.png' %}"/>
     <link rel="icon" type="image/png" href="{% static 'assets/orange_logo_transparent_background.png' %}"/>
@@ -42,7 +45,7 @@
         <title> Swapdrop</title>
     {% endif %}
 </head>
-<body>
+<body style="font-family: 'Montserrat', sans-serif;">
     <header class="site-header">
       <nav class="navbar bg-col shadow fixed-top" style="margin-right: 0">
                <div class="row" style="width: 100%;">
@@ -84,6 +87,7 @@
       <ul style="list-style-type: none; ">
           <li> <a href="{% url "shipping-address-info" %}">Shipping Address</a> </li>
           <li> <a href="{% url "profile-info" %}">Profile Info</a> </li>
+          <li> <a href="{% url "faq" %}">FAQs</a> </li>
           <li> <a href="{% url "terms-of-service" %}">Terms of Service</a> </li>
           <li> <a href="{% url "privacy" %}">Privacy Agreement</a> </li>
           <li> <a href="{% url "logout" %}">Logout</a> </li>
