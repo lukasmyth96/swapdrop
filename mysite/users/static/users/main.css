@@ -87,16 +87,28 @@
 /* Style the button and place it in the middle of the container/image */
 .product-container .offer-status-icon {
   position: absolute;
-  top: 1px;
-  left: 1px;
-  padding: 5px 10px;
-  background-color: rgb(255, 59, 0);
+  top: 5px;
+  left: 5px;
+  text-align: center;
+  width: 15%;
+  height: 15%;
+  background: linear-gradient(45deg, #FF5510 0%, #FF7600 100%);
   color: white;
-  font-size: 10px;
-  border: none;
-  cursor: pointer;
-  border-radius: 20px;
+  font-size: 16px;
+  border: 1px solid white;
+  border-radius: 50%;
+  box-shadow: 0 0 1px 1px #FF5510;
+  text-decoration: none;
 }
+
+@media only screen and (max-width: 600px) {
+.product-container .offer-status-icon{
+  width: 20%;
+  height: 20%;
+  font-size: 12px;
+}
+}
+
 
 
 .btn.btn-info {
