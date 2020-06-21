@@ -6,17 +6,21 @@
   margin-top: auto;
   margin-bottom: auto;
   outline:none;
-  border-color:rgb(255, 59, 0);
-  box-shadow:0 0 20px rgb(255, 59, 0);
-}
-
-.profile-img:hover {
-    box-shadow:0 0 40px rgb(255, 59, 0);
 }
 
 .profile-img-btn:focus{
   outline: none;
 }
+
+.users-profile-img{
+  border-color:#FF5510;
+  box-shadow:0 0 20px #FF5510;
+}
+
+.users-profile-img:hover {
+    box-shadow:0 0 30px #FF5510;
+}
+
 
 .profile-text-container{
   list-style: none;
@@ -24,8 +28,24 @@
 }
 
 .profile-username {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 24pt;
+  font-size: 24px;
+  font-weight: bolder;
+}
+
+.profile-bio{
+  font-size: 16px;
+  font-weight: lighter;
+}
+
+@media only screen and (max-width: 600px) {
+  .profile-text-container {
+    list-style: none;
+    margin-left: -10%;
+  }
+
+  .profile-username {
+    font-size: 18pt;
+  }
 }
 
 .upload-button{
