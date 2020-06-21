@@ -1,22 +1,50 @@
 {% extends "homepage/base.html" %}
 {% load crispy_forms_tags %}
 {% load user_agents %}
+{% load static %}
 {% block content %}
+
+  <div class="row" style="margin-bottom: 5%">
+    <h4> Profile Info </h4>
+  </div>
+
+    <!-- Container for croppie - contains placeholder image at start -->
+  <!-- NOTE- do NOT change the IDs carelessly here as they are used for the image cropping! -->
+  <div class="row" style="margin-bottom: 25px">
+      <div class="col-12">
+        <div id="croppie_container_image" style="width: 200px; height: 200px; margin-left: auto; margin-right: auto;">
+              <button id="upload_placeholder_image" onclick="triggerImageUpload(this);" style="border: none; outline: none; background-color: inherit">
+                    <img class="rounded-circle profile-img" src="{{ user.profile.image.url }}" style="width: 100%; height: 100%">
+              </button>
+          </div>
+      </div>
+  </div>
+
   <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <fieldset class="form-group">
-        <legend class="border-bottom mb-4">Profile Info</legend>
+
         {{ form|crispy }}
+        <input id="crop_dimensions_image" name="crop_dimensions_image" style="display: none">
+
+
+        <div class="row" style="margin-top: 5%">
+           <h6> Primarily looking for: </h6>
+        </div>
 
         <!-- Gender Preferences -->
         <div class="row" style="text-align: center">
-            <div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin-left: auto; margin-right: auto">
-              <label id="menswear-label" class="btn btn-info" for="menswear-checkbox">
-                <input type="radio" name="gender_preference" id="menswear-checkbox" value="m"> Menswear
-              </label>
-              <label id="womenswear-label" class="btn btn-info" for="womenswear-checkbox">
-                <input type="radio" name="gender_preference" id="womenswear-checkbox" value="w"> Womenswear
-              </label>
+            <div class="col-6" style="text-align: center">
+              <span>
+                  <input type="radio" name="gender_preference" id="menswear-checkbox" value="m" style="display: none">
+                  <label id="menswear-label" class="gender-radio" for="menswear-checkbox"> Menswear </label>
+              </span>
+            </div>
+            <div class="col-6" style="text-align: center">
+              <span>
+                  <input type="radio" name="gender_preference" id="womenswear-checkbox" value="w" style="display: none">
+                  <label id="womenswear-label" class="gender-radio" for="womenswear-checkbox"> Womenswear </label>
+              </span>
             </div>
         </div>
         {{ current_gender_preference|json_script:"current_gender_preference" }}
@@ -24,20 +52,22 @@
             // Select currently selected genders
             let currentGenderPreference = JSON.parse(document.getElementById('current_gender_preference').textContent);
             if (currentGenderPreference === 'MENSWEAR'){
-                $("#menswear-label").toggleClass('active');
                 $("#menswear-checkbox").prop("checked", true);
             }
             if (currentGenderPreference === 'WOMENSWEAR'){
-                $("#womenswear-label").toggleClass('active');
                 $("#womenswear-checkbox").prop("checked", true);
             }
-
         </script>
 
 
         <div class="row" style="margin-top: 5%">
+           <h6> Your sizes: </h6>
+        </div>
+
+
+        <div class="row">
             <!-- PRIMARY SIZE -->
-            <div class="col-xs-6 col-sm-4 col-md-4" style="text-align: center; margin-top: 10px">
+            <div class="col-12" style="text-align: center; margin-top: 25px">
                 <select id="primary-size-select" name="primary_size" class="selectpicker dropup" title="select primary sizes..." data-size="5" data-width="100%" data-actions-box="true" data-dropup-auto="false" multiple>
                     {% for primary_size in primary_sizes %}
                         <option value="{{ primary_size.id }}">{{ primary_size }}</option>
@@ -66,7 +96,7 @@
             </div>
 
             <!-- WAIST SIZE -->
-            <div class="col-xs-6 col-sm-4 col-md-4" style="text-align: center; margin-top: 10px">
+            <div class="col-12" style="text-align: center; margin-top: 25px">
                 <select id="waist-size-select" name="waist_size" class="selectpicker dropup" title="select waist sizes..." data-size="5" data-width="100%" data-actions-box="true" data-dropup-auto="false" multiple>
                     {% for waist_size in waist_sizes %}
                         <option value="{{ waist_size.id }}">{{ waist_size }}</option>
@@ -95,7 +125,7 @@
             </div>
 
             <!-- SHOE SIZE -->
-            <div class="col-xs-6 col-sm-4 col-md-4" style="text-align: center; margin-top: 10px">
+            <div class="col-12" style="text-align: center; margin-top: 25px">
                 <select id="shoe-size-select" name="shoe_size" class="selectpicker dropup" title="select shoe sizes..." data-size="5" data-width="100%" data-actions-box="true"  multiple>
                     {% for shoe_size in shoe_sizes %}
                         <option value="{{ shoe_size.id }}">{{ shoe_size }}</option>
@@ -126,9 +156,24 @@
         </div>
     </fieldset>
 
-    <div class="form-group" style="text-align: center">
-        <button class="btn btn-outline-info" type="submit">Update</button>
+    <div class="form-group" style="text-align: center; margin: 10% 20% 10% 20%">
+        <button class="signup-button" type="submit">Update</button>
     </div>
  </form>
+
+
+    <script>
+
+        // hidden upload <input> elements for each image
+        const uploadedImage = document.getElementById('id_image');
+
+        // Call the processFile every time the chosen image is changed
+        uploadedImage.addEventListener("change", processFile);
+
+        // Each time crop changes store the crop dimensions in a hidden input
+        $('#croppie_container_image').on('update.croppie', getCropDimensions);
+
+    </script>
+
 
 {% endblock content %}

@@ -32,6 +32,7 @@
 
     <script src={% static 'image-picker.js' %}></script>
     <script src={% static 'croppie.js' %}></script>
+    <script src={% static 'cropping_functions.js' %}></script>
     <script src="{% static 'jquery.slidereveal.min.js' %}"></script>
 
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
@@ -45,9 +46,11 @@
         <title> Swapdrop</title>
     {% endif %}
 </head>
-<body style="font-family: 'Montserrat', sans-serif;">
+<body {% if request|is_mobile %} style="margin-left: 10%; margin-right: 10%;"
+      {% else %} style="margin-left: 20%; margin-right: 20%;"
+      {% endif %}>
     <header class="site-header">
-      <nav class="navbar bg-col shadow fixed-top" style="margin-right: 0">
+      <nav class="navbar bg-col site-header-shadow fixed-top" style="margin-right: 0">
                <div class="row" style="width: 100%;">
                    <div class="col-3">
                        {% if request|is_mobile %}
@@ -59,7 +62,7 @@
                    </div>
 
                   <div class="col-6">
-                      <ul class="nav nav-pills" style="margin-left: 5%">
+                      <ul class="nav nav-pills">
                           <li class="nav-item" style="margin-left: auto">
                             <a id="feed-nav-link" class="nav-item nav-link" href="{% url 'product-feed' %}">Feed</a>
                           </li>
