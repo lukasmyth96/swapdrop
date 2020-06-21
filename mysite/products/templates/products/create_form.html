@@ -2,37 +2,40 @@
 {% load crispy_forms_tags %}
 {% load static %}
 {% block content %}
-    <div class="content-section">
+    <div class="row" style="margin-bottom: 5%">
+        <h4> Upload Item </h4>
+    </div>
 
+    <div>
               <!-- Container for croppie - contains placeholder image at start -->
               <!-- NOTE- do NOT change the IDs carelessly here as they are used for the image cropping! -->
               <!-- Warning - do NOT place this inside form as click on upload image will bubble to other form fields -->
               <div class="row">
-                  <div class="col-6">
-                    <div id="croppie_container_image" style="width: 300px; height: 300px; margin-left: auto; margin-right: auto">
+                  <div class="col-12 col-md-6">
+                    <div id="croppie_container_image" class="croppie-div">
                           <button id="upload_placeholder_image" onclick="triggerImageUpload(this);">
-                                <img src="{% static "assets/upload_image_placeholder.png" %}" style="width: 100%; height: 100%">
+                                <img src="{% static "assets/upload_placeholder_image_1.png" %}" style="width: 100%; height: 100%">
                           </button>
                       </div>
                   </div>
-                  <div class="col-6">
-                    <div id="croppie_container_image2" style="width: 300px; height: 300px; margin-left: auto; margin-right: auto">
+                  <div class="col-12 col-md-6">
+                    <div id="croppie_container_image2" class="croppie-div">
                           <button id="upload_placeholder_image2" onclick="triggerImageUpload(this);">
-                                <img src="{% static "assets/upload_image_placeholder.png" %}" style="width: 100%; height: 100%">
+                                <img src="{% static "assets/upload_placeholder_image_2.png" %}" style="width: 100%; height: 100%">
                           </button>
                       </div>
                   </div>
-                  <div class="col-6">
-                    <div id="croppie_container_image3" style="width: 300px; height: 300px; margin-left: auto; margin-right: auto">
+                  <div class="col-12 col-md-6">
+                    <div id="croppie_container_image3" class="croppie-div">
                           <button id="upload_placeholder_image3" onclick="triggerImageUpload(this);">
-                                <img src="{% static "assets/upload_image_placeholder.png" %}" style="width: 100%; height: 100%">
+                                <img src="{% static "assets/upload_placeholder_image_3.png" %}" style="width: 100%; height: 100%">
                           </button>
                       </div>
                   </div>
-                  <div class="col-6">
-                    <div id="croppie_container_image4" style="width: 300px; height: 300px; margin-left: auto; margin-right: auto">
+                  <div class="col-12 col-md-6">
+                    <div id="croppie_container_image4" class="croppie-div">
                           <button id="upload_placeholder_image4"  onclick="triggerImageUpload(this);">
-                                <img src="{% static "assets/upload_image_placeholder.png" %}" style="width: 100%; height: 100%">
+                                <img src="{% static "assets/upload_placeholder_image_4.png" %}" style="width: 100%; height: 100%">
                           </button>
                       </div>
                   </div>
@@ -68,8 +71,8 @@
                 {% endfor %}
             {% endif %}
 
-            <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Upload</button>
+            <div style="text-align: center; margin: 5% 20% 10% 20%">
+                <button class="signup-button" type="submit">Upload</button>
             </div>
         </form>
 

@@ -7,7 +7,8 @@ class ProductCreateForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = ['image', 'image2', 'image3', 'image4', 'name', 'description', 'gender', 'clothing_type', 'size']
-        widgets = {'description': forms.Textarea(attrs={'rows': 4})}
+        widgets = {'description': forms.Textarea(attrs={'rows': 4, 'placeholder': 'e.g only worn a few times, true to size'}),
+                   'name': forms.TextInput(attrs={'placeholder': 'e.g. White Nike Jumper'})}
 
     def save(self, commit=True):
         self.instance.crop_dimensions_image = self.extract_crop_dims_from_post_data('crop_dimensions_image')
