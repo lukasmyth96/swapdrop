@@ -1,12 +1,27 @@
 {% extends "homepage/base.html" %}
 {% load crispy_forms_tags %}
 {% load user_agents %}
+{% load static %}
 {% block content %}
+
+    <!-- Container for croppie - contains placeholder image at start -->
+  <!-- NOTE- do NOT change the IDs carelessly here as they are used for the image cropping! -->
+  <div class="row">
+      <div class="col-12">
+        <div id="croppie_container_image" style="width: 300px; height: 300px; margin-left: auto; margin-right: auto">
+              <button id="upload_placeholder_image" onclick="triggerImageUpload(this);">
+                    <img src="{% static "assets/upload_image_placeholder.png" %}" style="width: 100%; height: 100%">
+              </button>
+          </div>
+      </div>
+  </div>
+
   <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <fieldset class="form-group">
-        <legend class="border-bottom mb-4">Profile Info</legend>
+
         {{ form|crispy }}
+        <input id="crop_dimensions_image" name="crop_dimensions_image" style="display: none">
 
         <!-- Gender Preferences -->
         <div class="row" style="text-align: center">
@@ -31,13 +46,12 @@
                 $("#womenswear-label").toggleClass('active');
                 $("#womenswear-checkbox").prop("checked", true);
             }
-
         </script>
 
 
         <div class="row" style="margin-top: 5%">
             <!-- PRIMARY SIZE -->
-            <div class="col-xs-6 col-sm-4 col-md-4" style="text-align: center; margin-top: 10px">
+            <div class="col-12" style="text-align: center; margin-top: 25px">
                 <select id="primary-size-select" name="primary_size" class="selectpicker dropup" title="select primary sizes..." data-size="5" data-width="100%" data-actions-box="true" data-dropup-auto="false" multiple>
                     {% for primary_size in primary_sizes %}
                         <option value="{{ primary_size.id }}">{{ primary_size }}</option>
@@ -66,7 +80,7 @@
             </div>
 
             <!-- WAIST SIZE -->
-            <div class="col-xs-6 col-sm-4 col-md-4" style="text-align: center; margin-top: 10px">
+            <div class="col-12" style="text-align: center; margin-top: 25px">
                 <select id="waist-size-select" name="waist_size" class="selectpicker dropup" title="select waist sizes..." data-size="5" data-width="100%" data-actions-box="true" data-dropup-auto="false" multiple>
                     {% for waist_size in waist_sizes %}
                         <option value="{{ waist_size.id }}">{{ waist_size }}</option>
@@ -95,7 +109,7 @@
             </div>
 
             <!-- SHOE SIZE -->
-            <div class="col-xs-6 col-sm-4 col-md-4" style="text-align: center; margin-top: 10px">
+            <div class="col-12" style="text-align: center; margin-top: 25px">
                 <select id="shoe-size-select" name="shoe_size" class="selectpicker dropup" title="select shoe sizes..." data-size="5" data-width="100%" data-actions-box="true"  multiple>
                     {% for shoe_size in shoe_sizes %}
                         <option value="{{ shoe_size.id }}">{{ shoe_size }}</option>
@@ -130,5 +144,20 @@
         <button class="btn btn-outline-info" type="submit">Update</button>
     </div>
  </form>
+
+
+    <script>
+
+        // hidden upload <input> elements for each image
+        const uploadedImage = document.getElementById('id_image');
+
+        // Call the processFile every time the chosen image is changed
+        uploadedImage.addEventListener("change", processFile);
+
+        // Each time crop changes store the crop dimensions in a hidden input
+        $('#croppie_container_image').on('update.croppie', getCropDimensions);
+
+    </script>
+
 
 {% endblock content %}

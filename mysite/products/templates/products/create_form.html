@@ -4,15 +4,9 @@
 {% block content %}
     <div class="content-section">
 
-        <form method="POST" enctype='multipart/form-data'>
-            {% csrf_token %}
-
-
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">New Product</legend>
-
               <!-- Container for croppie - contains placeholder image at start -->
               <!-- NOTE- do NOT change the IDs carelessly here as they are used for the image cropping! -->
+              <!-- Warning - do NOT place this inside form as click on upload image will bubble to other form fields -->
               <div class="row">
                   <div class="col-6">
                     <div id="croppie_container_image" style="width: 300px; height: 300px; margin-left: auto; margin-right: auto">
@@ -44,6 +38,12 @@
                   </div>
               </div>
 
+        <form method="POST" enctype='multipart/form-data'>
+            {% csrf_token %}
+
+
+            <fieldset class="form-group">
+
                 {{ form|crispy }}
                 <input id="crop_dimensions_image" name="crop_dimensions_image" style="display: none">
                 <input id="crop_dimensions_image2" name="crop_dimensions_image2" style="display: none">
@@ -73,14 +73,6 @@
             </div>
         </form>
 
-        <script>
-            function triggerImageUpload(btn){
-                // Trigger click on hidden file upload button
-                const targetElementFieldName = btn.id.split('_').pop()  // e.g. 'image', 'image2' etc.
-                const targetIdToClick = 'id_' + targetElementFieldName  // id of the hidden upload button
-                document.getElementById(targetIdToClick).click()  // click the hidden upload button
-            }
-        </script>
 
         <script>
 
@@ -90,61 +82,11 @@
             let uploadedImage3 = document.getElementById('id_image3');
             let uploadedImage4 = document.getElementById('id_image4');
 
-            function readFileAsync(file) {
-              // This function returns a Promise with resolve value as a base64 encoding of the uploading image
-              // We do this so we can display the uploaded image in the cropper
-              return new Promise((resolve, reject) => {
-                let reader = new FileReader();
-
-                reader.onload = () => {
-                  resolve(reader.result);
-                };
-
-                reader.onerror = reject;
-
-                reader.readAsDataURL(file);
-              })
-            }
-
-            async function processFile(event) {
-                  // Converts uploaded file to base64 and starts a croppie with that image src
-                  const targetElementFieldName = event.target.id.split('_').pop()  // e.g. 'image', 'image2' etc.
-                  $('#upload_placeholder_' + targetElementFieldName).css('display', 'none');  // hide the placeholder image
-                  const croppieContainer = $('#croppie_container_' + targetElementFieldName)
-                  croppieContainer.croppie('destroy')  // destroy any existing croppies
-                  try {
-                    const file = event.target.files[0];  // get the uploaded file
-                    const src = await readFileAsync(file);  // read base64 str from file to display
-
-                      // Start croppie with the uploaded image src
-                      croppieContainer
-                      .css('display', 'block')  // make div container visible
-                      .croppie({
-                        viewport: {width: 200, height: 200},
-                        boundary: {width: 250, height: 250}})
-                      .croppie('bind', {url: src});  // display uploaded image in croppied container
-
-                  } catch(err) {
-                    console.log(err);
-                  }
-                }
-
             // Call the processFile every time the chosen image is changed
             uploadedImage.addEventListener("change", processFile);
             uploadedImage2.addEventListener("change", processFile)
             uploadedImage3.addEventListener("change", processFile)
             uploadedImage4.addEventListener("change", processFile)
-
-        </script>
-
-        <script>
-            // get the cropped dimensions and store them as comma separated string in hidden form input
-            function getCropDimensions(event) {
-                const croppieContainer = event.target;
-                const targetElementFieldName = croppieContainer.id.split('_').pop()  // e.g. 'image', 'image2' etc.
-                const croppedDimensions = $('#croppie_container_' + targetElementFieldName).croppie('get').points.join();
-                $('#crop_dimensions_' + targetElementFieldName).val(croppedDimensions);  // store value in hidden <input>
-            }
 
             // Each time crop changes store the crop dimensions in a hidden input
             $('#croppie_container_image').on('update.croppie', getCropDimensions);

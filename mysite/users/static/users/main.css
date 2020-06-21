@@ -235,6 +235,9 @@
   list-style: none
 }
 
+label[for="id_image"] {
+    display: none;
+}
 
 
 
