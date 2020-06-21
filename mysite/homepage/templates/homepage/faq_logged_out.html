@@ -3,23 +3,25 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
-        <link rel="stylesheet" type="text/css" href="{% static 'homepage/faq.css' %}">
-        <link rel="shortcut icon" type="image/png" href="{% static 'assets/orange_logo_transparent_background.png' %}"/>
-        <link rel="apple-touch-icon" type="image/png" href="{% static 'assets/orange_logo_transparent_background.png' %}"/>
-        <link rel="icon" type="image/png" href="{% static 'assets/orange_logo_transparent_background.png' %}"/>
-        <style>
-            body {
-                font-family: 'Montserrat', sans-serif;
-            }
-        </style>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css" href="{% static 'homepage/faq.css' %}">
+    <link rel="shortcut icon" type="image/png" href="{% static 'assets/orange_logo_transparent_background.png' %}"/>
+    <link rel="apple-touch-icon" type="image/png" href="{% static 'assets/orange_logo_transparent_background.png' %}"/>
+    <link rel="icon" type="image/png" href="{% static 'assets/orange_logo_transparent_background.png' %}"/>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+    </style>
+</head>
 
-    <body>
-        {% include "homepage/_faq_content.html" %}
-    </body>
+<body {% if request|is_mobile %} style="margin-left: 5%; margin-right: 5%;"
+{% else %} style="margin-left: 20%; margin-right: 20%;"
+{% endif %}>
+{% include "homepage/_faq_content.html" %}
+</body>
 
 </html>

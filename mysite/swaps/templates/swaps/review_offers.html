@@ -3,7 +3,7 @@
 {% block content %}
     {%  if products %}
 
-        <div {% if request|is_mobile %} style="margin-left: 5%; margin-right: 5%" {% else %} style="margin-left: 20%; margin-right: 20%" {% endif %}>
+        <div>
             <h3> expand an item to accept or reject it </h3>
             {% include "swaps/_review_offers_feed.html" %}
         </div>
