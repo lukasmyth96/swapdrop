@@ -1,8 +1,9 @@
 {% extends "users/_profile_base.html" %}
+{% load user_agents %}
 
 {% block profile_pic %}
     <a class="profile-img-btn" data-toggle="tooltip" title="Edit Profile" href="{% url "profile-info" %}">
-        <img class="rounded-circle profile-img" src="{{ user.profile.image.url }}">
+        <img class="rounded-circle profile-img users-profile-img" src="{{ user.profile.image.url }}">
     </a>
 {% endblock profile_pic %}
 
@@ -11,7 +12,9 @@
 {% endblock users_username %}
 
 {% block users_bio %}
-    <p> Current logged in users bio</p>
+    {% if request|is_pc %}
+        <p class="profile-bio"> Current logged in users bio </p>
+    {% endif %}
 {% endblock users_bio %}
 
 {% block upload_button %}

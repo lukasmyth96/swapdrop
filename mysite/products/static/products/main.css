@@ -42,6 +42,8 @@ label[for="id_image4"] {
 }
 
 .search-bar {
+    /*Hide for now*/
+    display: none;
     width: 60%;
     margin-top: 25px;
     margin-bottom: 25px;
