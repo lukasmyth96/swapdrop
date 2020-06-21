@@ -5,7 +5,6 @@
             <div class="col-12 col-md-6">
                 <!-- The slideshow -->
                 <div id="demo" class="carousel slide" data-ride="carousel">
-                    {# <img src="{{ product.image.url }}" width="100%">#}
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <img src="{{ product.image.url }}" width="100%">
@@ -39,17 +38,21 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-6" style="text-align: center">
-              <h2 class="article-title">{{ product.name }}</h2>
-              <a href="{% url "profile-other-user" product.owner.id %}"> Owner: {{ product.owner.username }}</a>
-              <h6 class="article-title">Status: {{ product.status.label }}</h6>
-              <h6 class="article-title">Size: {{ product.size }}</h6>
+            <div class="col-12 col-md-6">
+                {% block edit_delete_icons %}
+                {% endblock edit_delete_icons %}
 
-              <p class="article-content">{{ product.description }}</p>
+              <div style="text-align: center; margin-top: 5%">
+                  <h2 class="article-title">{{ product.name }}</h2>
+                  <a href="{% url "profile-other-user" product.owner.id %}"> Owner: {{ product.owner.username }}</a>
+                  {#              <h6 class="article-title">Status: {{ product.status.label }}</h6>#}
+                  <h6 class="article-title">Size: {{ product.size }}</h6>
+                  <p class="article-content">{{ product.description }}</p>
 
-               <!-- this block will be filled with the action button/form e.g. 'make offer' etc. -->
-              {% block product_detail_action %}
-              {% endblock product_detail_action %}
+                  <!-- this block will be filled with the action button/form e.g. 'make offer' etc. -->
+                  {% block product_detail_action %}
+                  {% endblock product_detail_action %}
+              </div>
 
             </div>
         </div>
