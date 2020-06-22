@@ -49,15 +49,17 @@
 }
 
 .upload-button{
-  background: radial-gradient(circle, rgba(255,129,0,1) 0%, rgba(255,59,0,1) 100%);
-  width: 50px;
-  height: 50px;
+  background: radial-gradient(circle, #FF5510 0%, #FF7600 100%);
+  width: 40px;
+  height: 40px;
   font-size: 20pt;
-  color: silver;
+  color: white;
   font-weight: bolder;
   margin-top: auto;
   margin-bottom: auto;
+  border: 1px solid white;
   border-radius: 50%;
+  box-shadow: 0 0 2px 2px #FF5510;
   cursor: pointer;
 }
 

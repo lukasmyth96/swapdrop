@@ -61,23 +61,20 @@
                        {% endif %}
                    </div>
 
-                  <div class="col-6">
-                      <ul class="nav nav-pills">
-                          <li class="nav-item" style="margin-left: auto">
-                            <a id="feed-nav-link" class="nav-item nav-link" href="{% url 'product-feed' %}">Feed</a>
-                          </li>
-                          <li class="nav-item" style="margin-right: auto">
-                            <a id="profile-nav-link" class="nav-item nav-link" href="{% url 'profile-your-items' %}">Profile</a>
-                          </li>
-                      </ul>
+                  <div class="col-3" style="text-align: right">
+                       <a id="feed-nav-link" class="nav-item nav-link" href="{% url 'product-feed' %}">Feed</a>
+                  </div>
+
+                  <div class="col-3" style="text-align: left">
+                      <a id="profile-nav-link" class="nav-item nav-link" href="{% url 'profile-your-items' %}">Profile</a>
                   </div>
 
                    <div class="col-3" style="text-align: right; vertical-align: middle">
                        <a id="trigger" style="margin-right: -10%">
                            {% if request|is_mobile %}
-                               <img class="menu-icon" alt="menu icon" src="{% static "assets/three_dot_menu_icon.png" %}" style="width: 30%; margin-top: 15%; margin-right: -30%">
+                               <img class="menu-icon" alt="menu icon" src="{% static "assets/three_bar_menu_icon.png" %}" style="width: 30%; margin-top: 15%; margin-right: -30%">
                            {% else %}
-                               <img class="menu-icon" alt="menu icon" src="{% static "assets/three_dot_menu_icon.png" %}" style="width: 30px; margin-top: 10px">
+                               <img class="menu-icon" alt="menu icon" src="{% static "assets/three_bar_menu_icon.png" %}" style="width: 30px; margin-top: 10px">
                            {% endif %}
 
                        </a>
