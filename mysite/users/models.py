@@ -51,7 +51,21 @@ class Profile(models.Model):
             return img_field  # TODO probably log here if img is not None but crop dims are
 
         pil_img = Image.open(img_field)
-        img_format = pil_img.format
+        img_format = pil_img.format  # note - important this comes above rotation
+
+        # Rotate mobile upload images that otherwise get wrong orientation
+        exif = pil_img._getexif()
+        orientation_key = 274  # cf ExifTags
+        if exif and orientation_key in exif:
+            orientation = exif[orientation_key]
+            rotate_values = {
+                3: Image.ROTATE_180,
+                6: Image.ROTATE_270,
+                8: Image.ROTATE_90
+            }
+            if orientation in rotate_values:
+                pil_img = pil_img.transpose(rotate_values[orientation])
+
         pil_img = pil_img.crop(crop_dimensions)  # crop image
         pil_img = pil_img.resize((512, 512))  # resize image
         thumb_io = BytesIO()  # create a BytesIO object
