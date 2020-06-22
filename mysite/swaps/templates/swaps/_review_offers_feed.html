@@ -1,0 +1,8 @@
+{% extends "products/_base_feed.html" %}
+{% block single_product %}
+    <div>
+      <a href="{% url 'review-single-offer' product.id users_product.id %}" style="width: 100%">
+        <img class="grid-item thumbnail" src="{{ product.image.url }}" style="width: 100%; visibility: hidden">
+      </a>
+    </div>
+{% endblock %}

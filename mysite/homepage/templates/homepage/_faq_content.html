@@ -1,0 +1,134 @@
+{% load user_agents %}
+{% load static %}
+<div class="faq-container">
+    <h1>FAQ's</h1>
+    <div class="faq-contact-info">
+        <p>Can't find what your looking for?</p>
+        <p> Contact us at <a href=mailto:<contact@swapdrop.email>contact@swapdrop.email</a></p>
+    </div>
+    <div class="accordion">
+        <div class="accordion-item">
+            <button id="accordion-button-1" aria-expanded="false"><span class="accordion-title">How much does a Swap
+            cost?</span><span class="plus-icon" aria-hidden="true"></span></button>
+            <div class="accordion-content">
+                <p>Each swap costs £5 - this covers service and delivery fees.</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <button id="accordion-button-2" aria-expanded="false">
+            <span class="accordion-title">What do these icons mean?
+            </span>
+                <img class="num-offers-icon" src="{% static "assets/number_of_offers_icon_for_faq.png" %}"
+                     alt="Untitled">
+                <span class="plus-icon" aria-hidden="true"></span>
+            </button>
+            <div class="accordion-content">
+                <p>They show you how many items have been offered for the pictured item. For example this item has had 7
+                    items
+                    offered. It is up to the items owner to decide which item to accept.</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <button id="accordion-button-3" aria-expanded="false"><span class="accordion-title">How does the pick-up
+            work?</span><span class="plus-icon" aria-hidden="true"></span></button>
+            <div class="accordion-content">
+                <p>During check out we’ll ask you to choose a pick-up slot. Before the pick-up slot you should make sure
+                    you
+                    have cleaned your item and have it ready to pass to our delivery rider. Once our delivery rider
+                    arrives they
+                    will place a box on your doorstep and step back from the door in order to maintain social
+                    distancing. You
+                    should then place your item in the box, step back and our rider will take the box. Our rider will
+                    then take
+                    your payment via card payment or cash.</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <button id="accordion-button-4" aria-expanded="false"><span class="accordion-title">How long will it take for my
+            item to be delivered?</span><span class="plus-icon" aria-hidden="true"></span></button>
+            <div class="accordion-content">
+                <p>It can take up to 6 days days to deliver your product. We give each user a choice of 4 days to have
+                    their
+                    item picked up after the initial 48 hour checkout process.</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <button id="accordion-button-5" aria-expanded="false"><span class="accordion-title">Can I accept more than 1
+            item?</span><span class="plus-icon" aria-hidden="true"></span></button>
+            <div class="accordion-content">
+                <p>At the moment we can only accommodate a 1 for 1 swap. This means that only one given item can be
+                    swapped
+                    for any other given single item on our site.</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <button id="accordion-button-5" aria-expanded="false"><span class="accordion-title">What does my payment
+            include?</span><span class="plus-icon" aria-hidden="true"></span></button>
+            <div class="accordion-content">
+                <p>Your payment includes the picking up of your item at your door and the delivery of the swap to both
+                    individuals. We also include our service fee within your payment. </p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <button id="accordion-button-4" aria-expanded="false"><span class="accordion-title">How will you take my
+            payment?
+          </span><span class="plus-icon" aria-hidden="true"></span></button>
+            <div class="accordion-content">
+                <p>We will take your payment at the door using a square card reader or through cash payment. We’re
+                    currently
+                    integrating online payment onto our site.</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <button id="accordion-button-4" aria-expanded="false"><span class="accordion-title">When will this be available
+            in other areas?</span><span class="plus-icon" aria-hidden="true"></span></button>
+            <div class="accordion-content">
+                <p>We’re working hard to bring our product for everyone to enjoy! Before we do that we’re making sure it
+                    fits
+                    the bill. We’re currently testing our product within select areas before a wider launch in
+                    September. </p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <button id="accordion-button-4" aria-expanded="false"><span class="accordion-title">The item I received wasn’t
+            the same as pictured.</span><span class="plus-icon" aria-hidden="true"></span></button>
+            <div class="accordion-content">
+                <p>If you’re not happy with your item send us an email at contact@swapdrop.email with a picture of the
+                    item
+                    you received and any other information about the item. We’ll investigate the matter and get back to
+                    you as
+                    soon as possible.</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <button id="accordion-button-4" aria-expanded="false"><span class="accordion-title">Is Swapping good for the
+            environment?</span><span class="plus-icon" aria-hidden="true"></span></button>
+            <div class="accordion-content">
+                <p>Yes! Swapping is a great way for you to change unsustainable fashion consumption habits. Everytime
+                    you swap
+                    instead </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- partial -->
+<script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+<script>
+    const items = document.querySelectorAll(".accordion button");
+
+    function toggleAccordion() {
+        const itemToggle = this.getAttribute('aria-expanded');
+
+        for (i = 0; i < items.length; i++) {
+            items[i].setAttribute('aria-expanded', 'false');
+        }
+
+        if (itemToggle === 'false') {
+            this.setAttribute('aria-expanded', 'true');
+        }
+    }
+
+    items.forEach(item => item.addEventListener('click', toggleAccordion));
+</script>

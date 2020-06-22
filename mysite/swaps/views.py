@@ -1,7 +1,9 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
+from django.http import Http404
 from django.contrib import messages
+from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from products.models import Product, ProductStatus
 from swaps.model_enums import SwapStatus
@@ -61,7 +63,6 @@ class MakeOfferListView(ListView):
         return redirect('product-feed')
 
 
-
 class ReviewOffersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
     model = Product
@@ -69,13 +70,12 @@ class ReviewOffersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     context_object_name = 'products'
     ordering = ['-date_posted']
 
-
     def get_queryset(self):
         """ Returns list of all products that have been offered for current product"""
-        current_product = self.get_current_product()  # product that the offers are being made for
 
-        if current_product.status == ProductStatus.LIVE:
-            offers_for_product = self.get_offers_for_product(current_product=current_product)
+        if self.users_product.status == ProductStatus.LIVE:
+            offers_for_product = Swap.objects.filter(desired_product=self.users_product,
+                                                     status=SwapStatus.PENDING_REVIEW)
             offered_products = [offer.offered_product for offer in offers_for_product]
         else:
             offered_products = []
@@ -83,58 +83,88 @@ class ReviewOffersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
         return offered_products
 
-    def post(self, request, product_id):
-        """ Process acceptance of offer"""
+    def get_context_data(self, *, object_list=None, **kwargs):
+        """ Add users_product to context so URLs can be created for links to review_single_offer
+        FIXME - this probably isn't needed but can't get to work by getting users_product_id directly in template
+        """
+        context = super(ReviewOffersListView, self).get_context_data(object_list=object_list, **kwargs)
+        context['users_product'] = self.users_product
+        return context
 
-        selected_product_id_str = request.POST.get('product_id')
-        if selected_product_id_str is None:
-            # Show warning if no items have been offered
-            messages.warning(request, 'You must select one offer to accept')
-            return redirect('review-offers', product_id=product_id)
-
-        selected_product_id = int(selected_product_id_str)  # cast to int
-
-        # Update status of current product to PENDING_CHECKOUT
-        current_product = self.get_current_product(product_id=product_id)  # Product object
-        assert current_product.status == ProductStatus.LIVE
-        current_product.status = ProductStatus.PENDING_CHECKOUT
-        current_product.save(update_fields=['status'])
-
-        # Update status of each offer and update the status of accepted product to PENDING_CHECKOUT
-        selected_product_id = int(selected_product_id)
-        offers_for_product = self.get_offers_for_product(current_product=current_product)  # get list of offered products
-        for offer in offers_for_product:
-            offered_product = offer.offered_product
-            if offered_product.id == selected_product_id:
-                offer.status = SwapStatus.PENDING_CHECKOUT  # update status of swap
-                offered_product.status = ProductStatus.PENDING_CHECKOUT  # update status of accepted product
-                offered_product.save(update_fields=['status'])
-            else:
-                offer.status = SwapStatus.REJECTED
-
-            offer.save(update_fields=['status'])  # update status in db
-
-        return redirect('checkout', product_id=current_product.id)
+    @property
+    def users_product(self):
+        users_product_id = self.kwargs.get('product_id')
+        users_product = Product.objects.get(id=users_product_id)
+        return users_product
 
     def test_func(self):
         """ Ensures only the owner of the product can review it's offers"""
-        current_product = self.get_current_product()
-        if self.request.user == current_product.owner:
+        if self.request.user == self.users_product.owner:
             return True
         return False
 
-    def get_current_product(self, product_id=None):
-        if product_id is None:
-            product_id = self.kwargs.get('product_id')  # for get requests
-        current_product = Product.objects.get(id=product_id)
-        return current_product
 
-    @staticmethod
-    def get_offers_for_product(current_product):
-        """ Returns QuerySet of all offers for this product """
-        offers_for_this_product = Swap.objects.filter(desired_product=current_product, status=SwapStatus.PENDING_REVIEW)
-        return offers_for_this_product
+def review_single_offer(request, offered_product_id, users_product_id):
+    """
+    Review a single offer and process offer acceptance
+    Parameters
+    ----------
+    request
+    offered_product_id: int
+        ID of product that user is reviewing
+    users_product_id: int
+        ID of product that user owns and that the offer has been made for
+    """
 
+    try:
+        offered_product = Product.objects.get(id=offered_product_id)
+        users_product = Product.objects.get(id=users_product_id)
+
+        if offered_product.status != ProductStatus.LIVE:
+            messages.info(request, 'This product is no longer LIVE')
+            return redirect('profile-your-items')
+
+    except:
+        raise Http404('Oops - one of these products doesn\'t exist')
+
+    if request.method == 'POST':
+        if 'accept_offer' in request.POST:
+            _process_offer_acceptance(users_product=users_product, offered_product=offered_product)
+            return redirect('checkout', product_id=users_product.id)
+        elif 'reject_offer' in request.POST:
+            _process_offer_rejection(users_product=users_product, offered_product=offered_product)
+            messages.success(request, 'Offer rejected successfully')
+            return redirect('review-offers', product_id=users_product.id)
+
+    else:
+        context = {'product': offered_product,  # NOTE - important that context name is 'product'
+                   'users_product': users_product}
+        return render(request, template_name="swaps/review_single_offer.html", context=context)
+
+
+def _process_offer_acceptance(users_product, offered_product):
+    """ Process offer acceptance"""
+    users_product.status = ProductStatus.PENDING_CHECKOUT
+    users_product.save(update_fields=['status'])
+
+    offered_product.status = ProductStatus.PENDING_CHECKOUT
+    offered_product.save(update_fields=['status'])
+
+    accepted_swap = Swap.objects.get(offered_product=offered_product, desired_product=users_product)
+    accepted_swap.status = SwapStatus.PENDING_CHECKOUT
+    accepted_swap.date_accepted = timezone.now()  # set match time
+    accepted_swap.save(update_fields=['status', 'date_accepted'])
+
+    # Reject other offers
+    rejected_swaps = Swap.objects.filter(desired_product=users_product).exclude(offered_product=offered_product)
+    for rejected_swap in rejected_swaps:
+        rejected_swap.status = SwapStatus.REJECTED
+        rejected_swap.save(update_fields=['status'])
+
+def _process_offer_rejection(users_product, offered_product):
+    rejected_swap = Swap.objects.get(offered_product=offered_product, desired_product=users_product)
+    rejected_swap.status = SwapStatus.REJECTED
+    rejected_swap.save(update_fields=['status'])
 
 
 

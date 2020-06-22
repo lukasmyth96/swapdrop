@@ -1,25 +1,103 @@
-.account-img {
-  height: 125px;
-  width: 125px;
-  margin-right: 20px;
-  margin-bottom: 16px;
+
+
+.profile-img {
+  width: 100px;
+  height: 100px;
+  margin-top: auto;
+  margin-bottom: auto;
   outline:none;
-  border-color:#9ecaed;
-  box-shadow:0 0 20px #9ecaed;
 }
 
-.account-img:hover {
-    box-shadow:0 0 40px #9ecaed;
+.profile-img-btn:focus{
+  outline: none;
 }
 
-.account-heading {
-  font-size: 2.5rem;
+.users-profile-img{
+  border-color:#FF5510;
+  box-shadow:0 0 20px #FF5510;
 }
+
+.users-profile-img:hover {
+    box-shadow:0 0 30px #FF5510;
+}
+
+
+.profile-text-container{
+  list-style: none;
+  margin-left: -25%;
+}
+
+.profile-username {
+  font-size: 24px;
+  font-weight: bolder;
+}
+
+.profile-bio{
+  font-size: 16px;
+  font-weight: lighter;
+}
+
+@media only screen and (max-width: 600px) {
+  .profile-text-container {
+    list-style: none;
+    margin-left: -10%;
+  }
+
+  .profile-username {
+    font-size: 18pt;
+  }
+}
+
+.upload-button{
+  background: radial-gradient(circle, #FF5510 0%, #FF7600 100%);
+  width: 40px;
+  height: 40px;
+  font-size: 20pt;
+  color: white;
+  font-weight: bolder;
+  margin-top: auto;
+  margin-bottom: auto;
+  border: 1px solid white;
+  border-radius: 50%;
+  box-shadow: 0 0 2px 2px #FF5510;
+  cursor: pointer;
+}
+
+.upload-button:hover{
+  background: radial-gradient(circle, rgba(255,59,0,1) 0%, rgba(255,129,0,1) 100%);
+}
+
+.upload-button:focus{
+  outline: none;
+}
+
+.profile-header-row{
+  margin-bottom: 25px;
+}
+
+.profile-tab-row{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.profile-tab-col{
+  cursor: pointer;
+}
+
+.profile-tab-col a{
+  color: inherit;
+  text-decoration: none;
+}
+
+.selected_profile_tab_underline{
+  border-bottom: 2px solid orangered;
+}
+
 
 /* Container needed to position the button. Adjust the width as needed */
 .product-container {
   position: relative;
-  width: 50%;
 }
 
 /* Make the image responsive */
@@ -29,25 +107,55 @@
 }
 
 /* Style the button and place it in the middle of the container/image */
-.product-container .offer-status-icon {
+.offer-status-icon {
   position: absolute;
-  top: 0px;
-  left: 6%;
-  background-color: #a39e9e;
+  top: 5px;
+  left: 5px;
+  text-align: center;
+  width: 15%;
+  height: 15%;
+  background: linear-gradient(45deg, #FF5510 0%, #FF7600 100%);
   color: white;
   font-size: 16px;
-  padding: 5px 10px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
+  border: 1px solid white;
+  border-radius: 50%;
+  box-shadow: 0 0 1px 1px #FF5510;
+  text-decoration: none;
 }
 
-.postcode-warning{
-  color: red;
-  display: none;
-  font-size: 2vw;
-  margin-left: 1%;
+.offer-status-overlay{
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  background: rgba(149, 149, 149, 0.5);
+  color: #FF5510;
+  -webkit-text-stroke-width: 0.25px;
+  -webkit-text-stroke-color: white;
+  font-size: 28px;
+  font-weight: 800;
+  text-decoration: none;
 }
+
+.offer-status-overlay:hover{
+  text-decoration: none;
+  color: #FF5510;
+}
+
+@media only screen and (max-width: 600px) {
+.offer-status-icon{
+  width: 20%;
+  height: 20%;
+  font-size: 12px;
+}
+.offer-status-overlay{
+  font-size: 16px;
+}
+}
+
+
 
 .btn.btn-info {
   background: grey;
@@ -55,9 +163,177 @@
 }
 
 .btn.btn-info.focus.active{
-  background: cadetblue;
-  border-color: cadetblue;
+  outline: 0;
+  outline-offset: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
+
+/*Sign-Up Form*/
+
+.signup-background{
+  width: 100%;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgb(255, 59, 0)), color-stop(50%,rgb(240, 153, 54)), color-stop(50%,rgb(255, 255, 255)));
+}
+
+.signup-background-mobile{
+  width: 100%;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background: rgb(255,59,0);
+  background: radial-gradient(circle, rgba(255,59,0,1) 0%, rgba(255,129,0,1) 100%);
+}
+
+.swapdrop-header {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20pt;
+  color: white;
+  font-weight: 800;
+  margin-top: 50px;
+  margin-left: 50px;
+}
+
+.swapdrop-header-mobile {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 30pt;
+  color: white;
+  font-weight: 800;
+  padding-top: 20%;
+}
+
+
+.signup-container{
+  text-align: center;
+  background: white;
+  border: solid #bbb5b5 1px;
+  border-radius: 40px;
+  margin-top: 50px;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+.signup-legend{
+  text-align: center;
+  color: grey;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16pt;
+  margin-top: 10%;
+  margin-bottom: 10%;
+}
+
+.postcode-warning{
+  text-align: center;
+  color: red;
+  display: none;
+  font-size: 8pt;
+  font-family: 'Montserrat', sans-serif;
+  margin-left: 1%;
+}
+
+.signup-footer{
+  text-align: center;
+  color: grey;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 8pt;
+  font-weight: bold;
+  margin-bottom: 25px;
+}
+
+.standard-swapdrop-btn{
+  width: 80%;
+  left: -100%;
+  background: linear-gradient(45deg, rgba(255,59,0,1) 0%, rgba(255,100,0,1) 100%);
+  border-radius: 28px;
+  border: 1px solid #b4a9a9;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 8px 31px;
+  text-decoration: none;
+  transition: all 0.4s;
+}
+
+.standard-swapdrop-btn:hover{
+  color: inherit;
+  text-decoration: none;
+  background: linear-gradient(45deg, rgba(255,100,0,1) 0%, rgba(255,59,0,1) 100%);
+}
+
+.standard-swapdrop-btn:focus{
+  /*aware this is bad practice -- needs changing*/
+  text-decoration: none;
+  outline: none;
+}
+
+.signup-container input {
+    width: 75%;
+    font-size: 12pt;
+    font-family: 'Montserrat', sans-serif;
+    color: grey;
+    margin-bottom: 20px;
+    outline: 0;
+    border-width: 0 0 1px;
+    border-color: lightgray;
+}
+
+.signup-container label{
+  display: none;
+}
+
+.signup-container .errorlist{
+
+  color: red;
+  font-size: 8pt;
+  font-family: 'Montserrat', sans-serif;
+  list-style: none
+}
+
+label[for="id_image"] {
+    display: none;
+}
+
+
+.gender-radio{
+  text-align: center;
+  margin: 20px;
+  width: 50%;
+  left: -100%;
+  background: #FFFFFF;
+  border-radius: 32px;
+  border: 1px solid #b4a9a9;
+  box-shadow: 0 3px 6px #00000029;
+  display: inline-block;
+  cursor: pointer;
+  color: #616161;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  padding: 8px;
+  text-decoration: none;
+  transition: all 0.4s;
+}
+
+@media only screen and (max-width: 600px) {
+  .gender-radio{
+      width: 80%;
+      font-size: 12px;
+  }
+}
+
+:checked + label{
+  color: white;
+  background: linear-gradient(45deg, rgba(255,100,0,1) 0%, rgba(255,59,0,1) 100%);
+}
+
+
+
 
 
 

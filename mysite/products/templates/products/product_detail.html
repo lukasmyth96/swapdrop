@@ -1,0 +1,34 @@
+{% extends "products/_base_product_detail.html" %}
+{% load static %}
+{% load user_agents %}
+
+{% block edit_delete_icons %}
+    {% if product.owner == user %}
+      <div {% if request|is_pc %} style="text-align: right; margin: 0 10px 0 10px;"
+          {% else %} style="text-align: center; margin: 20px 20px 0 20px;"
+          {% endif %}>
+          <a href="{% url 'product-update' product.id %}" style="outline: none">
+              <img src="{% static "assets/product_edit_icon.png" %}" style="width: 44px; height: 44px">
+          </a>
+          <a href="{% url 'product-delete' product.id %}" style="outline: none">
+              <img src="{% static "assets/product_delete_icon.png" %}" style="width: 34px; height: 34px">
+          </a>
+      </div>
+    {% endif %}
+{% endblock edit_delete_icons %}
+
+{% block product_detail_action %}
+      {% if product.owner == user %}
+        <div>
+          {% if product.status.name == 'LIVE' %}
+              <a class="standard-swapdrop-btn" href="{% url 'review-offers' product.id %}">Review {{ product.number_of_offers }} Offers</a>
+          {% elif product.status.name == 'PENDING_CHECKOUT' %}
+              <a class="standard-swapdrop-btn" href="{% url 'checkout' product.id %}"> Checkout Now</a>
+          {% endif %}
+        </div>
+      {% else %}
+          <button class="standard-swapdrop-btn" type="submit" onclick="location.href='{% url 'make-offer' product.id %}'">
+              Make an offer
+          </button>
+      {% endif %}
+{% endblock product_detail_action %}

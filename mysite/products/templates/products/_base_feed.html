@@ -1,0 +1,20 @@
+<! Used as a base component for product feed and profile feed - exposes single_product block to be extended>
+{% load user_agents %}
+<div>
+    <div class="row">
+        {% for product in products %}
+            <div class="col-4 col-md-3 custom-gutter">
+                {% block single_product %} {% endblock %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        let images = $('.grid-item, .offer-status-icon, .offer-status-overlay');
+        let i
+        for (i=0; i<images.length; i++){
+            images[i].style.visibility = 'visible'
+        }
+    });
+</script>

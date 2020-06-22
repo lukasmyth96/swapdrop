@@ -12,5 +12,18 @@ class Size(models.Model):
 
 
     def __str__(self):
-        return self.size.name
+        splitted = self.size.name.split('_')
+        size_type = splitted[0]
+        if size_type == 'PRIMARY':
+            size_text = f'{splitted[1].capitalize()} {splitted[2]}'
+        elif size_type == 'WAIST':
+            size_text = f'{splitted[1]}\"'
+        elif size_type == 'SHOE':
+            size_text = f'UK {splitted[1]}'
+            if len(splitted) == 3:
+                size_text += f'.{splitted[2]}'  # for half sizes
+        else:
+            raise ValueError('Unhandled size type')
+        return size_text
+
 
