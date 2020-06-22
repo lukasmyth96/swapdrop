@@ -130,12 +130,12 @@
   text-align: center;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(149, 149, 149, 0.5);
   color: #FF5510;
-  -webkit-text-stroke-width: 0.5px;
-  -webkit-text-stroke-color: grey;
+  -webkit-text-stroke-width: 0.25px;
+  -webkit-text-stroke-color: white;
   font-size: 28px;
-  font-weight: bolder;
+  font-weight: 800;
   text-decoration: none;
 }
 
