@@ -21,7 +21,7 @@
       {% if product.owner == user %}
         <div>
           {% if product.status.name == 'LIVE' %}
-              <a class="standard-swapdrop-btn" href="{% url 'review-offers' product.id %}">Review Offers</a>
+              <a class="standard-swapdrop-btn" href="{% url 'review-offers' product.id %}">Review {{ product.number_of_offers }} Offers</a>
           {% elif product.status.name == 'PENDING_CHECKOUT' %}
               <a class="standard-swapdrop-btn" href="{% url 'checkout' product.id %}"> Checkout Now</a>
           {% endif %}

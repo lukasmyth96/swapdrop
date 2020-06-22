@@ -44,10 +44,12 @@
 
               <div style="text-align: center; margin-top: 5%">
                   <h2 class="article-title">{{ product.name }}</h2>
-                  <a href="{% url "profile-other-user" product.owner.id %}"> Owner: {{ product.owner.username }}</a>
+                  {% if request.user != product.owner %}
+                        <a href="{% url "profile-other-user" product.owner.id %}"> Owner: {{ product.owner.username }}</a>
+                  {% endif %}
                   {#              <h6 class="article-title">Status: {{ product.status.label }}</h6>#}
                   <h6 class="article-title">Size: {{ product.size }}</h6>
-                  <p class="article-content">{{ product.description }}</p>
+                  <p class="item-description">{{ product.description }}</p>
 
                   <!-- this block will be filled with the action button/form e.g. 'make offer' etc. -->
                   {% block product_detail_action %}
