@@ -18,17 +18,6 @@
 {% endblock edit_delete_icons %}
 
 {% block product_detail_action %}
-      {% if product.owner == user %}
-        <div>
-          {% if product.status.name == 'LIVE' %}
-              <a class="standard-swapdrop-btn" href="{% url 'review-offers' product.id %}">Review {{ product.number_of_offers }} Offers</a>
-          {% elif product.status.name == 'PENDING_CHECKOUT' %}
-              <a class="standard-swapdrop-btn" href="{% url 'checkout' product.id %}"> Checkout Now</a>
-          {% endif %}
-        </div>
-      {% else %}
-          <button class="standard-swapdrop-btn" type="submit" onclick="location.href='{% url 'make-offer' product.id %}'">
-              Make an offer
-          </button>
-      {% endif %}
+    <!-- Button text and redirect url determined in view -->
+     <a class="standard-swapdrop-btn" href="{{ button_redirect_url }}"> {{ button_text }} </a>
 {% endblock product_detail_action %}

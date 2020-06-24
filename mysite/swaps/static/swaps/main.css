@@ -1,10 +1,10 @@
 
 .offer-img{
-    border: 5px solid white;
+    border: 1px solid white;
+    border-radius: 5px;
     width: 100%;
-
 }
 
 .offer-img-active{
-    border-color: orangered;
+  box-shadow: 0 0 2px 5px #FF5510;
 }

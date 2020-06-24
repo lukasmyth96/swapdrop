@@ -11,11 +11,13 @@
                 {% endblock profile_pic %}
             </div>
 
-            <div class="col-6">
+            <div class="col-9">
                 <ul class="profile-text-container" style="list-style: none;">
                     <li>
-                        {% block users_username %}
-                        {% endblock users_username %}
+                        <div class="profile-box" style="display: flex; align-items: center">
+                            {% block users_username %}{% endblock users_username %}
+                            {% block upload_button %} {% endblock upload_button %}
+                        </div>
                     </li>
                     <li>
                         {% block users_bio %}
@@ -25,11 +27,11 @@
 
             </div>
 
-            <div class="col-3">
-                <!-- Block below will be filled with upload button ONLY for your profile-->
-                {% block upload_button %}
-                {% endblock %}
-            </div>
+{#            <div class="col-3">#}
+{#                <!-- Block below will be filled with upload button ONLY for your profile-->#}
+{#                {% block upload_button %}#}
+{#                {% endblock %}#}
+{#            </div>#}
         </div>
 
         <!-- Block below will be filled with Your Items / Offers Made tab ONLY for your profile-->
