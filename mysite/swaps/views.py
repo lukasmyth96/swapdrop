@@ -63,6 +63,21 @@ class MakeOfferListView(ListView):
         return redirect('product-feed')
 
 
+def cancel_offers(request, product_id):
+    """Cancel all users offers on a given product"""
+    try:
+        product = Product.objects.get(id=product_id)
+    except Product.DoesNotExist:
+        raise Http404('This product does not exist')
+
+    users_offers_on_product = Swap.objects.filter(offered_product__owner=request.user, desired_product=product)
+    for offer in users_offers_on_product:
+        offer.status = SwapStatus.CANCELLED
+        offer.save(update_fields=['status'])
+    messages.success(request, f'Cancelled {len(users_offers_on_product)} Offers')
+    return redirect('profile-offers-made')
+
+
 class ReviewOffersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
     model = Product
@@ -160,6 +175,7 @@ def _process_offer_acceptance(users_product, offered_product):
     for rejected_swap in rejected_swaps:
         rejected_swap.status = SwapStatus.REJECTED
         rejected_swap.save(update_fields=['status'])
+
 
 def _process_offer_rejection(users_product, offered_product):
     rejected_swap = Swap.objects.get(offered_product=offered_product, desired_product=users_product)

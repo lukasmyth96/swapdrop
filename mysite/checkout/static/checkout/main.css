@@ -87,18 +87,18 @@
 }
 
 .time-slot-radio {
-  background: lightgray;
+  background:  white;
   border: 1px solid lightgray;
   border-radius: 40px;
-  box-shadow: 0 0 5px 4px lightgray;
   margin-top: 15px;
   padding: 5%;
   width: 100%;
+  color: grey;
   font-size: 12pt;
   margin-left: auto;
   margin-right: auto;
 }
 
 .time-slot-radio.active {
-    box-shadow: 0 0 5px 4px rgb(255, 59, 0);
+  box-shadow: 0 0 2px 5px #FF5510;
 }

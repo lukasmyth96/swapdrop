@@ -13,7 +13,7 @@ class ProductStatus(enum.Enum):
 
     # InvalidStatusOperationError exception will be raised if we attempt an invalid transition
     __transitions__ = {
-        LIVE: (PENDING_CHECKOUT,),  # Can only transition to live from PENDING_CHECKOUT
+        LIVE: (PENDING_CHECKOUT, CHECKOUT_COMPLETE),  # Can only transition to live from PENDING_CHECKOUT and CHECKOUT_COMPLETE
         PENDING_CHECKOUT: (LIVE,),  # Can only transition to PENDING_CHECKOUT from LIVE
         CHECKOUT_COMPLETE: (PENDING_CHECKOUT,),  # Can only transition to CHECKOUT_COMPLETE from PENDING_CHECKOUT
         COLLECTED: (CHECKOUT_COMPLETE,),  # Can only transition to COLLECTED from CHECKOUT_COMPLETE
