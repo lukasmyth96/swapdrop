@@ -9,7 +9,7 @@ from django.views.generic import (
 )
 from .models import Product, ProductStatus
 from sizes.model_enums import GenderOptions
-from swaps.models import Swap
+from swaps.models import Swap, SwapStatus
 from .forms import ProductCreateForm, ProductUpdateForm
 
 
@@ -45,6 +45,41 @@ class ProductListView(ListView):
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'products/product_detail.html'
+    context_object_name = 'product'
+
+    def get_context_data(self, **kwargs):
+        """
+        Overriding to add 'button_text' and 'button_redirect_url' to context.
+
+        This is used in template in the main 'call to action' button which can be on of 4 things depending on status.
+        """
+        context = super(ProductDetailView, self).get_context_data(**kwargs)
+        product = self.object
+        button_text = ''
+        button_redirect_url = '#'
+        if product.owner == self.request.user:
+            if product.status == ProductStatus.LIVE:
+                button_text = f'Review {product.number_of_offers} Offers'
+                button_redirect_url = reverse_lazy('review-offers', kwargs={'product_id': product.id})
+            elif product.status == ProductStatus.PENDING_CHECKOUT:
+                button_text = 'Checkout Now'
+                button_redirect_url = reverse_lazy('checkout', kwargs={'product_id': product.id})
+        else:
+            # get QuerySet of offers made by current user for this product
+            users_offers_on_product = Swap.objects.filter(offered_product__owner=self.request.user,
+                                                          desired_product=product,
+                                                          status=SwapStatus.PENDING_REVIEW)
+            if users_offers_on_product:
+                button_text = f'Cancel {len(users_offers_on_product)} Offers'
+                button_redirect_url = reverse_lazy('cancel-offers', kwargs={'product_id': product.id})
+            else:
+                button_text = 'Make Offer'
+                button_redirect_url = reverse_lazy('make-offer', kwargs={'product_id': product.id})
+
+        context['button_text'] = button_text
+        context['button_redirect_url'] = button_redirect_url
+
+        return context
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
