@@ -92,6 +92,7 @@ class ReviewOffersListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
             offers_for_product = Swap.objects.filter(desired_product=self.users_product,
                                                      status=SwapStatus.PENDING_REVIEW)
             offered_products = [offer.offered_product for offer in offers_for_product]
+            offered_products = [prod for prod in offered_products if prod.status == ProductStatus.LIVE]
         else:
             offered_products = []
             messages.warning(self.request, 'You have already accepted an offer on this product')
