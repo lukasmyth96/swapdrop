@@ -83,12 +83,36 @@
     <!-- Sidebar menu -->
     <div id="slider" class="slider" style="text-align: left">
       <ul style="list-style-type: none; ">
-          <li> <a href="{% url "shipping-address-info" %}">Shipping Address</a> </li>
-          <li> <a href="{% url "profile-info" %}">Profile Info</a> </li>
-          <li> <a href="{% url "faq" %}">FAQs</a> </li>
-          <li> <a href="{% url "terms-of-service" %}">Terms of Service</a> </li>
-          <li> <a href="{% url "privacy" %}">Privacy Agreement</a> </li>
-          <li> <a href="{% url "logout" %}">Logout</a> </li>
+          <li>
+              <div>
+                  <img src="{% static "assets/shipping_address_icon.png" %}" height="50px">
+                  <a href="{% url "shipping-address-info" %}"> Shipping Address </a>
+              </div>
+          </li>
+          <li>
+            <div>
+              <img src="{% static "assets/faq_icon.png" %}" height="50px">
+              <a href="{% url "faq" %}">FAQs</a>
+            </div>
+          </li>
+          <li>
+              <div>
+                <img src="{% static "assets/terms_of_service_icon.png" %}" height="50px">
+                <a href="{% url "terms-of-service" %}">Terms of Service</a>
+              </div>
+          </li>
+          <li>
+              <div>
+                <img src="{% static "assets/privacy_icon.png" %}" height="50px">
+                <a href="{% url "privacy" %}">Privacy Agreement</a>
+              </div>
+          </li>
+          <li>
+              <div>
+                <img src="{% static "assets/logout_icon.png" %}" height="50px">
+                <a href="{% url "logout" %}">Logout</a>
+              </div>
+          </li>
       </ul>
     </div>
 

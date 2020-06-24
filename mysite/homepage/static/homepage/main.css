@@ -31,12 +31,12 @@ body {
 }
 
 @media only screen and (max-width: 600px) {
-.site-header .nav-link {
-  font-size: 16px;
-}
-.nav-pills{
-  margin-left: 0;
-}
+  .site-header .nav-link {
+    font-size: 16px;
+  }
+  .nav-pills{
+    margin-left: 0;
+  }
 }
 
 
@@ -72,7 +72,16 @@ body {
   margin-top: 5%;
 }
 
-.slider a{
+.slider li div{
+  display: flex;
+  align-items:center;
+}
+
+.slider li div img{
+  height: 50px;
+}
+
+.slider li div a {
   color: #cbd5db;
   font-family: 'Montserrat', sans-serif;
   font-size: 24px;
@@ -92,11 +101,15 @@ body {
   }
 
   .slider li{
-  margin-top: 15%;
-}
+    margin-top: 15%;
+  }
 
-  .slider a{
-    font-size: 16px;
+  .slider li div img{
+    height: 40px;
+  }
+
+  .slider li div a{
+    font-size: 12px;
   }
 }
 
