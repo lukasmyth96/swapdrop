@@ -24,39 +24,29 @@
 
 .profile-text-container{
   list-style: none;
-  margin-left: -25%;
+  margin-left: -15%;
 }
 
 .profile-username {
-  font-size: 24px;
+  font-size: 36px;
   font-weight: bolder;
+  margin-bottom: 0;
 }
 
 .profile-bio{
+  margin-top: 10px;
   font-size: 16px;
   font-weight: lighter;
 }
 
-@media only screen and (max-width: 600px) {
-  .profile-text-container {
-    list-style: none;
-    margin-left: -10%;
-  }
-
-  .profile-username {
-    font-size: 18pt;
-  }
-}
-
 .upload-button{
   background: radial-gradient(circle, #FF5510 0%, #FF7600 100%);
-  width: 40px;
-  height: 40px;
-  font-size: 20pt;
+  width: 32px;
+  height: 32px;
+  font-size: 20px;
   color: white;
   font-weight: bolder;
-  margin-top: auto;
-  margin-bottom: auto;
+  margin-left: 20px;
   border: 1px solid white;
   border-radius: 50%;
   box-shadow: 0 0 2px 2px #FF5510;
@@ -69,6 +59,21 @@
 
 .upload-button:focus{
   outline: none;
+}
+
+@media only screen and (max-width: 600px) {
+  .profile-text-container {
+    margin-left: -5%;
+  }
+
+  .profile-username {
+    font-size: 24px;
+  }
+
+  .profile-bio{
+    font-size: 12px;
+  }
+
 }
 
 .profile-header-row{
