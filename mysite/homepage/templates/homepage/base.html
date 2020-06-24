@@ -47,9 +47,7 @@
         <title> Swapdrop</title>
     {% endif %}
 </head>
-<body {% if request|is_mobile %} style="margin-left: 10%; margin-right: 10%;"
-      {% else %} style="margin-left: 20%; margin-right: 20%;"
-      {% endif %}>
+<body>
     <header class="site-header">
       <nav class="navbar bg-col site-header-shadow fixed-top" style="margin-right: 0">
                <div class="row" style="width: 100%;">
@@ -132,7 +130,9 @@
 
     </header>
     <main role="main">
-         <div >
+         <div {% if request|is_mobile %} style="margin-left: 10%; margin-right: 10%; margin-top: 100px"
+      {% else %} style="margin-left: 20%; margin-right: 20%; margin-top: 150px"
+      {% endif %}>
            {% if messages %}
             {% for message in messages %}
               <div class="alert alert-{{ message.tags }}">
