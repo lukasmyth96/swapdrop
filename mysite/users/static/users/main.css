@@ -25,7 +25,6 @@
 
 .profile-text-container{
   list-style: none;
-  margin-left: -15%;
 }
 
 .profile-username {
@@ -63,9 +62,6 @@
 }
 
 @media only screen and (max-width: 600px) {
-  .profile-text-container {
-    margin-left: -5%;
-  }
 
   .profile-username {
     font-size: 24px;
