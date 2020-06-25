@@ -77,3 +77,7 @@ label[for="id_image4"] {
 .item-description {
     font-size: 16px;
 }
+
+.upload-placeholder:hover{
+    cursor: pointer;
+}
