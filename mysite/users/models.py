@@ -19,6 +19,7 @@ class Profile(models.Model):
 
     # profile picture
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
+    bio = models.CharField(max_length=30, null=True, blank=True)
 
     # shipping address
     house_name_number = models.CharField(max_length=50, blank=True)
@@ -41,7 +42,6 @@ class Profile(models.Model):
         return f'{self.user.username}'
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
-        # FIXME will the lines below cause issues if we update the product??
         self.image = self.crop_resize_rename_image(self.image, self.crop_dimensions_image)
         super(Profile, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
 

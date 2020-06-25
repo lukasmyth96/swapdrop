@@ -52,11 +52,11 @@ class ProfileUpdateForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ['image']
+        fields = ['image', 'bio']
 
     def __init__(self, *args, **kwargs):
         super(ProfileUpdateForm, self).__init__(*args, **kwargs)
-        for fieldname in ['image']:
+        for fieldname in ['image', 'bio']:
             self.fields[fieldname].help_text = None
 
     def save(self, commit=True):
