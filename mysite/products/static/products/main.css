@@ -81,3 +81,12 @@ label[for="id_image4"] {
 .upload-placeholder:hover{
     cursor: pointer;
 }
+
+.edit-delete-icons{
+    outline: none;
+    text-decoration: none;
+    color: white;
+}:hover :link :visited{
+    outline: none;
+    text-decoration: none;
+ }
