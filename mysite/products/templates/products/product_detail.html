@@ -4,14 +4,12 @@
 
 {% block edit_delete_icons %}
     {% if product.owner == user %}
-      <div {% if request|is_pc %} style="text-align: right; margin: 0 10px 0 10px;"
-          {% else %} style="text-align: center; margin: 20px 20px 0 20px;"
-          {% endif %}>
-          <a href="{% url 'product-update' product.id %}" style="outline: none">
-              <img src="{% static "assets/product_edit_icon.png" %}" style="width: 44px; height: 44px">
+      <div style="text-align: center">
+          <a class="edit-delete-icons" href="{% url 'product-update' product.id %}">
+              <img src="{% static "assets/product_edit_icon.png" %}" style="width: 56px; height: 56px">
           </a>
-          <a href="{% url 'product-delete' product.id %}" style="outline: none">
-              <img src="{% static "assets/product_delete_icon.png" %}" style="width: 34px; height: 34px">
+          <a class="edit-delete-icons" href="{% url 'product-delete' product.id %}">
+              <img src="{% static "assets/product_delete_icon.png" %}" style="width: 56px; height: 56px">
           </a>
       </div>
     {% endif %}

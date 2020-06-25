@@ -18,13 +18,13 @@
 }
 
 .users-profile-img:hover {
+    cursor: pointer;
     box-shadow:0 0 30px #FF5510;
 }
 
 
 .profile-text-container{
   list-style: none;
-  margin-left: -15%;
 }
 
 .profile-username {
@@ -62,9 +62,6 @@
 }
 
 @media only screen and (max-width: 600px) {
-  .profile-text-container {
-    margin-left: -5%;
-  }
 
   .profile-username {
     font-size: 24px;
@@ -256,7 +253,7 @@
   border: 1px solid #b4a9a9;
   display: inline-block;
   cursor: pointer;
-  color: #ffffff;
+  color: rgb(224, 224, 224);
   font-family: 'Montserrat', sans-serif;
   font-size: 16px;
   font-weight: bold;
@@ -266,7 +263,7 @@
 }
 
 .standard-swapdrop-btn:hover{
-  color: inherit;
+  color: white;
   text-decoration: none;
   background: linear-gradient(45deg, rgba(255,100,0,1) 0%, rgba(255,59,0,1) 100%);
 }

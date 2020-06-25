@@ -13,7 +13,7 @@
   <div class="row" style="margin-bottom: 25px">
       <div class="col-12">
         <div id="croppie_container_image" style="width: 200px; height: 200px; margin-left: auto; margin-right: auto;">
-              <button id="upload_placeholder_image" onclick="triggerImageUpload(this);" style="border: none; outline: none; background-color: inherit">
+              <button id="upload_placeholder_image" data-toggle="tooltip" title="Change Profile Pic" onclick="triggerImageUpload(this);" style="border: none; outline: none; background-color: inherit">
                     <img class="rounded-circle users-profile-img" src="{{ user.profile.image.url }}" style="width: 100%; height: 100%">
               </button>
           </div>
@@ -28,7 +28,7 @@
         <input id="crop_dimensions_image" name="crop_dimensions_image" style="display: none">
 
 
-        <div class="row" style="margin-top: 5%">
+        <div class="row" style="margin-top: 5%; padding-left: 15px">
            <h6> Primarily looking for: </h6>
         </div>
 
@@ -60,7 +60,7 @@
         </script>
 
 
-        <div class="row" style="margin-top: 5%">
+        <div class="row" style="margin-top: 5%; padding-left: 15px">
            <h6> Your sizes: </h6>
         </div>
 

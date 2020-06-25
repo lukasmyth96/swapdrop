@@ -77,3 +77,16 @@ label[for="id_image4"] {
 .item-description {
     font-size: 16px;
 }
+
+.upload-placeholder:hover{
+    cursor: pointer;
+}
+
+.edit-delete-icons{
+    outline: none;
+    text-decoration: none;
+    color: white;
+}:hover :link :visited :active{
+    outline: none;
+    text-decoration: none;
+ }

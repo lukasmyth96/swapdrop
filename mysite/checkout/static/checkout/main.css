@@ -3,6 +3,8 @@
 /*checkout.html*/
 
 .checkout-img-row{
+  display: flex;
+  align-items:center;
   margin-top: 10%;
   margin-bottom: 5%;
 }
@@ -27,39 +29,15 @@
   }
 }
 
-.checkout-button {
-  width: 20%;
-  left: -100%;
-  background: linear-gradient(45deg, rgba(255,59,0,1) 0%, rgba(255,100,0,1) 100%);
-  border-radius: 28px;
-  border: 1px solid #b4a9a9;
-  display: inline-block;
-  cursor: pointer;
-  color: #ffffff;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 16pt;
-  font-weight: bold;
-  padding: 1% 2%;
-  text-decoration: none;
-  text-shadow: 0 1px 0 #2f6627;
-  transition: all 0.4s;
-}
-
-@media only screen and (max-width: 600px) {
-  .checkout-button{
-    width: 60%;
-    font-size: 12pt;
-    padding: 1% 4%;
-  }
-}
-
-.checkout-button:hover{
-  background: linear-gradient(45deg, rgba(255,100,0,1) 0%, rgba(255,59,0,1) 100%);
-}
-
-.checkout-button:focus{
+.checkout-info-btn{
+  background-color: orangered;
+  border: none;
+  border-radius: 50%;
   outline: none;
-}
+}:hover{
+  cursor: pointer;
+ }
+
 
 /*Time slot page*/
 .time-slot-container{
