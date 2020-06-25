@@ -29,6 +29,15 @@
   }
 }
 
+.checkout-info-btn{
+  background-color: orangered;
+  border: none;
+  border-radius: 50%;
+  outline: none;
+}:hover{
+  cursor: pointer;
+ }
+
 
 /*Time slot page*/
 .time-slot-container{

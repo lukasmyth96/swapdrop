@@ -8,18 +8,40 @@
                 <img class="checkout-img" src="{{ users_product.image.url }}" style="width: 60%">
             </div>
             <div class="col-12 col-md-2" style="text-align: center">
-                <img src="{% static "assets/red_and_orange_logo.png"%}" style="width: 100px">
+                <img src="{% static "assets/orange_logo_transparent_background.png"%}" style="width: 100px">
             </div>
             <div class="col-12 col-md-5" style="text-align: center">
                 <img class="checkout-img" src="{{ other_users_product.image.url }}" style="width: 60%">
             </div>
         </div>
 
-        <form method="post">
-            {% csrf_token %}
-            <div class="form-group" style="text-align: center; margin: 10% 20% 10% 20%">
-                <button class="standard-swapdrop-btn" type="submit">Checkout</button>
+            <form method="post">
+                {% csrf_token %}
+                <div style="text-align: center; display: flex; align-items: center; margin: 10% 20% 10% 20%">
+                    <button class="standard-swapdrop-btn" style="margin-left: 40px" type="submit">Checkout</button>
+                    <button type="button" class="checkout-info-btn" data-toggle="modal" data-target="#exampleModalLong" style="margin-left: 20px;">
+                      <img src="{% static "assets/checkout_info_icon.png" %}" style="width: 20px; height: 20px">
+                    </button>
+                </div>
+            </form>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Checkout Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+
+                Nam ac eros in est gravida volutpat. Curabitur varius eget metus eu fermentum. Proin malesuada blandit ipsum. Fusce sodales scelerisque nisl. Proin eleifend risus vitae mollis egestas. Etiam orci lectus, efficitur a tincidunt sed, convallis nec turpis. Integer egestas ac metus eu tempor. Sed et eros enim. Duis quam lectus, varius nec velit at, rhoncus malesuada urna. Donec porta elit aliquet risus aliquam ullamcorper. Curabitur congue lorem sit amet varius pellentesque.
+              </div>
             </div>
-        </form>
+          </div>
+        </div>
+
     </div>
 {% endblock %}
