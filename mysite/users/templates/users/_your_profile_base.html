@@ -12,7 +12,7 @@
 {% endblock users_username %}
 
 {% block users_bio %}
-        <p class="profile-bio"> Current logged in users bio </p>
+        <p class="profile-bio"> {{ user.profile.bio }}</p>
 {% endblock users_bio %}
 
 {% block upload_button %}

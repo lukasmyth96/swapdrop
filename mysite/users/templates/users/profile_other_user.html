@@ -9,7 +9,9 @@
 {% endblock users_username %}
 
 {% block users_bio %}
-    <p> Bio of {{ other_user.username }}</p>
+    {% if other_user.profile.bio %}
+        <p> {{ other_user.profile.bio }}</p>
+    {% endif %}
 {% endblock users_bio %}
 
 {% block profile_feed %}
