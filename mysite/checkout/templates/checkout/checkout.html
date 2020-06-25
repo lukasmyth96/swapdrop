@@ -1,20 +1,24 @@
 {% extends "homepage/base.html" %}
+{% load static %}
 {% block content %}
 
     <div>
         <div class="row checkout-img-row">
-            <div class="col-12 col-md-6" style="text-align: center">
-                <img class="checkout-img" src="{{ users_product.image.url }}">
+            <div class="col-12 col-md-5" style="text-align: center">
+                <img class="checkout-img" src="{{ users_product.image.url }}" style="width: 60%">
             </div>
-            <div class="col-12 col-md-6" style="text-align: center">
-                <img class="checkout-img" src="{{ other_users_product.image.url }}">
+            <div class="col-12 col-md-2" style="text-align: center">
+                <img src="{% static "assets/red_and_orange_logo.png"%}" style="width: 100px">
+            </div>
+            <div class="col-12 col-md-5" style="text-align: center">
+                <img class="checkout-img" src="{{ other_users_product.image.url }}" style="width: 60%">
             </div>
         </div>
 
         <form method="post">
             {% csrf_token %}
-            <div class="form-group" style="text-align: center">
-                <button class="checkout-button" type="submit">Checkout</button>
+            <div class="form-group" style="text-align: center; margin: 10% 20% 10% 20%">
+                <button class="standard-swapdrop-btn" type="submit">Checkout</button>
             </div>
         </form>
     </div>

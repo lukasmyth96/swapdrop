@@ -86,7 +86,7 @@ label[for="id_image4"] {
     outline: none;
     text-decoration: none;
     color: white;
-}:hover :link :visited{
+}:hover :link :visited :active{
     outline: none;
     text-decoration: none;
  }
