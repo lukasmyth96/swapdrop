@@ -72,7 +72,10 @@ class ProfileYourItemsListView(ListView):
                                                   & Q(status=SwapStatus.PENDING_CHECKOUT))
         for swap in users_pending_swaps:
             if swap.hours_left_to_checkout == 0:
-                swap.timeout_reached()
+                try:
+                    swap.timeout_reached()
+                except Exception as err:
+                    print(f'Warning! - following exception was raised in timeout_reached(): {err}')
         return super(ProfileYourItemsListView, self).get(request, *args, **kwargs)
 
     def get_queryset(self):
