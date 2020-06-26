@@ -45,12 +45,14 @@
         </div>
 
         <div style="text-align: center; margin: 50px 20% 10% 20%">
-            <a>
-                <button class="standard-swapdrop-btn" style="font-weight: bold; margin-bottom: 25px">
-                    Sign Up
-                </button>
-            </a>
-            <a class="find-out-more"> Found out more </a>
+            <div style="margin-bottom: 25px">
+                <a href="{% url 'register' %}">
+                    <button class="standard-swapdrop-btn" style="font-weight: bold">
+                        Sign Up
+                    </button>
+                </a>
+            </div>
+            <a href="{% url "faq" %}" class="find-out-more"> Found out more </a>
         </div>
 
 
