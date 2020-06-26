@@ -1,19 +1,59 @@
 {% extends "homepage/base.html" %}
 {% block content %}
 
+
     <div class="row">
-        <div class="col-12 col-md-6" style="text-align: center">
-            <img src="{{ product.image.url }}" style="width: 80%">
+        <div class="col-6" style="text-align: center">
+            <h3 class="out-in-text"> Out </h3>
+            <img src="{{ product.image.url }}" style="width: 100%">
+            <div style="display: flex; align-items:center; margin-top: 25px">
+                <img class="rounded-circle checkout-profile-pic" src="{{ product.owner.profile.image.url }}" style="width: 50px; height: 50px;">
+                <h6 class="checkout-username">{{ product.owner.username }} </h6>
+            </div>
         </div>
 
-        <div class="col-12 col-md-6" style="text-align: center">
-            <form method="post" style="margin-top: 25%">
-                {% csrf_token %}
-                <button class="btn btn-outline-info" type="submit">
-                    Confirm Payment
-                </button>
-            </form>
+        <div class="col-6" style="text-align: center">
+            <h3 class="out-in-text"> Out </h3>
+            <img src="{{ other_users_product.image.url }}" style="width: 100%">
+            <div style="display: flex; align-items:center; margin-top: 25px">
+                <img class="rounded-circle checkout-profile-pic" src="{{ other_users_product.owner.profile.image.url }}" style="width: 50px; height: 50px;">
+                <h6 class="checkout-username">{{ other_users_product.owner.username }} </h6>
+            </div>
         </div>
     </div>
 
+    <div class="row" style="text-align: center; margin-top: 50px; background: #F7F7F7">
+        <div class="col-4" style="text-align: center">
+            <h6> Scheduled Pick-up:</h6>
+            <div class="checkout-details-container">
+                <h6> {{ selected_time_slot.time }} </h6>
+                <h6> {{ selected_time_slot.day_str }} {{ selected_time_slot.date_str }} </h6>
+            </div>
+        </div>
+        <div class="col-4" style="text-align: center">
+            <h6> Pick-up Address:</h6>
+            <div class="checkout-details-container">
+                <h6> {{ selected_time_slot.time }} </h6>
+                <h6> {{ selected_time_slot.day_str }} {{ selected_time_slot.date_str }} {{ selected_time_slot.month_str }} </h6>
+            </div>
+        </div>
+        <div class="col-4" style="text-align: center">
+            <h6> Price:</h6>
+            <div class="checkout-details-container">
+                <h6> £4.99 </h6>
+                <h6>To be paid on collection </h6>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <form method="post" style="width: 100%">
+            {% csrf_token %}
+            <div style="text-align: center; margin: 10% 20% 10% 20%">
+                <button class="standard-swapdrop-btn" type="submit">
+                    Confirm Payment
+                </button>
+            </div>
+        </form>
+    </div>
 {% endblock content %}

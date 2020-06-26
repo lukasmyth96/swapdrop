@@ -43,6 +43,10 @@ class TimeSlot(models.Model):
         return f'{self.date.day}{suffix}'
 
     @property
+    def month_str(self):
+        return self.date.strftime('%B')
+
+    @property
     def bookings(self):
         """ Returns QuerySet of bookings in this time slot"""
         return Booking.objects.filter(time_slot=self)

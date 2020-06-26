@@ -302,7 +302,7 @@ label[for="id_image"] {
 }
 
 
-.gender-radio{
+.gender-checkbox-label{
   text-align: center;
   margin: 20px;
   width: 50%;
@@ -315,24 +315,26 @@ label[for="id_image"] {
   cursor: pointer;
   color: #616161;
   font-family: 'Montserrat', sans-serif;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: normal;
   padding: 8px;
   text-decoration: none;
   transition: all 0.4s;
 }
 
+
 @media only screen and (max-width: 600px) {
-  .gender-radio{
+  .gender-checkbox-label{
       width: 80%;
       font-size: 12px;
   }
 }
 
-:checked + label{
+.gender-checkbox:checked ~ .gender-checkbox-label{
   color: white;
   background: linear-gradient(45deg, rgba(255,100,0,1) 0%, rgba(255,59,0,1) 100%);
 }
+
 
 
 
