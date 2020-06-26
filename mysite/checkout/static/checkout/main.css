@@ -90,3 +90,34 @@
 .time-slot-radio.active {
   box-shadow: 0 0 2px 5px #FF5510;
 }
+
+.out-in-text{
+  color: #707070;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bolder;
+}
+
+.checkout-profile-pic{
+  width: 50px;
+  height: 50px;
+  border-color: white;
+  box-shadow: 0 5px 10px #00000061;
+}
+
+.checkout-username{
+  margin-left: 25px;
+  color: #707070;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: normal;
+}
+
+.checkout-details-container{
+  padding-top: 10%;
+  background: white;
+  margin-top: 25px;
+  height: 150px;
+  color: #FF5510;
+  font-family: 'Montserrat', sans-serif;
+  box-shadow: 0 3px 6px #00000029;
+  border-radius: 10px;
+}

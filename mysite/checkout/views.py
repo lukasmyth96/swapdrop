@@ -111,7 +111,15 @@ def confirm_payment(request, product_id, selected_time_slot_id):
         return redirect('profile-your-items')
 
     else:  # GET request
-        return render(request, template_name="checkout/confirm_payment.html", context={'product': product})
+        swap = Swap.objects.get((Q(offered_product=product) | Q(desired_product=product)) & Q(status=SwapStatus.PENDING_CHECKOUT))
+        if swap.offered_product == product:
+            other_users_product = swap.desired_product
+        else:
+            other_users_product = swap.offered_product
+        context = {'product': product,
+                   'other_users_product': other_users_product,
+                   'selected_time_slot': selected_time_slot}
+        return render(request, template_name="checkout/confirm_payment.html", context=context)
 
 
 
