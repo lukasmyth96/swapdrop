@@ -18,6 +18,14 @@
     </div>
 
     <script>
+        // focus on postcode on load instead of username
+        $(document).ready(function () {
+            $("#id_postcode").focus()
+        })
+    </script>
+
+    <script>
+        // hide/show postcode warning
         $("#id_postcode").focus(function() {
             $(".postcode-warning").hide();}
             ).blur(function() {

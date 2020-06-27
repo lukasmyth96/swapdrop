@@ -32,19 +32,20 @@ class ProductStatus(enum.Enum):
 class ClothingType(enum.Enum):
 
     T_SHIRT = 0
-    SHIRT = 1
-    BLOUSE = 2
+    TOP = 1
+    SHIRT = 2
+    BLOUSE = 3
     JUMPER = 4
     JACKET = 5
-    COAT = 5
-    TROUSERS = 6
-    JEANS = 7
-    SHORTS = 8
-    SKIRT = 9
-    DRESS = 10
-    SHOES = 11
-    ACCESSORIES = 12
-    OTHER = 13
+    COAT = 6
+    TROUSERS = 7
+    JEANS = 8
+    SHORTS = 9
+    SKIRT = 10
+    DRESS = 12
+    SHOES = 13
+    ACCESSORIES = 14
+    OTHER = 15
 
     @property
     def label(self):

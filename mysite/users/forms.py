@@ -74,7 +74,7 @@ class ProfileUpdateForm(forms.ModelForm):
 class ShippingAddressUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
-        exclude = ['image', 'user', 'gender_preference', 'sizes']  # ie include all fields except image (house_name_number, address...)
+        exclude = ['image', 'bio', 'user', 'gender_preference', 'sizes']  # ie include all fields except image (house_name_number, address...)
         labels = {'house_name_number': 'House Name/Number',  # django automates this. override bad ones.
                   'address_line_1': 'Address Line 1',
                   'address_line_2': 'Address Line 2',

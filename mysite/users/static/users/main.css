@@ -1,25 +1,21 @@
 
 
 .profile-img {
-  width: 100px;
-  height: 100px;
+  width: 80%;
   margin-top: auto;
   margin-bottom: auto;
   outline:none;
+  box-shadow: 0 5px 10px #00000061;
+  border: 2px solid #FFFFFF;
 }
 
 .profile-img-btn:focus{
   outline: none;
 }
 
-.users-profile-img{
-  border-color:#FF5510;
-  box-shadow:0 0 20px #FF5510;
-}
-
 .users-profile-img:hover {
     cursor: pointer;
-    box-shadow:0 0 30px #FF5510;
+  box-shadow: 0 5px 30px #00000061;
 }
 
 
@@ -109,23 +105,37 @@
 }
 
 /* Style the button and place it in the middle of the container/image */
-.offer-status-icon {
+.num-offers-icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
   position: absolute;
   top: 5px;
   left: 5px;
-  text-align: center;
-  width: 15%;
-  height: 15%;
+  width: 2vw;
+  height: 2vw;
   background: linear-gradient(45deg, #FF5510 0%, #FF7600 100%);
   color: white;
-  font-size: 16px;
+  font-size: 1vw;
   border: 1px solid white;
   border-radius: 50%;
   box-shadow: 0 0 1px 1px #FF5510;
   text-decoration: none;
 }
 
+@media only screen and (max-width: 600px){
+  .num-offers-icon{
+      width: 4vw;
+      height: 4vw;
+      font-size: 2vw;
+  }
+}
+
 .offer-status-overlay{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   position: absolute;
   top: 0;
   left: 0;
@@ -134,29 +144,21 @@
   height: 100%;
   background: rgba(149, 149, 149, 0.5);
   color: #FF5510;
-  -webkit-text-stroke-width: 0.25px;
-  -webkit-text-stroke-color: white;
-  font-size: 28px;
+  font-size: 2vw;
   font-weight: 800;
   text-decoration: none;
+}
+
+@media only screen and (max-width: 600px){
+.offer-status-overlay{
+    font-size: 4vw;
+  }
 }
 
 .offer-status-overlay:hover{
   text-decoration: none;
   color: #FF5510;
 }
-
-@media only screen and (max-width: 600px) {
-.offer-status-icon{
-  width: 20%;
-  height: 20%;
-  font-size: 12px;
-}
-.offer-status-overlay{
-  font-size: 16px;
-}
-}
-
 
 
 .btn.btn-info {
@@ -211,9 +213,9 @@
 .signup-container{
   text-align: center;
   background: white;
-  border: solid #bbb5b5 1px;
-  border-radius: 40px;
-  margin-top: 50px;
+  box-shadow: 5px 5px 30px black;
+  border-radius: 30px;
+  margin-top: 100px;
   padding-top: 25px;
   padding-bottom: 25px;
 }
@@ -246,14 +248,16 @@
 }
 
 .standard-swapdrop-btn{
-  width: 80%;
+  width: 224px;
+  margin-bottom: 12px;
   left: -100%;
   background: linear-gradient(45deg, rgba(255,59,0,1) 0%, rgba(255,100,0,1) 100%);
+  border: none;
   border-radius: 28px;
-  border: 1px solid #b4a9a9;
+  box-shadow: 1px 1px 22px grey;
   display: inline-block;
   cursor: pointer;
-  color: rgb(224, 224, 224);
+  color: white;
   font-family: 'Montserrat', sans-serif;
   font-size: 16px;
   font-weight: bold;
@@ -261,6 +265,13 @@
   text-decoration: none;
   transition: all 0.4s;
 }
+
+/*@media only screen and (max-width: 600px) {*/
+/*  .standard-swapdrop-btn{*/
+/*    width: 124px;*/
+/*    font-size: 12px;*/
+/*  }*/
+/*}*/
 
 .standard-swapdrop-btn:hover{
   color: white;
@@ -270,6 +281,7 @@
 
 .standard-swapdrop-btn:focus{
   /*aware this is bad practice -- needs changing*/
+  color: white;
   text-decoration: none;
   outline: none;
 }
@@ -278,11 +290,15 @@
     width: 75%;
     font-size: 12pt;
     font-family: 'Montserrat', sans-serif;
-    color: grey;
+    color: black;
     margin-bottom: 20px;
     outline: 0;
     border-width: 0 0 1px;
     border-color: lightgray;
+}
+
+.signup-container input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: grey;
 }
 
 .signup-container label{
@@ -331,8 +347,8 @@ label[for="id_image"] {
 }
 
 .gender-checkbox:checked ~ .gender-checkbox-label{
-  color: white;
-  background: linear-gradient(45deg, rgba(255,100,0,1) 0%, rgba(255,59,0,1) 100%);
+  color: #FF5510;
+  box-shadow: 0 0 2px 5px #FF5510;
 }
 
 
