@@ -1,8 +1,9 @@
 {% extends "users/_profile_base.html" %}
+{% load user_agents %}
 
 {% block profile_pic %}
     <a class="profile-img-btn" data-toggle="tooltip" title="Edit Profile" href="{% url "profile-info" %}">
-        <img class="rounded-circle profile-img" src="{{ user.profile.image.url }}">
+        <img class="rounded-circle profile-img users-profile-img" src="{{ user.profile.image.url }}">
     </a>
 {% endblock profile_pic %}
 
@@ -11,7 +12,7 @@
 {% endblock users_username %}
 
 {% block users_bio %}
-    <p> Current logged in users bio</p>
+        <p class="profile-bio"> {{ user.profile.bio }}</p>
 {% endblock users_bio %}
 
 {% block upload_button %}
@@ -24,12 +25,12 @@
 {% block your_items_offers_made_tab %}
     <div class="row profile-tab-row">
             <div class="col-6 profile-tab-col">
-                <a id="your-items-link" href="{% url "profile-your-items" %}">
+                <a id="your-items-link" style="display: inline-block; width: 80%" href="{% url "profile-your-items" %}">
                     Your items
                 </a>
             </div>
             <div class="col-6 profile-tab-col">
-                <a id="offers-made-link" href="{% url "profile-offers-made" %}">
+                <a id="offers-made-link" style="display: inline-block; width: 80%" href="{% url "profile-offers-made" %}">
                     Offers made
                 </a>
             </div>

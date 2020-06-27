@@ -36,6 +36,7 @@ class Swap(models.Model):
             self.save(update_fields=['status'])
 
     def timeout_reached(self):
+        print(f'Running timeout_reached on Swap {self.id}')
         self.status = SwapStatus.TIMED_OUT
         self.save(update_fields=['status'])
         self.offered_product.status = ProductStatus.LIVE

@@ -24,8 +24,8 @@ class TimeSlot(models.Model):
 
     @property
     def day_str(self):
-        """ Returns e.g. Mon, Tue etc."""
-        return self.date.strftime('%a')
+        """ Returns e.g. Monday, Tuesday etc."""
+        return self.date.strftime('%A')
 
     @property
     def date_str(self):
@@ -41,6 +41,10 @@ class TimeSlot(models.Model):
             }
         suffix = date_suffix.get(self.date.day, 'th')
         return f'{self.date.day}{suffix}'
+
+    @property
+    def month_str(self):
+        return self.date.strftime('%B')
 
     @property
     def bookings(self):

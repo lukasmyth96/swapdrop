@@ -1,3 +1,7 @@
+#div_id_image{
+    display: none;
+}
+
 #id_image {
     display: none;
 }
@@ -38,6 +42,8 @@ label[for="id_image4"] {
 }
 
 .search-bar {
+    /*Hide for now*/
+    display: none;
     width: 60%;
     margin-top: 25px;
     margin-bottom: 25px;
@@ -67,3 +73,32 @@ label[for="id_image4"] {
 .carousel-control-next-icon {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
 }
+
+.product-detail-container{
+    height: 100%;
+    box-shadow: 0 0 50px rgb(230, 230, 230);
+
+}
+
+.item-name{
+    color: #FF5510;
+}
+
+.item-size{
+    color: #FF5510;
+}
+
+.item-description {
+    font-size: 16px;
+}
+
+.edit-delete-icons{
+    outline: none;
+    text-decoration: none;
+    color: white;
+}
+
+.edit-delete-icons:hover .edit-delete-icons:link .edit-delete-icons:visited :active{
+    outline: none;
+    text-decoration: none;
+ }

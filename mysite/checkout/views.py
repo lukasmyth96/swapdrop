@@ -9,9 +9,9 @@ from products.models import Product
 from products.model_enums import ProductStatus
 from swaps.models import Swap
 from swaps.models import SwapStatus
-from bookings.models import TimeSlot, Booking
-from bookings.model_enums import BookingType
-from checkout.permissions import owns_product, verify_checkout_progress, CheckoutStatus
+from bookings.models import TimeSlot
+from checkout.permission_decorators import owns_product
+from checkout.view_funcs import user_has_valid_address, create_collection_booking, group_time_slots_by_day
 
 
 @owns_product
@@ -21,13 +21,8 @@ def start_checkout(request, product_id):
     redirects to time-slot picker.
     """
     if request.method == 'POST':
-        address_form = ShippingAddressUpdateForm(instance=request.user.profile)
 
-        request.session['checkout_status'] = {product_id: CheckoutStatus.CHECKOUT_STARTED.name}
-
-        if address_form.is_initial_valid():
-            # if shipping address already given redirect straight to time slot pick
-            request.session['checkout_status'] = {product_id: CheckoutStatus.ADDRESS_GIVEN.name}
+        if user_has_valid_address(user=request.user):
             return redirect('pick-collection-time', product_id=product_id)
         else:
             return redirect('shipping-address-redirect', product_id=product_id)
@@ -39,14 +34,13 @@ def start_checkout(request, product_id):
                 other_users_product = swap.desired_product
             else:
                 other_users_product = swap.offered_product
-            context = {'users_product': users_product, 'other_users_product': other_users_product}
+            context = {'product': users_product, 'other_users_product': other_users_product}
             return render(request, template_name='checkout/checkout.html', context=context)
         except Swap.DoesNotExist:
             messages.warning(request, 'oops.. looks like this product isn\'t ready for checkout yet')
             return redirect('profile-your-items')
 
 
-@verify_checkout_progress(required_checkout_status=CheckoutStatus.CHECKOUT_STARTED)
 @owns_product
 def shipping_address_redirect(request, product_id):
 
@@ -54,113 +48,82 @@ def shipping_address_redirect(request, product_id):
         address_form = ShippingAddressUpdateForm(instance=request.user.profile, data=request.POST)
         if address_form.is_valid():
             address_form.save()
-            request.session['checkout_status'] = {product_id: CheckoutStatus.ADDRESS_GIVEN.name}
             return redirect('pick-collection-time', product_id=product_id)
     else:
         address_form = ShippingAddressUpdateForm(instance=request.user.profile)
         return render(request, 'checkout/shipping_address_redirect.html', context={'address_form': address_form})
 
 
-@verify_checkout_progress(required_checkout_status=CheckoutStatus.ADDRESS_GIVEN)
 @owns_product
 def pick_collection_time(request, product_id):
+
+    # Prevent user from accessing this page before prior checkout stages
+    if not user_has_valid_address(user=request.user):
+        messages.warning(request, 'You must give a valid address first')
+        return redirect('checkout', product_id=product_id)
 
     if request.method == 'POST':
         try:
             selected_time_slot_id = int(request.POST.get('time-slot-radio'))
+            return redirect('confirm-payment', product_id=product_id, selected_time_slot_id=selected_time_slot_id)
         except ValueError:
             messages.warning(request, 'select an available time slot')
             return redirect('pick-collection-time', product_id=product_id)  # try again
-
-        # Create collection booking within selected time-slot
-        selected_time_slot = TimeSlot.objects.get(id=selected_time_slot_id)
-        _create_collection_booking(selected_time_slot=selected_time_slot, product_id=product_id, owner=request.user)
-        time_slot_str = selected_time_slot.date.strftime('%A') + ' at ' + selected_time_slot.time.label
-        messages.success(request, f'Collection booking confirmed for {time_slot_str}')
-
-        # TODO in future this will move to after payment
-        # Complete Checkout - updates status of Product and Swap
-        checkout_successful = _complete_checkout(product_id)  # TODO what if checkout completion fails?
-        if checkout_successful:
-            messages.success(request, 'Checkout completed successfully')
-        else:
-            messages.error(request, 'Error occurred during checkout completion')
-
-        return redirect('profile-your-items')
 
     else:  # GET request
         max_date_to_show = datetime.date.today() + datetime.timedelta(days=5)
         time_slots = TimeSlot.objects.filter(date__lte=max_date_to_show)  # get all slots within next n days
         time_slots = [slot for slot in time_slots if slot.is_available]
-        grouped_time_slots = _group_time_slots(time_slots)
+        grouped_time_slots = group_time_slots_by_day(time_slots)
         context = {'product_id': product_id,
                    'grouped_time_slots': grouped_time_slots}
         return render(request, template_name='checkout/pick_collection_time.html', context=context)
 
 
-def _group_time_slots(time_slots):
-    """
-    Groups list of TimeSlot objects into a list[list[TimeSLot]] where each sublist contains the timeslots for a single
-    day.
-    Parameters
-    ----------
-    time_slots: list[TimeSLot]
+@owns_product
+def confirm_payment(request, product_id, selected_time_slot_id):
 
-    Returns
-    -------
-    grouped_time_slots: list[list[TimeSlot]]
-    """
-
-    def date_range(start_date, end_date):
-        """ Iterator - yields all dates in range (inclusive)"""
-        for n in range(int((end_date - start_date).days)+1):
-            yield start_date + datetime.timedelta(n)
-
-    grouped_time_slots = []
-    if time_slots:
-        max_date = max([ts.date for ts in time_slots])  # get max date among time slots
-        for date in date_range(datetime.date.today(), max_date):
-            grouped_time_slots.append([ts for ts in time_slots if ts.date == date])
-
-    return grouped_time_slots
-
-
-def _create_collection_booking(selected_time_slot, product_id, owner):
-    """ Create and save collection Booking in chosen time slot"""
-    product = Product.objects.get(id=product_id)
-    swap = Swap.objects.get((Q(offered_product=product) | Q(desired_product=product)) & Q(status=SwapStatus.PENDING_CHECKOUT))
-    booking = Booking(time_slot=selected_time_slot,
-                      owner=owner,
-                      product=product,
-                      swap=swap,
-                      booking_type=BookingType.COLLECTION)
-    booking.save()
-
-
-def _complete_checkout(product_id):
-    """
-    Function to be called upon successful checkout. Updates status of product and Swap.
-
-    Returns
-    -------
-    success: bool
-        True if updated succesfully
-    """
-
-    # Update status of product
+    # Prevent user from accessing this page before prior checkout stages
     try:
-        product = Product.objects.get(id=product_id)
+        selected_time_slot = TimeSlot.objects.get(id=selected_time_slot_id)
+    except TimeSlot.DoesNotExist:
+        messages.warning(request, 'time slot does not exist')
+        return redirect('profile-your-items')
+
+    product = Product.objects.get(id=product_id)
+
+    if request.method == 'POST':
+
+        # Update product status to CHECKOUT_COMPLETE
         product.status = ProductStatus.CHECKOUT_COMPLETE
         product.save(update_fields=['status'])
 
-        # Refresh status of Swap that product belongs to
-        # TODO error handling if can't find or find more than one? shouldn't ever happen
+        # Update swap status if both products are not CHECKOUT_COMPLETE
         swap = Swap.objects.get((Q(offered_product=product) | Q(desired_product=product))
                                 & Q(status=SwapStatus.PENDING_CHECKOUT))
-        swap.refresh_status()  # internally updates status depending on status of the two products
-        return True
-    except:
-        return False
+        swap.refresh_status()
+
+        # Create timeslot booking
+        booking = create_collection_booking(selected_time_slot=selected_time_slot,
+                                            product=product,
+                                            swap=swap)
+        messages.success(request, f'Swap confirmed - collection booked for {booking.time_slot.day_str} at {booking.time_slot.time.label}')
+        return redirect('profile-your-items')
+
+    else:  # GET request
+        swap = Swap.objects.get((Q(offered_product=product) | Q(desired_product=product)) & Q(status=SwapStatus.PENDING_CHECKOUT))
+        if swap.offered_product == product:
+            other_users_product = swap.desired_product
+        else:
+            other_users_product = swap.offered_product
+        context = {'product': product,
+                   'other_users_product': other_users_product,
+                   'selected_time_slot': selected_time_slot}
+        return render(request, template_name="checkout/confirm_payment.html", context=context)
+
+
+
+
 
 
 

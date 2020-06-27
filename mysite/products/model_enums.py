@@ -13,7 +13,7 @@ class ProductStatus(enum.Enum):
 
     # InvalidStatusOperationError exception will be raised if we attempt an invalid transition
     __transitions__ = {
-        LIVE: (PENDING_CHECKOUT,),  # Can only transition to live from PENDING_CHECKOUT
+        LIVE: (PENDING_CHECKOUT, CHECKOUT_COMPLETE),  # Can only transition to live from PENDING_CHECKOUT and CHECKOUT_COMPLETE
         PENDING_CHECKOUT: (LIVE,),  # Can only transition to PENDING_CHECKOUT from LIVE
         CHECKOUT_COMPLETE: (PENDING_CHECKOUT,),  # Can only transition to CHECKOUT_COMPLETE from PENDING_CHECKOUT
         COLLECTED: (CHECKOUT_COMPLETE,),  # Can only transition to COLLECTED from CHECKOUT_COMPLETE
@@ -32,19 +32,20 @@ class ProductStatus(enum.Enum):
 class ClothingType(enum.Enum):
 
     T_SHIRT = 0
-    SHIRT = 1
-    BLOUSE = 2
+    TOP = 1
+    SHIRT = 2
+    BLOUSE = 3
     JUMPER = 4
     JACKET = 5
-    COAT = 5
-    TROUSERS = 6
-    JEANS = 7
-    SHORTS = 8
-    SKIRT = 9
-    DRESS = 10
-    SHOES = 11
-    ACCESSORIES = 12
-    OTHER = 13
+    COAT = 6
+    TROUSERS = 7
+    JEANS = 8
+    SHORTS = 9
+    SKIRT = 10
+    DRESS = 12
+    SHOES = 13
+    ACCESSORIES = 14
+    OTHER = 15
 
     @property
     def label(self):

@@ -1,0 +1,48 @@
+{% extends "homepage/base.html" %}
+{% block content %}
+
+    {% include "checkout/_progress_bar_component.html" %}
+    <script>
+        $("#progress-bar-3").addClass("active")
+    </script>
+
+    {% include "checkout/_swap_comparison_component.html" %}
+
+    <div class="row checkout-details-row">
+        <div class="col-12 col-md-4" style="margin-top: 20px">
+            <h6> Pick-up Address:</h6>
+            <div class="checkout-detail-container">
+                <h6> {{ user.profile.house_name_number }} {{ user.profile.address_line_1 }} </h6>
+                <h6> {{ user.profile.town_city }} </h6>
+                <h6> {{ user.profile.postcode }} </h6>
+            </div>
+        </div>
+        <div class="col-12 col-md-4" style="margin-top: 20px">
+            <h6> Scheduled Pick-up:</h6>
+            <div class="checkout-detail-container">
+                <h6> {{ selected_time_slot.time }} </h6>
+                <h6> {{ selected_time_slot.day_str }} {{ selected_time_slot.date_str }} {{ selected_time_slot.month_str }} </h6>
+            </div>
+        </div>
+        <div class="col-12 col-md-4" style="margin-top: 20px">
+            <h6> Price:</h6>
+            <div class="checkout-detail-container">
+                <h6> £4.99 </h6>
+                <h6>To be paid on collection </h6>
+            </div>
+        </div>
+
+{#        Confirm payment#}
+        <div class="col-12">
+            <form method="post" style="width: 100%">
+                {% csrf_token %}
+                <div style="text-align: center; margin: 10% 20% 0 20%">
+                    <button class="standard-swapdrop-btn" type="submit">
+                        Confirm Payment
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+{% endblock content %}

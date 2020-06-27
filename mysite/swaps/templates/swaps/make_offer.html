@@ -4,8 +4,10 @@
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group" style="text-align: center">
-                <h2>Select which items you want to offer</h2>
-                <button class="btn btn-outline-info" type="submit">Send Offer</button>
+                <h3>Select which items you want to offer</h3>
+                <div style="text-align: center; margin: 5% 20% 5% 20%">
+                    <button class="standard-swapdrop-btn" type="submit">Send Offer</button>
+                </div>
             </div>
             {% include 'swaps/_make_offer_feed.html' %}
         </form>

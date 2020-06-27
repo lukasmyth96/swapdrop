@@ -34,7 +34,7 @@ def register(request):
             user = authenticate(username=user_form.cleaned_data['username'],
                                 password=user_form.cleaned_data['password1'])
             login(request, user)
-            messages.success(request, f'Welcome to Swapdrop - please selected your preferences below...')
+            messages.success(request, f'Welcome to Swapdrop - please select your preferences below')
             return redirect('profile-info')
     else:
         user_form = UserRegisterForm()
@@ -72,7 +72,10 @@ class ProfileYourItemsListView(ListView):
                                                   & Q(status=SwapStatus.PENDING_CHECKOUT))
         for swap in users_pending_swaps:
             if swap.hours_left_to_checkout == 0:
-                swap.timeout_reached()
+                try:
+                    swap.timeout_reached()
+                except Exception as err:
+                    print(f'Warning! - following exception was raised in timeout_reached(): {err}')
         return super(ProfileYourItemsListView, self).get(request, *args, **kwargs)
 
     def get_queryset(self):
@@ -90,10 +93,10 @@ class ProfileOffersMadeListView(ListView):
 
     def get_queryset(self):
         """ Return all products that currently logged in user has made an offer on"""
-        offers_made = Swap.objects.filter(offered_product__owner=self.request.user)
+        offers_made = Swap.objects.filter(offered_product__owner=self.request.user, status=SwapStatus.PENDING_REVIEW)
         # making unique list because there can be multiple offers on the same product
-        products_bidded_on = list(set([offer.desired_product for offer in offers_made]))
-        return products_bidded_on
+        products_offered_on = list(set([offer.desired_product for offer in offers_made]))
+        return products_offered_on
 
 
 def profile_info(request):

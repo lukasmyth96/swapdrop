@@ -1,21 +1,23 @@
 {% extends "homepage/base.html" %}
+{% load static %}
 {% block content %}
 
     <div>
-        <div class="row checkout-img-row">
-            <div class="col-12 col-md-6" style="text-align: center">
-                <img class="checkout-img" src="{{ users_product.image.url }}">
-            </div>
-            <div class="col-12 col-md-6" style="text-align: center">
-                <img class="checkout-img" src="{{ other_users_product.image.url }}">
-            </div>
-        </div>
+
+        {% include "checkout/_progress_bar_component.html" %}
+        {% include "checkout/_swap_comparison_component.html" %}
 
         <form method="post">
             {% csrf_token %}
-            <div class="form-group" style="text-align: center">
-                <button class="checkout-button" type="submit">Checkout</button>
+            <div style="display: flex; align-items: center; justify-content: center; margin: 10% 20% 10% 25%">
+                <button class="standard-swapdrop-btn" type="submit">Checkout</button>
+                <button type="button" class="checkout-info-btn" data-toggle="modal" data-target="#exampleModalLong">
+                  <img src="{% static "assets/checkout_info_icon.png" %}">
+                </button>
             </div>
         </form>
+
+        {% include "checkout/_checkout_info_modal.html" %}
+
     </div>
 {% endblock %}

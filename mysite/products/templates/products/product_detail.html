@@ -1,19 +1,25 @@
 {% extends "products/_base_product_detail.html" %}
+{% load static %}
+{% load user_agents %}
+
+{% block edit_delete_icons %}
+    {% if product.owner == user %}
+        {% if product.status.name == 'LIVE' %}
+          <div style="text-align: center">
+              <a class="edit-delete-icons" href="{% url 'product-update' product.id %}">
+                  <img src="{% static "assets/product_edit_icon.png" %}" style="width: 56px; height: 56px">
+              </a>
+              <a class="edit-delete-icons" href="{% url 'product-delete' product.id %}">
+                  <img src="{% static "assets/product_delete_icon.png" %}" style="width: 56px; height: 56px">
+              </a>
+          </div>
+        {% endif %}
+    {% endif %}
+{% endblock edit_delete_icons %}
 
 {% block product_detail_action %}
-      {% if product.owner == user %}
-        <div>
-          {% if product.status.name == 'LIVE' %}
-              <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'review-offers' product.id %}">Review Offers</a>
-          {% else %}
-              <a class="btn btn-secondary btn-sm mt-1 mb-1" href="#">Already Matched</a>
-          {% endif %}
-          <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'product-update' product.id %}">Update</a>
-          <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'product-delete' product.id %}">Delete</a>
-        </div>
-      {% else %}
-          <button style="width: 40%" class="btn btn-outline-info" type="submit" onclick="location.href='{% url 'make-offer' product.id %}'">
-              Make an offer
-          </button>
-      {% endif %}
+    <!-- Button text and redirect url determined in view -->
+     {% if button_text %}
+          <a class="standard-swapdrop-btn" href="{{ button_redirect_url }}"> {{ button_text }} </a>
+    {% endif %}
 {% endblock product_detail_action %}

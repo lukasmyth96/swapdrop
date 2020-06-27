@@ -1,18 +1,10 @@
 {% extends "homepage/base.html" %}
 {% block content %}
 
+
+    {% include "checkout/_progress_bar_component.html" %}
     <script>
-        function changeColour(element) {
-            let selected_slot = element.getElementsByTagName('div')[0];
-            let all_slots = document.getElementsByClassName('time-slot-radio');
-            let i;
-            for (i=0; i<all_slots.length; i++){
-                // first set all image borders to white
-                all_slots[i].classList.remove('active');
-            }
-            // but set the selected one to green
-            selected_slot.classList.add('active');
-        }
+        $("#progress-bar-2").addClass("active")
     </script>
 
     <div class="time-slot-container">
@@ -38,7 +30,23 @@
                     {% endif %}
                 </div>
 
-                <button class="checkout-button" type="submit">Submit Booking</button>
+                <div style="text-align: center; margin: 5% 20% 10% 20%">
+                    <button class="standard-swapdrop-btn" type="submit">Submit Booking</button>
+                </div>
         </form>
     </div>
+
+    <script>
+        function changeColour(element) {
+            let selected_slot = element.getElementsByTagName('div')[0];
+            let all_slots = document.getElementsByClassName('time-slot-radio');
+            let i;
+            for (i=0; i<all_slots.length; i++){
+                // first set all image borders to white
+                all_slots[i].classList.remove('active');
+            }
+            // but set the selected one to green
+            selected_slot.classList.add('active');
+        }
+    </script>
 {% endblock content %}

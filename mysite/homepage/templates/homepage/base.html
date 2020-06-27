@@ -18,6 +18,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'checkout/main.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'homepage/image-picker.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'homepage/croppie.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'homepage/faq.css' %}">
+
 
     <!-- Optional JavaScript -->
     <!-- Popper.js, then Bootstrap JS -->
@@ -30,8 +32,11 @@
 
     <script src={% static 'image-picker.js' %}></script>
     <script src={% static 'croppie.js' %}></script>
+    <script src={% static 'cropping_functions.js' %}></script>
     <script src="{% static 'jquery.slidereveal.min.js' %}"></script>
 
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,600,800">
     <link rel="shortcut icon" type="image/png" href="{% static 'assets/orange_logo_transparent_background.png' %}"/>
     <link rel="apple-touch-icon" type="image/png" href="{% static 'assets/orange_logo_transparent_background.png' %}"/>
     <link rel="icon" type="image/png" href="{% static 'assets/orange_logo_transparent_background.png' %}"/>
@@ -44,34 +49,30 @@
 </head>
 <body>
     <header class="site-header">
-      <nav class="navbar bg-col shadow fixed-top" style="margin-right: 0">
-               <div class="row" style="width: 100%;">
+      <nav class="navbar bg-col site-header-shadow fixed-top" style="display: flex; align-items:center;">
+               <div class="row" style="width: 100%; display: flex; align-items:center;">
                    <div class="col-3">
                        {% if request|is_mobile %}
-                           <img src="{% static "assets/orange_on_white_logo.png" %}" style="width: 50%; margin-top: 5%">
+                           <img src="{% static "assets/orange_on_white_logo.png" %}" style="width: 50%">
                        {% else %}
-                            <span class="nav-swapdrop"> Swapdrop </span>
-                            <img src="{% static "assets/orange_on_white_logo.png" %}" style="vertical-align: middle; width: 40px">
+                            <img src="{% static "assets/swapdrop_text_and_logo_navbar.png" %}" style="height: 50px">
                        {% endif %}
                    </div>
 
-                  <div class="col-6">
-                      <ul class="nav nav-pills" style="margin-left: 5%">
-                          <li class="nav-item" style="margin-left: auto">
-                            <a id="feed-nav-link" class="nav-item nav-link" href="{% url 'product-feed' %}">Feed</a>
-                          </li>
-                          <li class="nav-item" style="margin-right: auto">
-                            <a id="profile-nav-link" class="nav-item nav-link" href="{% url 'profile-your-items' %}">Profile</a>
-                          </li>
-                      </ul>
+                  <div class="col-3" style="text-align: right">
+                       <a id="feed-nav-link" class="nav-item nav-link" href="{% url 'product-feed' %}">Feed</a>
                   </div>
 
-                   <div class="col-3" style="text-align: right; vertical-align: middle">
-                       <a id="trigger" style="margin-right: -10%">
+                  <div class="col-3" style="text-align: left">
+                      <a id="profile-nav-link" class="nav-item nav-link" href="{% url 'profile-your-items' %}">Profile</a>
+                  </div>
+
+                   <div class="col-3" style="display: flex; align-items:center;" >
+                       <a id="trigger" style="margin-left: 90%">
                            {% if request|is_mobile %}
-                               <img class="menu-icon" alt="menu icon" src="{% static "assets/three_dot_menu_icon.png" %}" style="width: 30%; margin-top: 15%; margin-right: -30%">
+                               <img class="menu-icon" alt="menu icon" src="{% static "assets/three_bar_menu_icon.png" %}" style="width:  20px">
                            {% else %}
-                               <img class="menu-icon" alt="menu icon" src="{% static "assets/three_dot_menu_icon.png" %}" style="width: 30px; margin-top: 10px">
+                               <img class="menu-icon" alt="menu icon" src="{% static "assets/three_bar_menu_icon.png" %}" style="width: 30px">
                            {% endif %}
 
                        </a>
@@ -82,11 +83,36 @@
     <!-- Sidebar menu -->
     <div id="slider" class="slider" style="text-align: left">
       <ul style="list-style-type: none; ">
-          <li> <a href="{% url "shipping-address-info" %}">Shipping Address</a> </li>
-          <li> <a href="{% url "profile-info" %}">Profile Info</a> </li>
-          <li> <a href="{% url "terms-of-service" %}">Terms of Service</a> </li>
-          <li> <a href="{% url "privacy" %}">Privacy Agreement</a> </li>
-          <li> <a href="{% url "logout" %}">Logout</a> </li>
+          <li>
+              <div>
+                  <img src="{% static "assets/shipping_address_icon.png" %}" height="50px">
+                  <a href="{% url "shipping-address-info" %}"> Shipping Address </a>
+              </div>
+          </li>
+          <li>
+            <div>
+              <img src="{% static "assets/faq_icon.png" %}" height="50px">
+              <a href="{% url "faq" %}">FAQs</a>
+            </div>
+          </li>
+          <li>
+              <div>
+                <img src="{% static "assets/terms_of_service_icon.png" %}" height="50px">
+                <a href="{% url "terms-of-service" %}">Terms of Service</a>
+              </div>
+          </li>
+          <li>
+              <div>
+                <img src="{% static "assets/privacy_icon.png" %}" height="50px">
+                <a href="{% url "privacy" %}">Privacy Agreement</a>
+              </div>
+          </li>
+          <li>
+              <div>
+                <img src="{% static "assets/logout_icon.png" %}" height="50px">
+                <a href="{% url "logout" %}">Logout</a>
+              </div>
+          </li>
       </ul>
     </div>
 
@@ -128,7 +154,9 @@
 
     </header>
     <main role="main">
-         <div >
+         <div {% if request|is_mobile %} style="margin-left: 10%; margin-right: 10%; margin-top: 100px"
+      {% else %} style="margin-left: 20%; margin-right: 20%; margin-top: 150px"
+      {% endif %}>
            {% if messages %}
             {% for message in messages %}
               <div class="alert alert-{{ message.tags }}">
