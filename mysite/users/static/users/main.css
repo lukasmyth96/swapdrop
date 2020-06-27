@@ -106,19 +106,30 @@
 
 /* Style the button and place it in the middle of the container/image */
 .num-offers-icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
   position: absolute;
   top: 5px;
   left: 5px;
-  text-align: center;
-  width: 15%;
-  height: 15%;
+  width: 2vw;
+  height: 2vw;
   background: linear-gradient(45deg, #FF5510 0%, #FF7600 100%);
   color: white;
-  font-size: 16px;
+  font-size: 1vw;
   border: 1px solid white;
   border-radius: 50%;
   box-shadow: 0 0 1px 1px #FF5510;
   text-decoration: none;
+}
+
+@media only screen and (max-width: 600px){
+  .num-offers-icon{
+      width: 4vw;
+      height: 4vw;
+      font-size: 2vw;
+  }
 }
 
 .offer-status-overlay{
@@ -133,27 +144,21 @@
   height: 100%;
   background: rgba(149, 149, 149, 0.5);
   color: #FF5510;
-  font-size: 28px;
+  font-size: 2vw;
   font-weight: 800;
   text-decoration: none;
+}
+
+@media only screen and (max-width: 600px){
+.offer-status-overlay{
+    font-size: 4vw;
+  }
 }
 
 .offer-status-overlay:hover{
   text-decoration: none;
   color: #FF5510;
 }
-
-@media only screen and (max-width: 600px) {
-.num-offers-icon{
-  width: 20%;
-  height: 20%;
-  font-size: 12px;
-}
-.offer-status-overlay{
-  font-size: 16px;
-}
-}
-
 
 
 .btn.btn-info {
