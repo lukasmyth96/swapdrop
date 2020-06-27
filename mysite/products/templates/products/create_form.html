@@ -47,7 +47,10 @@
 
             <fieldset class="form-group">
 
-                {{ form|crispy }}
+                <div class="django-form-container">
+                    {{ form|crispy }}
+                </div>
+
                 <input id="crop_dimensions_image" name="crop_dimensions_image" style="display: none">
                 <input id="crop_dimensions_image2" name="crop_dimensions_image2" style="display: none">
                 <input id="crop_dimensions_image3" name="crop_dimensions_image3" style="display: none">

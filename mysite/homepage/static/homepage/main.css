@@ -125,3 +125,11 @@ body {
   border-radius: 5%;
   box-shadow: 0 0 5px 4px lightgray;
 }
+
+.django-form-container input{
+  color: black;
+}
+
+.django-form-container input::-webkit-input-placeholder{
+    color: grey;
+}
