@@ -121,9 +121,8 @@ body {
 .croppie-div button{
   background: inherit;
   outline: none;
-  border: 1px solid #707070;
+  border: none  ;
   border-radius: 5%;
-  box-shadow: 0 0 5px 4px lightgray;
 }
 
 .django-form-container input{

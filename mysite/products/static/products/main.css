@@ -78,10 +78,6 @@ label[for="id_image4"] {
     font-size: 16px;
 }
 
-.upload-placeholder:hover{
-    cursor: pointer;
-}
-
 .edit-delete-icons{
     outline: none;
     text-decoration: none;
