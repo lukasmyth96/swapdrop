@@ -20,5 +20,14 @@ workflows:
                       only:
                        - staging
 
+    production_deploy:
+        jobs:
+            - eb_deploy:
+                filters:
+                    branches:
+                      only:
+                       - master
+
+
 
 
