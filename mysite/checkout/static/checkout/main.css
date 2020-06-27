@@ -38,7 +38,7 @@
   outline: none;
 }
 
-:hover {
+.checkout-info-btn:hover {
   cursor: pointer;
 }
 
