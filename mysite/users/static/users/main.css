@@ -1,25 +1,21 @@
 
 
 .profile-img {
-  width: 100px;
-  height: 100px;
+  width: 80%;
   margin-top: auto;
   margin-bottom: auto;
   outline:none;
+  box-shadow: 0 5px 10px #00000061;
+  border: 2px solid #FFFFFF;
 }
 
 .profile-img-btn:focus{
   outline: none;
 }
 
-.users-profile-img{
-  border-color:#FF5510;
-  box-shadow:0 0 20px #FF5510;
-}
-
 .users-profile-img:hover {
     cursor: pointer;
-    box-shadow:0 0 30px #FF5510;
+  box-shadow: 0 5px 30px #00000061;
 }
 
 
