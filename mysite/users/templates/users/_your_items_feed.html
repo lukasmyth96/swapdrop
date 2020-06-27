@@ -6,7 +6,7 @@
       </a>
 
       {% if product.status.label == 'Live' %}
-          <a class="offer-status-icon" style="visibility: hidden" href="{% url 'product-detail' product.id %}"> {{ product.number_of_offers }}</a>
+          <a class="num-offers-icon" style="visibility: hidden" href="{% url 'product-detail' product.id %}"> {{ product.number_of_offers }}</a>
       {% else %}
               {% if product.status.label == 'Pending Checkout'%}
                   <a class="offer-status-overlay" style="visibility: hidden" href="{% url 'product-detail' product.id %}">{{ product.hours_left_to_checkout }} hours to checkout</a>

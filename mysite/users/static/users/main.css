@@ -105,7 +105,7 @@
 }
 
 /* Style the button and place it in the middle of the container/image */
-.offer-status-icon {
+.num-offers-icon {
   position: absolute;
   top: 5px;
   left: 5px;
@@ -144,7 +144,7 @@
 }
 
 @media only screen and (max-width: 600px) {
-.offer-status-icon{
+.num-offers-icon{
   width: 20%;
   height: 20%;
   font-size: 12px;

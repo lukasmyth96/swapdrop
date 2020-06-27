@@ -5,7 +5,7 @@
         <img class="grid-item thumbnail" src="{{ product.image.url }}" style="width: 100%; visibility: hidden">
       </a>
       {% if product.status.label == 'Live' %}
-            <a class="offer-status-icon" style="visibility: hidden" href="{% url 'product-detail' product.id %}"> {{ product.number_of_offers }}</a>
+            <a class="num-offers-icon" style="visibility: hidden" href="{% url 'product-detail' product.id %}"> {{ product.number_of_offers }}</a>
       {% else %}
             <a class="offer-status-overlay" style="visibility: hidden" href="{% url 'product-detail' product.id %}"></a>
       {% endif %}
