@@ -93,8 +93,28 @@
 
 .out-in-text{
   color: #707070;
+  text-align: center;
   font-family: 'Montserrat', sans-serif;
   font-weight: bolder;
+}
+
+/*container for signle checkout item image + profile pic and name of owner*/
+.checkout-item-container{
+  text-align: center;
+  box-shadow: 0 0 20px grey;
+}
+
+/*single checkout img*/
+.checkout-item-container .checkout-item-img{
+  width: 100%;
+  padding: 20px;
+}
+
+.checkout-item-container .item-owner-container{
+  width: 100%;
+  display: flex;
+  align-items:center;
+  padding: 10px 20px;
 }
 
 .checkout-profile-pic{
@@ -111,13 +131,48 @@
   font-weight: normal;
 }
 
-.checkout-details-container{
-  padding-top: 10%;
+
+@media only screen and (max-width: 600px) {
+
+  .checkout-item-img{
+    padding: 5px;
+  }
+
+  .checkout-profile-pic{
+      width: 28px;
+      height: 28px;
+  }
+
+  .checkout-username{
+      margin-left: 10px;
+      font-size: 12px;
+  }
+}
+
+/*container row for checkout details address, price, time*/
+.checkout-details-row{
+  text-align: center;
+  margin: 50px 0;
+  padding: 30px 20px;
+  background-color: #F7F7F7;
+  color: #707070;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  box-shadow: 0 0 20px grey;
+}
+
+ /*container for one checkout detail column e.g address, pickup time, price*/
+.checkout-detail-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   background: white;
   margin-top: 25px;
   height: 150px;
   color: #FF5510;
-  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: bolder;
   box-shadow: 0 3px 6px #00000029;
   border-radius: 10px;
 }

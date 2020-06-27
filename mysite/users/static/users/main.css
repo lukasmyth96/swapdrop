@@ -249,8 +249,9 @@
   width: 80%;
   left: -100%;
   background: linear-gradient(45deg, rgba(255,59,0,1) 0%, rgba(255,100,0,1) 100%);
+  border: none;
   border-radius: 28px;
-  border: 1px solid #b4a9a9;
+  box-shadow: 1px 1px 22px grey;
   display: inline-block;
   cursor: pointer;
   color: white;
@@ -263,12 +264,14 @@
 }
 
 .standard-swapdrop-btn:hover{
+  color: white;
   text-decoration: none;
   background: linear-gradient(45deg, rgba(255,100,0,1) 0%, rgba(255,59,0,1) 100%);
 }
 
 .standard-swapdrop-btn:focus{
   /*aware this is bad practice -- needs changing*/
+  color: white;
   text-decoration: none;
   outline: none;
 }
