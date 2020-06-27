@@ -34,7 +34,7 @@ def start_checkout(request, product_id):
                 other_users_product = swap.desired_product
             else:
                 other_users_product = swap.offered_product
-            context = {'users_product': users_product, 'other_users_product': other_users_product}
+            context = {'product': users_product, 'other_users_product': other_users_product}
             return render(request, template_name='checkout/checkout.html', context=context)
         except Swap.DoesNotExist:
             messages.warning(request, 'oops.. looks like this product isn\'t ready for checkout yet')
