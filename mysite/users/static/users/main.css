@@ -249,6 +249,7 @@
 
 .standard-swapdrop-btn{
   width: 224px;
+  margin-bottom: 12px;
   left: -100%;
   background: linear-gradient(45deg, rgba(255,59,0,1) 0%, rgba(255,100,0,1) 100%);
   border: none;
@@ -265,12 +266,12 @@
   transition: all 0.4s;
 }
 
-@media only screen and (max-width: 600px) {
-  .standard-swapdrop-btn{
-    width: 124px;
-    font-size: 12px;
-  }
-}
+/*@media only screen and (max-width: 600px) {*/
+/*  .standard-swapdrop-btn{*/
+/*    width: 124px;*/
+/*    font-size: 12px;*/
+/*  }*/
+/*}*/
 
 .standard-swapdrop-btn:hover{
   color: white;
