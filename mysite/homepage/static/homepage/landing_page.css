@@ -3,7 +3,6 @@
 
 .montserrat{
     font-family: 'Montserrat', sans-serif;
-    font-weight: 800;
 }
 
 .h1{
@@ -72,8 +71,13 @@
     color: #616161;
     font-size: 18px;
     font-family: 'Montserrat', sans-serif;
-}:hover{
+}
+
+.find-out-more:hover{
     cursor: pointer;
- }:visited{
+
+ }
+
+.find-out-more:visited{
     color: #616161;
    }
