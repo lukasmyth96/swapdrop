@@ -125,6 +125,10 @@ body {
   border-radius: 5%;
 }
 
+.croppie-div button:hover{
+  cursor: pointer;
+}
+
 .django-form-container input{
   color: black;
 }
