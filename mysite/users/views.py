@@ -34,7 +34,7 @@ def register(request):
             user = authenticate(username=user_form.cleaned_data['username'],
                                 password=user_form.cleaned_data['password1'])
             login(request, user)
-            messages.success(request, f'Welcome to Swapdrop - please selected your preferences below...')
+            messages.success(request, f'Welcome to Swapdrop - please select your preferences below')
             return redirect('profile-info')
     else:
         user_form = UserRegisterForm()
