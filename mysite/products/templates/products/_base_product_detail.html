@@ -39,22 +39,31 @@
             </div>
 
             <div class="col-12 col-md-6">
-                {% block edit_delete_icons %}
-                {% endblock edit_delete_icons %}
+                <div class="product-detail-container">
 
-              <div style="text-align: center; margin-top: 5%">
-                  <h2 class="article-title">{{ product.name }}</h2>
-                  {% if request.user != product.owner %}
-                        <a href="{% url "profile-other-user" product.owner.id %}"> Owner: {{ product.owner.username }}</a>
-                  {% endif %}
-                  {#              <h6 class="article-title">Status: {{ product.status.label }}</h6>#}
-                  <h6 class="article-title">Size: {{ product.size }}</h6>
-                  <p class="item-description">{{ product.description }}</p>
+                    {% block edit_delete_icons %}
+                    {% endblock edit_delete_icons %}
 
-                  <!-- this block will be filled with the action button/form e.g. 'make offer' etc. -->
-                  {% block product_detail_action %}
-                  {% endblock product_detail_action %}
-              </div>
+                    <div class="item-owner-container" style="padding: 20px 40px; border-bottom: 1px solid lightgray">
+                        <img class="rounded-circle checkout-profile-pic" src="{{ product.owner.profile.image.url }}"
+                             style="width: 50px; height: 50px;">
+                        <h6 class="checkout-username">{{ product.owner.username }} </h6>
+                    </div>
+
+                      <div style="text-align: center; margin-top: 5%">
+                          <h2 class="article-title">{{ product.name }}</h2>
+                          <h6 class="article-title">Size: {{ product.size }}</h6>
+                          {#              <h6 class="article-title">Status: {{ product.status.label }}</h6>#}
+                          <p class="item-description">{{ product.description }}</p>
+                      </div>
+
+                      <div style="bottom: 10px; text-align: center">
+                          <!-- this block will be filled with the action button/form e.g. 'make offer' etc. -->
+                          {% block product_detail_action %}
+                          {% endblock product_detail_action %}
+                      </div>
+
+                </div>
 
             </div>
         </div>

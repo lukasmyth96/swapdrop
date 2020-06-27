@@ -124,7 +124,7 @@
   padding: 20px;
 }
 
-.checkout-item-container .item-owner-container{
+.item-owner-container{
   width: 100%;
   display: flex;
   align-items:center;
