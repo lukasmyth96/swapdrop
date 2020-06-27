@@ -30,16 +30,26 @@
 }
 
 .checkout-info-btn {
-  width: 32px;
-  height: 32px;
+  margin-left: 15px;
+  width: 44px;
+  height: 44px;
   background-color: white;
   border: none;
   border-radius: 50%;
   outline: none;
 }
 
-.checkout-info-btn:hover {
+.checkout-info-btn:hover{
   cursor: pointer;
+  outline: none;
+  text-decoration: none;
+}
+
+.checkout-info-btn:active{
+  cursor: pointer;
+  border: none;
+  outline: none;
+  text-decoration: none;
 }
 
 .checkout-info-btn img {
