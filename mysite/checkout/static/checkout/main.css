@@ -77,6 +77,10 @@
   background: white;
 }
 
+.time-slot-label:hover{
+  cursor: pointer;
+}
+
 @media only screen and (max-width: 600px) {
   .time-slot-label{
   width: 80%;
@@ -97,6 +101,7 @@
 }
 
 .time-slot-radio.active {
+  color: #FF5510;
   box-shadow: 0 0 2px 5px #FF5510;
 }
 

@@ -339,8 +339,8 @@ label[for="id_image"] {
 }
 
 .gender-checkbox:checked ~ .gender-checkbox-label{
-  color: white;
-  background: linear-gradient(45deg, rgba(255,100,0,1) 0%, rgba(255,59,0,1) 100%);
+  color: #FF5510;
+  box-shadow: 0 0 2px 5px #FF5510;
 }
 
 
