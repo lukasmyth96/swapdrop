@@ -5,5 +5,5 @@ class MyMiddleware:
 
     def __call__(self, request):
         response = self.get_response(request)
-        response['Cache-Control'] = 'max-age=60'  # max client cache time seconds
+        response['Cache-Control'] = 'max-age=3600'  # max client cache time seconds
         return response

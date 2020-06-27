@@ -80,6 +80,14 @@ label[for="id_image4"] {
 
 }
 
+.item-name{
+    color: #FF5510;
+}
+
+.item-size{
+    color: #FF5510;
+}
+
 .item-description {
     font-size: 16px;
 }
