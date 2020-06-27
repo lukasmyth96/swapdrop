@@ -10,7 +10,7 @@ body {
 }
 
 .site-header-shadow{
-  box-shadow: 0 4px 10px 0 rgba(176,171,169,1);
+  box-shadow: 0 1px 10px 0 rgba(176,171,169,1);
 }
 
 .site-header .nav-swapdrop {
