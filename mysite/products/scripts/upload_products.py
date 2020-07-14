@@ -32,7 +32,7 @@ if __name__ == '__main__':
     src_dir = '/home/luka/Pictures/Swapdrop'
     dest_dir = '/home/luka/PycharmProjects/SWAPDROP/mysite/media/product_pics'
     media_dir = '/media/product_pics'
-    max_to_upload = 24
+    max_to_upload = 200
 
     filenames = [file for file in os.listdir(src_dir) if file.endswith('.jpg')]
     for idx, filename in tqdm(enumerate(filenames)):
