@@ -1,3 +1,6 @@
+import random
+from datetime import datetime, timedelta
+
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (
@@ -18,7 +21,7 @@ class ProductListView(ListView):
     template_name = 'products/feed.html'
     context_object_name = 'products'
     paginate_by = 36
-    ordering = ['-date_posted']
+    feed_order_expiry_mins = 30
 
     def get_queryset(self):
         """ Returns all LIVE (non-matched) products the current user does not own and hasn't already made an offer for"""
@@ -39,7 +42,23 @@ class ProductListView(ListView):
         already_offered_on_product_ids = set([offer.desired_product.id for offer in users_offers])
         filtered_products = filtered_products.exclude(id__in=already_offered_on_product_ids)
 
+        # 5) shuffle
+        filtered_products = list(filtered_products)
+        random_seed = self.get_random_seed()
+        random.Random(random_seed).shuffle(filtered_products)
+
         return filtered_products
+
+    def get_random_seed(self):
+        time_format = '%d/%m/%y %H:%M:%S'
+        random_seed = self.request.session.get('random_seed')
+        random_seed_expiry_str = self.request.session.get('random_seed_expiry')
+        if (not random_seed) or (datetime.strptime(random_seed_expiry_str, time_format) < datetime.now()):
+            random_seed = random.randint(0, 100)
+            self.request.session['random_seed'] = random_seed
+            self.request.session['random_seed_expiry'] = datetime.strftime(datetime.now() +
+                                                                           timedelta(minutes=self.feed_order_expiry_mins), time_format)
+        return random_seed
 
 
 class ProductDetailView(DetailView):
