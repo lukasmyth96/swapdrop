@@ -7,31 +7,30 @@ I built this first version of site using Django as I hadn't built a website befo
   
 
 
-
 <p align="center">
-  <img src="demos/landing.gif">
+  <img src="demos/landing.gif" title="The Swapdrop landing page.">
 </p>
 
 <p align="center">
-  <img src="demos/signup.gif">
+  <img src="demos/signup.gif" title="Signup form.">
 </p>
 
 <p align="center">
-  <img src="demos/upload.gif">
+  <img src="demos/upload.gif" title="Item upload form. Users could crop their uploaded images easily.">
 </p>
 
 <p align="center">
-  <img src="demos/feed_and_product_detail.gif">
+  <img src="demos/feed_and_product_detail.gif" title="Users could browse their feed and click on an item to see more detail.">
 </p>
 
 <p align="center">
-  <img src="demos/make_offer.gif">
+  <img src="demos/make_offer.gif" title="When making an offer on an item, users selected which of their own items they'd be willing to swap for it.">
 </p>
 
 <p align="center">
-  <img src="demos/review_offer.gif">
+  <img src="demos/review_offer.gif" title="Users could either reject or accept offers they received on their items.">
 </p>
 
 <p align="center">
-  <img src="demos/checkout.gif">
+  <img src="demos/checkout.gif" title="Once a swap was agreed users were taken to checkout where they gave their address and selected a time for their item to be collected.">
 </p>
