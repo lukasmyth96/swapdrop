@@ -1,0 +1,25 @@
+<div class="row">
+    <div class="col-6">
+        <h3 class="out-in-text"> Out </h3>
+        <div class="checkout-item-container">
+            <img class="checkout-item-img" src="{{ product.image.url }}">
+            <div class="item-owner-container">
+                <img class="rounded-circle checkout-profile-pic" src="{{ product.owner.profile.image.url }}"
+                     style="width: 50px; height: 50px;">
+                <h6 class="checkout-username">{{ product.owner.username }} </h6>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6">
+        <h3 class="out-in-text"> In </h3>
+        <div class="checkout-item-container">
+            <img class="checkout-item-img" src="{{ other_users_product.image.url }}">
+            <div class="item-owner-container">
+                <img class="rounded-circle checkout-profile-pic" src="{{ other_users_product.owner.profile.image.url }}"
+                     style="width: 50px; height: 50px;">
+                <h6 class="checkout-username">{{ other_users_product.owner.username }} </h6>
+            </div>
+        </div>
+    </div>
+</div>

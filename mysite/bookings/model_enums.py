@@ -68,3 +68,9 @@ class BookingType(enum.Enum):
         RETURN: 'Return'
     }
 
+
+class BookingStatus(enum.Enum):
+    PENDING = 0
+    COMPLETE = 1
+    CANCELLED = 2
+

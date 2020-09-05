@@ -1,5 +1,8 @@
 {% extends "homepage/base.html" %}
 {% block content %}
-    <h2> Where should we pick up from? </h2>
+    {% include "checkout/_progress_bar_component.html" %}
+    <script>
+        $("#progress-bar-1").addClass("active")
+    </script>
     {% include "users/_shipping_address_component.html" %}
 {% endblock content %}

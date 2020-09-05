@@ -1,0 +1,33 @@
+version: 2
+jobs:
+    eb_deploy:
+      docker:
+        - image: circleci/python:3.6.8
+      steps:
+        - checkout
+        - run:
+            command: |
+              ls -la
+              sudo pip install awsebcli==3.18.1
+              eb deploy
+workflows:
+    version: 2
+    staging_deploy:
+        jobs:
+            - eb_deploy:
+                filters:
+                    branches:
+                      only:
+                       - staging
+
+    production_deploy:
+        jobs:
+            - eb_deploy:
+                filters:
+                    branches:
+                      only:
+                       - master
+
+
+
+

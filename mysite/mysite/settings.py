@@ -36,14 +36,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'dashboard.apps.DashboardConfig',
     'homepage.apps.HomepageConfig',
     'users.apps.UsersConfig',
     'products.apps.ProductsConfig',
     'swaps.apps.SwapsConfig',
     'checkout.apps.CheckoutConfig',
     'bookings.apps.BookingsConfig',
+    'sizes.apps.SizesConfig',
     'django_user_agents',
-    'storages'
+    'storages',
+    'reset_migrations'
 ]
 
 MIDDLEWARE = [
@@ -54,7 +57,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_user_agents.middleware.UserAgentMiddleware'
+    'django_user_agents.middleware.UserAgentMiddleware',
+    'mysite.custom_middleware.MyMiddleware'
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -62,7 +66,7 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -80,7 +84,8 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-if 'RDS_DB_NAME' in os.environ:
+# production RDS database - env variables are exposed by default on AWS elastic beanstalk
+if not os.environ.get('DJANGO_DEVELOPMENT'):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -91,20 +96,6 @@ if 'RDS_DB_NAME' in os.environ:
             'PORT': os.environ['RDS_PORT'],
         }
     }
-    DEBUG = False
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'swapdrop_db',
-            'USER': 'luka',
-            'PASSWORD': 'test123',
-            'HOST': 'localhost',
-            'PORT': '5432'
-        }
-    }
-
-    # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = True
 
 
@@ -144,17 +135,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-# STATIC_ROOT = os.path.join(BASE_DIR, "..", "www", "static")
 
 STATIC_URL = '/static/'
 
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = 'profile'
+LOGIN_REDIRECT_URL = 'profile-your-items'
 LOGIN_URL = 'login'
+LOGOUT_REDIRECT_URL = 'login'
+
+
+CHECKOUT_TIMEOUT_HOURS = 48
 
 ALLOWED_HOSTS = ['*']
 
@@ -163,16 +156,24 @@ AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=94608000',
 }
 
-AWS_STORAGE_BUCKET_NAME = 'swapdrop-files'
-AWS_S3_REGION_NAME = 'eu-west-2'  # e.g. us-east-2
-AWS_ACCESS_KEY_ID = 'AKIASOHMJCQWEXZ4ENVN'
-AWS_SECRET_ACCESS_KEY = 'Cs43m15Wmup60ONLohQXLmdEsGWwgPidOdlz5PiG'
-AWS_DEFAULT_ACL = None
-AWS_S3_FILE_OVERWRITE = False
-AWS_QUERYSTRING_AUTH = False
+if not os.environ.get('DJANGO_DEVELOPMENT'):
+    # Production specific
+    AWS_STORAGE_BUCKET_NAME = os.environ.get('S3_BUCKET_NAME')
+    AWS_S3_REGION_NAME = 'eu-west-2'  # e.g. us-east-2
+    AWS_ACCESS_KEY_ID = 'AKIASOHMJCQWEXZ4ENVN'  # for django-user
+    AWS_SECRET_ACCESS_KEY = 'Cs43m15Wmup60ONLohQXLmdEsGWwgPidOdlz5PiG'  # for django-user
+    AWS_DEFAULT_ACL = None
+    AWS_S3_FILE_OVERWRITE = False
+    AWS_QUERYSTRING_AUTH = False
 
-STATICFILES_LOCATION = 'static'
-STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+    STATICFILES_LOCATION = 'static'
+    STATICFILES_STORAGE = 'custom_storages.StaticStorage'
 
-MEDIAFILES_LOCATION = 'media'
-DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+    MEDIAFILES_LOCATION = 'media'
+    DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+
+
+# IMPORTANT - the following will override certain settings with whatever is declared in settings_dev.py if the
+# environment variable DJANGO_DEVELOPMENT is found.
+if os.environ.get('DJANGO_DEVELOPMENT'):
+    from mysite.settings_dev import *  # or specific overrides

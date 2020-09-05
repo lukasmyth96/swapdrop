@@ -1,0 +1,32 @@
+
+.offer-img{
+    border: 1px solid white;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.offer-img-active{
+  box-shadow: 0 0 2px 5px #FF5510;
+}
+
+.review-offer-button{
+    margin: 20px;
+    box-shadow: 1px 1px 22px grey;
+    border-radius: 10%;
+    font-size: 18px;
+}
+
+.review-offer-button:hover{
+    cursor: pointer;
+}
+
+.accept-offer-button{
+    background-color: #FF5510;
+    color: white;
+}
+
+.reject-offer-button{
+    background-color: rgb(250, 250, 250);
+    color: #FF5510;
+}
+

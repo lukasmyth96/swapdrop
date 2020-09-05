@@ -1,0 +1,13 @@
+{% extends "products/_base_feed.html" %}
+{% block single_product %}
+  <div class="product-container">
+      <a href="{% url 'product-detail' product.id %}" style="width: 100%">
+        <img class="grid-item thumbnail" src="{{ product.image.url }}" style="width: 100%; visibility: hidden">
+      </a>
+      {% if product.status.label == 'Live' %}
+            <a class="num-offers-icon" style="visibility: hidden" href="{% url 'product-detail' product.id %}"> {{ product.number_of_offers }}</a>
+      {% else %}
+            <a class="offer-status-overlay" style="visibility: hidden" href="{% url 'product-detail' product.id %}"></a>
+      {% endif %}
+  </div>
+{% endblock %}

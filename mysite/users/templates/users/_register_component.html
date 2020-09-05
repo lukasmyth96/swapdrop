@@ -1,0 +1,38 @@
+<div class="signup-container">
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="signup-legend" >Sign Up</legend>
+            {{ postcode_form }}
+            <p class="postcode-warning"> Sorry - for now you must have a PO19 postcode to sign up </p>
+            {{ user_form }}
+        </fieldset>
+        <div class="form-group" style="text-align: center">
+            <button class="standard-swapdrop-btn" type="submit">Sign Up</button>
+        </div>
+    </form>
+    <div style="text-align: center">
+        <small class="signup-footer">
+            Already got an account? <a style="color: rgb(255, 59, 0)" href="{% url 'login' %}">Login</a>
+        </small>
+    </div>
+
+    <script>
+        // focus on postcode on load instead of username
+        $(document).ready(function () {
+            $("#id_postcode").focus()
+        })
+    </script>
+
+    <script>
+        // hide/show postcode warning
+        $("#id_postcode").focus(function() {
+            $(".postcode-warning").hide();}
+            ).blur(function() {
+            if (this.value && !this.value.startsWith('PO19')){
+            $(".postcode-warning").show();
+            console.log('INVALID POSTCODE');
+            }
+            });
+    </script>
+</div>

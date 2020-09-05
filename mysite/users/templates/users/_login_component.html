@@ -1,0 +1,17 @@
+<div class="signup-container">
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="signup-legend" >Login</legend>
+            {{ form }}
+        </fieldset>
+        <div class="form-group" style="text-align: center">
+            <button class="standard-swapdrop-btn" type="submit">Login</button>
+        </div>
+    </form>
+    <div style="text-align: center">
+        <small class="signup-footer">
+            Need an account? <a style="color: rgb(255, 59, 0)" href="{% url 'register' %}">Signup</a>
+        </small>
+    </div>
+</div>

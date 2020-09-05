@@ -1,0 +1,23 @@
+{% extends "homepage/base.html" %}
+{% load static %}
+{% block content %}
+
+    <div>
+
+        {% include "checkout/_progress_bar_component.html" %}
+        {% include "checkout/_swap_comparison_component.html" %}
+
+        <form method="post">
+            {% csrf_token %}
+            <div style="display: flex; align-items: center; justify-content: center; margin: 10% 20% 10% 25%">
+                <button class="standard-swapdrop-btn" type="submit">Checkout</button>
+                <button type="button" class="checkout-info-btn" data-toggle="modal" data-target="#exampleModalLong">
+                  <img src="{% static "assets/checkout_info_icon.png" %}">
+                </button>
+            </div>
+        </form>
+
+        {% include "checkout/_checkout_info_modal.html" %}
+
+    </div>
+{% endblock %}

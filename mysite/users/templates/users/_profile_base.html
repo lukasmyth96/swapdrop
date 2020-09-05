@@ -1,0 +1,45 @@
+<!-- Base class for 'Your items' and 'Offers made' pages-->
+{% extends "homepage/base.html" %}
+{% load crispy_forms_tags %}
+{% load user_agents %}
+{% block content %}
+    <div style="margin-bottom: 50px">
+        <div class="row no-gutters profile-header-row">
+            <div class="col-3" style="text-align: center">
+                <!-- Block below will be filled by profile pic of user - will differ for your profile vs other users-->
+                {% block profile_pic %}
+                {% endblock profile_pic %}
+            </div>
+
+            <div class="col-9">
+                <ul class="profile-text-container" style="list-style: none;">
+                    <li>
+                        <div class="profile-box" style="display: flex; align-items: center">
+                            {% block users_username %}{% endblock users_username %}
+                            {% block upload_button %} {% endblock upload_button %}
+                        </div>
+                    </li>
+                    <li>
+                        {% block users_bio %}{% endblock users_bio %}
+                    </li>
+                </ul>
+
+            </div>
+
+{#            <div class="col-3">#}
+{#                <!-- Block below will be filled with upload button ONLY for your profile-->#}
+{#                {% block upload_button %}#}
+{#                {% endblock %}#}
+{#            </div>#}
+        </div>
+
+        <!-- Block below will be filled with Your Items / Offers Made tab ONLY for your profile-->
+        {% block your_items_offers_made_tab %}
+        {% endblock %}
+
+        <!-- Block below will be filled by all sub-templates -->
+        {% block profile_feed %}
+        {% endblock %}
+    </div>
+
+{% endblock content %}

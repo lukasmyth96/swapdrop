@@ -3,7 +3,6 @@
 
 .montserrat{
     font-family: 'Montserrat', sans-serif;
-        font-weight: 800;
 }
 
 .h1{
@@ -21,7 +20,7 @@
 }
 
 .orange{
-    color: rgba(255, 59, 0, 1);
+    color: rgb(255, 59, 0);
 }
 
 .black{
@@ -67,19 +66,18 @@
     box-shadow: -6px 8px 18px 5px rgba(62,66,66,0.26);
 }
 
-.register-button{
-    background: rgb(255,120,0);
-    background: linear-gradient(215deg, rgba(255,120,0,1) 0%, rgba(255,159,0,1) 100%);
-    color: white;
+.find-out-more{
+    margin-top: 50px;
+    color: #616161;
+    font-size: 18px;
+    font-family: 'Montserrat', sans-serif;
 }
 
-#fadeout-text{
-  text-align: center;
-  font-size: 1.5vw;
-  margin-top: 1%;
-}
+.find-out-more:hover{
+    cursor: pointer;
 
-.fadeout{
-  opacity: 0;
-  transition: 3s opacity;
-}
+ }
+
+.find-out-more:visited{
+    color: #616161;
+   }

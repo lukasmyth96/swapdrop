@@ -1,0 +1,25 @@
+{% extends "products/_base_product_detail.html" %}
+{% load static %}
+{% load user_agents %}
+
+{% block edit_delete_icons %}
+    {% if product.owner == user %}
+        {% if product.status.name == 'LIVE' %}
+          <div style="text-align: center">
+              <a class="edit-delete-icons" href="{% url 'product-update' product.id %}">
+                  <img src="{% static "assets/product_edit_icon.png" %}" style="width: 56px; height: 56px">
+              </a>
+              <a class="edit-delete-icons" href="{% url 'product-delete' product.id %}">
+                  <img src="{% static "assets/product_delete_icon.png" %}" style="width: 56px; height: 56px">
+              </a>
+          </div>
+        {% endif %}
+    {% endif %}
+{% endblock edit_delete_icons %}
+
+{% block product_detail_action %}
+    <!-- Button text and redirect url determined in view -->
+     {% if button_text %}
+          <a class="standard-swapdrop-btn" href="{{ button_redirect_url }}"> {{ button_text }} </a>
+    {% endif %}
+{% endblock product_detail_action %}

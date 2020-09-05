@@ -1,58 +1,51 @@
 body {
-  background: #fafafa;
+  background: white;
   color: #333333;
   margin-top: 5rem;
+  font-family: 'Montserrat', sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  color: #444444;
+.bg-col {
+  background-color: white;
 }
 
-ul {
-  margin: 0;
+.site-header-shadow{
+  box-shadow: 0 1px 10px 0 rgba(176,171,169,1);
 }
 
-.bg-steel {
-  background-color: #5f788a;
+.site-header .nav-swapdrop {
+  color: rgb(255, 59, 0);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2vw;
+  font-weight: 800;
+  margin-bottom: 0;
 }
 
-.site-header .navbar-nav .nav-link {
-  color: #cbd5db;
+.site-header .nav-link {
+  color: rgba(42, 38, 38, 0.96);
+  font-weight: bold;
+  font-size: 20px;
 }
 
-.site-header .navbar-nav .nav-link:hover {
-  color: #ffffff;
+.nav-pills{
 }
 
-.site-header .navbar-nav .nav-link.active {
+@media only screen and (max-width: 600px) {
+  .site-header .nav-link {
+    font-size: 16px;
+  }
+  .nav-pills{
+    margin-left: 0;
+  }
+}
+
+
+.site-header .nav-link:hover {
+  color: black;
+}
+
+.site-header .nav-link.active {
   font-weight: 500;
-}
-
-.content-section {
-  background: #ffffff;
-  padding: 10px 20px;
-  border: 1px solid #dddddd;
-  border-radius: 3px;
-  margin-bottom: 20px;
-}
-
-.article-title {
-  color: #444444;
-}
-
-a.article-title:hover {
-  color: #428bca;
-  text-decoration: none;
-}
-
-.article-content {
-  white-space: pre-line;
-}
-
-.article-img {
-  height: 65px;
-  width: 65px;
-  margin-right: 16px;
 }
 
 .feed-img {
@@ -64,4 +57,82 @@ a.article-title:hover {
   width: 25px;
   height: 25px;
   vertical-align: middle;
+}
+
+.menu-icon:hover{
+  cursor: pointer;
+}
+
+.slider {
+  display: none;
+  margin-right: 10%;
+}
+
+.slider li{
+  margin-top: 5%;
+}
+
+.slider li div{
+  display: flex;
+  align-items:center;
+}
+
+.slider li div img{
+  height: 50px;
+}
+
+.slider li div a {
+  color: #cbd5db;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.slider a:hover{
+  color: #ffffff;
+  font-weight: bold;
+}
+
+@media only screen and (max-width: 600px) {
+  .slider{
+    margin-right: 35%;
+    margin-top: 20%;
+  }
+
+  .slider li{
+    margin-top: 15%;
+  }
+
+  .slider li div img{
+    height: 40px;
+  }
+
+  .slider li div a{
+    font-size: 12px;
+  }
+}
+
+.croppie-div{
+  width: 70%;
+  margin: 5% auto 5% auto;
+}
+
+.croppie-div button{
+  background: inherit;
+  outline: none;
+  border: none  ;
+  border-radius: 5%;
+}
+
+.croppie-div button:hover{
+  cursor: pointer;
+}
+
+.django-form-container input{
+  color: black;
+}
+
+.django-form-container input::-webkit-input-placeholder{
+    color: grey;
 }
